@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
+             xmlns:bidTrainer1="clr-namespace:Maui.BidTrainer"
+             x:Class="Maui.BidTrainer.Views.StartPage">
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="BlanchedAlmond"/>
+            <Setter Property="TextColor" Value="Blue"/>
+            <Setter Property="FontSize" Value="Small"/>
+            <Setter Property="TextTransform" Value="None"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <viewModels:StartViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid BackgroundColor="BlanchedAlmond">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="400"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <CollectionView Grid.Row="0" ItemsSource="{Binding Lessons}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type bidTrainer1:Lesson}">
+                        <StackLayout>
+                            <Button Text="{Binding Content}"
+                                Command="{Binding Path=StartLessonCommand, 
+                                    Source={RelativeSource AncestorType={x:Type viewModels:StartViewModel}}}" 
+                                CommandParameter="{Binding LessonNr}"/>
+                            <BoxView Color="Black" WidthRequest="100" HeightRequest="2"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <StackLayout Grid.Row="1">
+                <Button Text="Continue where I left off" 
+                        Command="{Binding ContinueWhereLeftOffCommand}" />
+                <BoxView Color="Black" WidthRequest="100" HeightRequest="2"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

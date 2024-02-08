@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
+             xmlns:converters="clr-namespace:Maui.BidTrainer.Converters"
+             x:Class="Maui.BidTrainer.Views.SettingsPage">
+    <ContentPage.BindingContext>
+        <viewModels:SettingsViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <converters:CardImageConverter x:Key="CardImageConverter"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Text="Username" Padding="15"/>
+            <Entry Grid.Row="0" Grid.Column="1" Placeholder="Username" Text="{Binding Username}"/>
+            <Label Grid.Row="1" Grid.Column="0" Text="Alternate suits" Padding="15"/>
+            <Switch Grid.Row="1" Grid.Column="1" IsToggled="{Binding AlternateSuits}"/>
+            <Label Grid.Row="2" Grid.Column="0" Text="Cards" Padding="15"/>
+            <StackLayout Grid.Row="2" Grid.Column="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+                    <RadioButton GroupName="Cards" Grid.Row="0" Grid.Column="0" Content="default" FontSize="Small"
+                                 IsChecked="{Binding CardImage, Converter={StaticResource CardImageConverter}, ConverterParameter='default'}"/>
+                    <Image x:Name="ImageDefault" Grid.Row="0" Grid.Column="1"/>
+                    <RadioButton GroupName="Cards" Grid.Row="1" Grid.Column="0" Content="bbo" FontSize="Small"
+                                 IsChecked="{Binding CardImage, Converter={StaticResource CardImageConverter}, ConverterParameter='bbo'}"/>
+                    <Image x:Name="ImageBbo" Grid.Row="1" Grid.Column="1"/>
+                </Grid>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

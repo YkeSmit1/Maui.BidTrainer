@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:dataGrid="clr-namespace:Maui.DataGrid;assembly=Maui.DataGrid"
+             xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
+             x:Class="Maui.BidTrainer.Views.LeaderboardPage">
+    <ContentPage.BindingContext>
+        <viewModels:LeaderboardViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <!-- ReSharper disable once ObsoleteElementError -->
+            <dataGrid:DataGrid ItemsSource="{Binding Accounts}"
+                         RowHeight="30" HeaderHeight="50" 
+                         BorderColor="#CCCCCC" HeaderBackground="#E0E6F8"
+                         FontSize="9">
+                <dataGrid:DataGrid.HeaderLabelStyle>
+                    <Style TargetType="Label">
+                        <Setter Property="FontSize" Value="11" />
+                    </Style>
+                </dataGrid:DataGrid.HeaderLabelStyle>
+                <dataGrid:DataGrid.Columns>
+                    <dataGrid:DataGridColumn Title="Name" PropertyName="username" HorizontalContentAlignment="Start"/>
+                    <dataGrid:DataGridColumn Title="Boards played" PropertyName="numberOfBoardsPlayed" HorizontalContentAlignment="Center"/>
+                    <dataGrid:DataGridColumn Title="Correct boards" PropertyName="numberOfCorrectBoards" HorizontalContentAlignment="Center"/>
+                    <dataGrid:DataGridColumn Title="Time spent" PropertyName="timeElapsed" StringFormat="{}{0:h\:mm\:ss}" HorizontalContentAlignment="Center"/>
+                </dataGrid:DataGrid.Columns>
+            </dataGrid:DataGrid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

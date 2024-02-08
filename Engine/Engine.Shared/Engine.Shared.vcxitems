@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{9d963917-89a4-4099-be48-0dd5a92ebae8}</ItemsProjectGuid>
+    <ItemsProjectName>Engine.Shared</ItemsProjectName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Api.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)BoardCharacteristic.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)InformationFromAuction.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ISqliteWrapper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Rule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SqliteCppWrapper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Api.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BoardCharacteristic.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)InformationFromAuction.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ISqliteWrapper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Rule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SqliteCppWrapper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utils.h" />
+  </ItemGroup>
+</Project>

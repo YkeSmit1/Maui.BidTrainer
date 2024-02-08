@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:common="clr-namespace:Common;assembly=Common"
+             xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
+             x:Class="Maui.BidTrainer.Views.BiddingBoxView">
+  <ContentView.BindingContext>
+      <viewModels:BiddingBoxViewModel/>
+  </ContentView.BindingContext>
+    <ContentView.Resources>
+        <DataTemplate x:Key="BidButtonsTemplate" x:DataType="{x:Type common:Bid }">
+            <Frame Padding="1" WidthRequest="42" BackgroundColor="MediumSeaGreen" CornerRadius="5">
+                <Button Text="{Binding}" 
+                        FontSize="9"
+                        BackgroundColor="White"
+                        TextColor="Black"
+                        HorizontalOptions="Center" VerticalOptions="Center"
+                        Command="{Binding Path=DoBid, Source={RelativeSource AncestorType={x:Type viewModels:BiddingBoxViewModel}} }" 
+                        CommandParameter="{Binding}" />
+            </Frame>
+        </DataTemplate>
+    </ContentView.Resources>
+    
+  <ContentView.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="250"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+            <!--Bids-->
+            <CollectionView Grid.Row="0"
+                            ItemsSource="{Binding SuitBids}" 
+                            ItemTemplate="{StaticResource BidButtonsTemplate}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Horizontal" Span="7"/>
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+            <!--NonBids (Pass, Dbl, Rdbl)-->
+            <CollectionView Grid.Row="1"
+                            ItemsSource="{Binding NonSuitBids}" 
+                            ItemTemplate="{StaticResource BidButtonsTemplate}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal"/>
+            </CollectionView.ItemsLayout>
+            </CollectionView>
+
+        </Grid>
+  </ContentView.Content>
+</ContentView>

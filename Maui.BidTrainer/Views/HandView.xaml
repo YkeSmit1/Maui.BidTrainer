@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
+             xmlns:bidTrainer="clr-namespace:Maui.BidTrainer"
+             x:Class="Maui.BidTrainer.Views.HandView">
+    <ContentView.BindingContext>
+        <viewModels:HandViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Content>
+        <StackLayout>
+            <CollectionView ItemsSource="{Binding Cards}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="bidTrainer:Card">
+                        <StackLayout>
+                            <Image Source="{Binding ImageSource}" 
+                                Aspect="AspectFit" 
+                                WidthRequest="{Binding Width}"
+                                HeightRequest="{Binding Height}"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

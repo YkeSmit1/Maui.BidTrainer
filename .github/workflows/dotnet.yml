@@ -1,0 +1,66 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+          submodules: true      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '2.0.x'
+        source-url: https://nuget.pkg.github.com/YkeSmit1/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}        
+    - name: Setup Java JDK
+      uses: actions/setup-java@v4.0.0
+      with:
+        distribution: 'microsoft'
+        java-version: '17'
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: NuGet Restore
+      run: nuget restore App.BidTrainer.sln
+      # Restore from cache the previously built ports. If cache-miss, download, build vcpkg.
+    - name: Restore from cache and install vcpkg
+      # Download and build vcpkg, without installing any port. If content is cached already, it is a no-op.
+      uses: lukka/run-vcpkg@v11
+      # Now that vcpkg is installed, it is being used to run with desired arguments.
+    - name: Install SQLiteCpp and nlohmann-json using vcpg      
+      run: |
+        $VCPKG_ROOT/vcpkg install SQLiteCpp:x64-windows
+        $VCPKG_ROOT/vcpkg install nlohmann-json:x64-windows
+        $VCPKG_ROOT/vcpkg integrate install
+      shell: bash      
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.3
+    - name: build x64 .so files
+      run: msbuild Engine\Engine.Android\Engine.Android.vcxproj /p:Configuration=Release /p:Platform=x64
+    - name: build x86 .so files
+      run: msbuild Engine\Engine.Android\Engine.Android.vcxproj /p:Configuration=Release /p:Platform=x86
+    - name: build ARM .so files
+      run: msbuild Engine\Engine.Android\Engine.Android.vcxproj /p:Configuration=Release /p:Platform=ARM
+    - name: build ARM64 .so files
+      run: msbuild Engine\Engine.Android\Engine.Android.vcxproj /p:Configuration=Release /p:Platform=ARM64      
+    - name: Build
+      run: msbuild App.BidTrainer\App.BidTrainer.Android\App.BidTrainer.Android.csproj /p:Configuration=Release /t:PackageForAndroid 
+    #- name: Test
+    #  run: dotnet test --no-build --verbosity normal
+    - uses: actions/upload-artifact@v4
+      with:
+        name: distribute
+        path: .\App.BidTrainer\App.BidTrainer.Android\bin\Release\app.bidtrainer.aab
+

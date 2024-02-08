@@ -1,0 +1,38 @@
+[
+  {
+    "PbnFile": "lesson2.pbn",
+    "Content": "Lesson 2. One openings and responses",
+    "LessonNr": 2,
+    "Modules": 1
+  },
+  {
+    "PbnFile": "lesson3.pbn",
+    "Content": "Lesson 3. 1NT openings and responses",
+    "LessonNr": 3,
+    "Modules": 1
+  },
+  {
+    "PbnFile": "lesson4.pbn",
+    "Content": "Lesson 4. Overcall and take-out double",
+    "LessonNr": 4,
+    "Modules": 1
+  },
+  {
+    "PbnFile": "lesson5.pbn",
+    "Content": "Advanced course Lesson 1. Five card majors and 2 openings and higher",
+    "LessonNr": 5,
+    "Modules": 6
+  },
+  {
+    "PbnFile": "lesson6.pbn",
+    "Content": "Advanced course Lesson 2. Negative double and reverse",
+    "LessonNr": 6,
+    "Modules": 30
+  },
+  {
+    "PbnFile": "lesson7.pbn",
+    "Content": "Advanced course Lesson 3. Control bidding and RKCB",
+    "LessonNr": 7,
+    "Modules": 126
+  }
+]

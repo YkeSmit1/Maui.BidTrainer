@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
+             xmlns:converters="clr-namespace:Maui.BidTrainer.Converters"
+             x:Class="Maui.BidTrainer.Views.AuctionView">
+    <ContentView.BindingContext>
+        <viewModels:AuctionViewModel/>
+    </ContentView.BindingContext>
+    <ContentView.Resources>
+        <converters:BiddingRoundToPaddingConverter x:Key="BiddingRoundToPaddingConverter"/>
+        <converters:PlayerToVisibilityConverter x:Key="PlayerToVisibilityConverter"/>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="Micro"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="HeightRequest" Value="25"/>
+        </Style>
+    </ContentView.Resources>
+  <ContentView.Content>
+        <Grid Padding="3" BackgroundColor="White" HeightRequest="150">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <CollectionView Grid.Row="0" ItemsSource="{Binding Auction.Bids.Values}">
+                <CollectionView.Header>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="West" WidthRequest="28" TextColor="Gray"/>
+                        <Label Text="North" WidthRequest="30" TextColor="Gray"/>
+                        <Label Text="East" WidthRequest="28" TextColor="Gray"/>
+                        <Label Text="South" WidthRequest="30" TextColor="Gray"/>
+                    </StackLayout>
+                </CollectionView.Header> 
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <CollectionView ItemsSource="{Binding}" HeightRequest="25">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                                        <Label Text="{Binding Value}" FontSize="Micro" WidthRequest="30" TextColor="Gray"/>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>                            
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal"/>
+                            </CollectionView.ItemsLayout>
+                        </CollectionView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Label Grid.Row="0" Text="?" FontSize="Micro" 
+                   Padding="{Binding Auction.CurrentBiddingRound, Converter={StaticResource BiddingRoundToPaddingConverter}}"
+                   IsVisible="{Binding Auction.CurrentPlayer, Converter={StaticResource PlayerToVisibilityConverter}}"/>
+        </Grid>
+  </ContentView.Content>
+</ContentView>
