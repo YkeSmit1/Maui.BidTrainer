@@ -33,7 +33,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: NuGet Restore
-      run: nuget restore App.BidTrainer.sln
+      run: nuget restore Maui.BidTrainer.sln
       # Restore from cache the previously built ports. If cache-miss, download, build vcpkg.
     - name: Restore from cache and install vcpkg
       # Download and build vcpkg, without installing any port. If content is cached already, it is a no-op.
@@ -56,11 +56,11 @@ jobs:
     - name: build ARM64 .so files
       run: msbuild Engine\Engine.Android\Engine.Android.vcxproj /p:Configuration=Release /p:Platform=ARM64      
     - name: Build
-      run: msbuild App.BidTrainer\App.BidTrainer.Android\App.BidTrainer.Android.csproj /p:Configuration=Release /t:PackageForAndroid 
+      run: msbuild Maui.BidTrainer\\Maui.BidTrainer.Android.csproj /p:Configuration=Release /t:PackageForAndroid 
     #- name: Test
     #  run: dotnet test --no-build --verbosity normal
     - uses: actions/upload-artifact@v4
       with:
         name: distribute
-        path: .\App.BidTrainer\App.BidTrainer.Android\bin\Release\app.bidtrainer.aab
+        path: .\Maui.BidTrainer\bin\Release\maui.bidtrainer.aab
 
