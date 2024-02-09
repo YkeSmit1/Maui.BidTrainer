@@ -364,4 +364,4 @@ FodyWeavers.xsd
 
 # Rider
 .idea
-/App.BidTrainer/app.bidtrainer.aab
+/Maui.BidTrainer/maui.bidtrainer.aab
