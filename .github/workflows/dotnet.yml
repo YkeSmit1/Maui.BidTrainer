@@ -62,5 +62,5 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: distribute
-        path: .\Maui.BidTrainer\bin\Release\maui.bidtrainer.aab
+        path: .\Maui.BidTrainer\bin\Release\net8.0-android\com.companyname.maui.bidtrainer-Signed.apk
 
