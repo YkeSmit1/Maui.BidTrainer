@@ -56,7 +56,7 @@ jobs:
     - name: build ARM64 .so files
       run: msbuild Engine\Engine.Android\Engine.Android.vcxproj /p:Configuration=Release /p:Platform=ARM64      
     - name: Build
-      run: msbuild Maui.BidTrainer\Maui.BidTrainer.csproj /p:Configuration=Release
+      run: msbuild Maui.BidTrainer\Maui.BidTrainer.csproj /p:Configuration=Release /t:net8.0-android 
     #- name: Test
     #  run: dotnet test --no-build --verbosity normal
     - uses: actions/upload-artifact@v4
