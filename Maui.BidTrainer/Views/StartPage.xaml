@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
-             xmlns:bidTrainer1="clr-namespace:Maui.BidTrainer"
+             xmlns:bidTrainer="clr-namespace:Maui.BidTrainer"
              x:Class="Maui.BidTrainer.Views.StartPage">
     <ContentPage.Resources>
         <Style TargetType="Button">
@@ -23,7 +23,7 @@
             </Grid.RowDefinitions>
             <CollectionView Grid.Row="0" ItemsSource="{Binding Lessons}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type bidTrainer1:Lesson}">
+                    <DataTemplate x:DataType="{x:Type bidTrainer:Lesson}">
                         <StackLayout>
                             <Button Text="{Binding Content}"
                                 Command="{Binding Path=StartLessonCommand, 

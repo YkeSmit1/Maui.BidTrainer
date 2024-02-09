@@ -16,7 +16,7 @@
 
         private static readonly CardImageSettings DefaultCardImageSettings = new CardImageSettings
         {
-            CardImage = "Maui.BidTrainer.Resources.Images.cardfaces.png",
+            CardImage = "cardfaces.png",
             FirstCardIsAce = true,
             TopClubs = 0,
             TopDiamonds = 294,
@@ -31,7 +31,7 @@
 
         private static readonly CardImageSettings BboCardImageSettings = new CardImageSettings
         {
-            CardImage = "Maui.BidTrainer.Resources.Images.cardfaces2.jpg",
+            CardImage = "cardfaces2.jpg",
             FirstCardIsAce = false,
             TopClubs = 138,
             TopDiamonds = 14,

@@ -38,7 +38,7 @@
             </StackLayout>
             <Grid Grid.Row="2" >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="220"/>
+                    <ColumnDefinition Width="252"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <StackLayout Grid.Column="0">

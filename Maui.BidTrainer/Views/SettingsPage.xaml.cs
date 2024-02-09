@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Maui.BidTrainer.ViewModels;
+﻿using Maui.BidTrainer.ViewModels;
 
 namespace Maui.BidTrainer.Views
 {
@@ -9,8 +8,6 @@ namespace Maui.BidTrainer.Views
         public SettingsPage()
         {
             InitializeComponent();
-            ImageDefault.Source = ImageSource.FromResource("Maui.BidTrainer.Resources.cardfaces.png", typeof(SettingsPage).GetTypeInfo().Assembly);
-            ImageBbo.Source = ImageSource.FromResource("Maui.BidTrainer.Resources.cardfaces2.jpg", typeof(SettingsPage).GetTypeInfo().Assembly);
         }
 
         protected override void OnAppearing()

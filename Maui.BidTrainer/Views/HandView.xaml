@@ -16,10 +16,11 @@
                 <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="bidTrainer:Card">
                         <StackLayout>
-                            <Image Source="{Binding ImageSource}" 
-                                Aspect="AspectFit" 
-                                WidthRequest="{Binding Width}"
-                                HeightRequest="{Binding Height}"/>
+                            <Image Source="{Binding Source}" 
+                                   Aspect="AspectFit" 
+                                   WidthRequest="{Binding Width}"
+                                   HeightRequest="{Binding Height}"
+                                   Clip="{Binding Clip}"/>
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
