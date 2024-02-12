@@ -1,5 +1,12 @@
 #pragma once
 
+#ifdef _WIN32
+#  define DLLENGINE_API __declspec( dllexport )
+#else
+#  define DLLENGINE_API
+#endif
+
+
 /// <summary>
 /// Types of bids deduced from the hand
 /// </summary>
@@ -37,9 +44,9 @@ enum class Modules
 };
 
 extern "C" {
-    int GetBidFromRule(const char* hand, const char* previousBidding, char* description);
-    void GetRulesByBid(int bidId, const char* previousBidding, char* information);
-    int Setup(const char* database);
-    void SetModules(int modules);
-    void GetInformationFromAuction(const char* previousBidding, char* informationFromAuctionJson);
+    DLLENGINE_API int GetBidFromRule(const char* hand, const char* previousBidding, char* description);
+    DLLENGINE_API void GetRulesByBid(int bidId, const char* previousBidding, char* information);
+    DLLENGINE_API int Setup(const char* database);
+    DLLENGINE_API void SetModules(int modules);
+    DLLENGINE_API void GetInformationFromAuction(const char* previousBidding, char* informationFromAuctionJson);
 }
