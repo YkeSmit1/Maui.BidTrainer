@@ -1,6 +1,9 @@
 // ReSharper disable CppCStyleCast
 #pragma once
 
+#define SQLITECPP_COMPILE_DLL
+
+
 #include "ISqliteWrapper.h"
 #include "SQLiteCpp/SQLiteCpp.h"
 #include <unordered_map>

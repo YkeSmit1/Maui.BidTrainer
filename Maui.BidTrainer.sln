@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maui.BidTrainer", "Maui.Bid
 		{6BD51737-C02A-4BA3-9844-6B9EDDAE707B} = {6BD51737-C02A-4BA3-9844-6B9EDDAE707B}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Windows.Engine", "Engine\Windows.Engine\Windows.Engine.vcxproj", "{07020388-0D27-40F6-AEEB-A8BA513667D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -133,6 +135,34 @@ Global
 		{CCA906E9-753B-4344-BAB6-BCC70C8CFE1A}.Release|x86.ActiveCfg = Release|Any CPU
 		{CCA906E9-753B-4344-BAB6-BCC70C8CFE1A}.Release|x86.Build.0 = Release|Any CPU
 		{CCA906E9-753B-4344-BAB6-BCC70C8CFE1A}.Release|x86.Deploy.0 = Release|Any CPU
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Debug|Any CPU.Build.0 = Debug|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Debug|ARM.ActiveCfg = Debug|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Debug|ARM.Build.0 = Debug|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Debug|ARM64.ActiveCfg = Debug|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Debug|ARM64.Build.0 = Debug|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Debug|iPhone.ActiveCfg = Debug|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Debug|iPhone.Build.0 = Debug|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Debug|iPhoneSimulator.ActiveCfg = Debug|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Debug|iPhoneSimulator.Build.0 = Debug|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Debug|x64.ActiveCfg = Debug|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Debug|x64.Build.0 = Debug|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Debug|x86.ActiveCfg = Debug|Win32
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Debug|x86.Build.0 = Debug|Win32
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Release|Any CPU.ActiveCfg = Release|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Release|Any CPU.Build.0 = Release|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Release|ARM.ActiveCfg = Release|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Release|ARM.Build.0 = Release|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Release|ARM64.ActiveCfg = Release|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Release|ARM64.Build.0 = Release|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Release|iPhone.ActiveCfg = Release|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Release|iPhone.Build.0 = Release|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Release|iPhoneSimulator.ActiveCfg = Release|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Release|iPhoneSimulator.Build.0 = Release|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Release|x64.ActiveCfg = Release|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Release|x64.Build.0 = Release|x64
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Release|x86.ActiveCfg = Release|Win32
+		{07020388-0D27-40F6-AEEB-A8BA513667D6}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -141,6 +171,7 @@ Global
 		SolutionGuid = {B61E7E17-A4E4-43AF-9A43-CFF33E1AD821}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Engine\Engine.Shared\Engine.Shared.vcxitems*{07020388-0d27-40f6-aeeb-a8ba513667d6}*SharedItemsImports = 4
 		Engine\Engine.Shared\Engine.Shared.vcxitems*{429c2b45-0cb2-42dd-928b-e03cc1a90dea}*SharedItemsImports = 4
 		Engine\Engine.Shared\Engine.Shared.vcxitems*{9d963917-89a4-4099-be48-0dd5a92ebae8}*SharedItemsImports = 9
 	EndGlobalSection
