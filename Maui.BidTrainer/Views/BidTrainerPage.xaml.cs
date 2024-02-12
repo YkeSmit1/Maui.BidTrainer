@@ -47,7 +47,7 @@ namespace Maui.BidTrainer.Views
         public BidTrainerPage()
         {
             InitializeComponent();
-            Application.Current.ModalPopping += PopModel;
+            Application.Current!.ModalPopping += PopModel;
             BiddingBoxViewModel.DoBid = new AsyncCommand<object>(ClickBiddingBoxButton, ButtonCanExecute);
             AuctionViewModel.Auction = auction;
         }
@@ -63,10 +63,12 @@ namespace Maui.BidTrainer.Views
                 if (File.Exists(resultsFile)) 
                     results = JsonConvert.DeserializeObject<Results>(await File.ReadAllTextAsync(resultsFile));
 
-                await CopyFileToAppDataDirectory("four_card_majors.db3");
+                if (!File.Exists(Path.Combine(FileSystem.AppDataDirectory, "four_card_majors.db3")))
+                {
+                    await CopyFileToAppDataDirectory("four_card_majors.db3");
+                }
 
                 Pinvoke.Setup(Path.Combine(FileSystem.Current.AppDataDirectory, "four_card_majors.db3"));
-
                 await StartLessonAsync();
                 await StartNextBoard();
             }
@@ -103,7 +105,7 @@ namespace Maui.BidTrainer.Views
             else if (e.Modal == settingsPage)
             {
                 ((SettingsViewModel)settingsPage.BindingContext).Save();
-                Device.BeginInvokeOnMainThread(() =>
+                MainThread.BeginInvokeOnMainThread(() =>
                     StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}");
             }
         }
@@ -155,7 +157,7 @@ namespace Maui.BidTrainer.Views
 
         private async Task StartNextBoard()
         {
-            Device.BeginInvokeOnMainThread(() =>
+            MainThread.BeginInvokeOnMainThread(() =>
             {
                 PanelNorth.IsVisible = false;
                 BiddingBoxView.IsEnabled = true;
@@ -178,7 +180,7 @@ namespace Maui.BidTrainer.Views
                     return;
                 }
             }
-            Device.BeginInvokeOnMainThread(() =>
+            MainThread.BeginInvokeOnMainThread(() =>
                 StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}");
             ShowBothHands();
             await StartBidding();
@@ -264,12 +266,12 @@ namespace Maui.BidTrainer.Views
         private void ShowReport()
         {
             var resultsPage = new ResultsPage(results);
-            Application.Current.MainPage.Navigation.PushAsync(resultsPage);
+            Application.Current!.MainPage!.Navigation.PushAsync(resultsPage);
         }
 
         private async void ButtonClickedStartLesson(object sender, EventArgs e)
         {
-            await Application.Current.MainPage.Navigation.PushAsync(startPage);
+            await Application.Current!.MainPage!.Navigation.PushAsync(startPage);
         }
 
         private async void ButtonClickedNextBoard(object sender, EventArgs e)
@@ -287,12 +289,12 @@ namespace Maui.BidTrainer.Views
         {
             var accounts = await DependencyService.Get<ICosmosDbHelper>().GetAllAccounts();
             var leaderboardPage = new LeaderboardPage(accounts.OrderByDescending(x => (double)x.numberOfCorrectBoards / x.numberOfBoardsPlayed));
-            await Application.Current.MainPage.Navigation.PushAsync(leaderboardPage);
+            await Application.Current!.MainPage!.Navigation.PushAsync(leaderboardPage);
         }
 
         private async void ButtonClickedSettings(object sender, EventArgs e)
         {
-            await Application.Current.MainPage.Navigation.PushAsync(settingsPage);
+            await Application.Current!.MainPage!.Navigation.PushAsync(settingsPage);
         }
 
         protected override async void OnAppearing()

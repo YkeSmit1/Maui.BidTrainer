@@ -1,7 +1,6 @@
-﻿using ObjCRuntime;
-using UIKit;
+﻿using UIKit;
 
-namespace Maui.BidTrainer
+namespace Maui.BidTrainer.Platforms.MacCatalyst
 {
     public class Program
     {

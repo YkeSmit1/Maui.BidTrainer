@@ -120,6 +120,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Platforms\Windows\Constants.cs">
+      <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+    </Compile>
+    <Compile Update="Platforms\Windows\CosmosDBHelper.cs">
+      <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+    </Compile>
     <Compile Update="Views\AuctionView.xaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>
     </Compile>

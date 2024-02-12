@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace Maui.BidTrainer
+namespace Maui.BidTrainer.Platforms.MacCatalyst
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

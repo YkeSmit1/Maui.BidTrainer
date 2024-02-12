@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace Maui.BidTrainer
+namespace Maui.BidTrainer.Platforms.Android
 {
     [Application]
     public class MainApplication : MauiApplication

@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace Maui.BidTrainer
+namespace Maui.BidTrainer.Platforms.IOS
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

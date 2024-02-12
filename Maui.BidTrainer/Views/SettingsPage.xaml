@@ -39,10 +39,10 @@
                     </Grid.RowDefinitions>
                     <RadioButton GroupName="Cards" Grid.Row="0" Grid.Column="0" Content="default" FontSize="Small"
                                  IsChecked="{Binding CardImage, Converter={StaticResource CardImageConverter}, ConverterParameter='default'}"/>
-                    <Image x:Name="ImageDefault" Grid.Row="0" Grid.Column="1" Source="cardfaces.png"/>
+                    <Image Grid.Row="0" Grid.Column="1" Source="cardfaces.png"/>
                     <RadioButton GroupName="Cards" Grid.Row="1" Grid.Column="0" Content="bbo" FontSize="Small"
                                  IsChecked="{Binding CardImage, Converter={StaticResource CardImageConverter}, ConverterParameter='bbo'}"/>
-                    <Image x:Name="ImageBbo" Grid.Row="1" Grid.Column="1" Source="cardfaces2.jpg"/>
+                    <Image Grid.Row="1" Grid.Column="1" Source="cardfaces2.jpg"/>
                 </Grid>
             </StackLayout>
         </Grid>

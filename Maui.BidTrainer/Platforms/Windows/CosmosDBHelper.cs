@@ -1,7 +1,6 @@
 ﻿using Microsoft.Azure.Cosmos;
 
-//[assembly: Xamarin.Forms.Dependency(typeof(CosmosDbHelper))]
-namespace Maui.BidTrainer.Platforms.Android
+namespace Maui.BidTrainer.Platforms.Windows
 {
     public class CosmosDbHelper : ICosmosDbHelper
     {

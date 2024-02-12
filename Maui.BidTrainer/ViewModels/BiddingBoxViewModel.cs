@@ -16,7 +16,7 @@ namespace Maui.BidTrainer.ViewModels
         public BiddingBoxViewModel()
         {
             SuitBids = new ObservableCollection<Bid>(Enum.GetValues(typeof(Suit)).Cast<Suit>()
-                            .SelectMany(suit => Enumerable.Range(1, 7), (suit, level) => new { suit, level })
+                            .SelectMany(_ => Enumerable.Range(1, 7), (suit, level) => new { suit, level })
                             .Select(x => new Bid(x.level, x.suit)));
             NonSuitBids = new ObservableCollection<Bid> { Bid.PassBid, Bid.Dbl, Bid.Rdbl};
         }

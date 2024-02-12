@@ -7,7 +7,7 @@ namespace Maui.BidTrainer.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (Player)value == Player.South;
+            return (Player)value! == Player.South;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

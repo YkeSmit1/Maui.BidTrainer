@@ -6,7 +6,7 @@ namespace Maui.BidTrainer.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var correct = (bool)value;
+            var correct = (bool)value!;
             if (correct)
                 return "correct.png";
             else

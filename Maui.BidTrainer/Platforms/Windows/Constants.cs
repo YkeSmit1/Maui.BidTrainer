@@ -1,4 +1,4 @@
-﻿namespace Maui.BidTrainer.Platforms.Android
+﻿namespace Maui.BidTrainer.Platforms.Windows
 {
     public static class Constants
     {
