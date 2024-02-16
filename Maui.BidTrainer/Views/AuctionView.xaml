@@ -7,52 +7,26 @@
     <ContentView.BindingContext>
         <viewModels:AuctionViewModel/>
     </ContentView.BindingContext>
-    <ContentView.Resources>
-        <converters:BiddingRoundToPaddingConverter x:Key="BiddingRoundToPaddingConverter"/>
-        <converters:PlayerToVisibilityConverter x:Key="PlayerToVisibilityConverter"/>
-        <Style TargetType="Label">
-            <Setter Property="FontSize" Value="Micro"/>
-            <Setter Property="FontAttributes" Value="Bold"/>
-            <Setter Property="HeightRequest" Value="25"/>
-        </Style>
-    </ContentView.Resources>
   <ContentView.Content>
         <Grid Padding="3" BackgroundColor="White" HeightRequest="150">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <CollectionView Grid.Row="0" ItemsSource="{Binding Auction.Bids.Values}">
+            <CollectionView Grid.Row="0" ItemsSource="{Binding Bids}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="4"/>
+                </CollectionView.ItemsLayout>
                 <CollectionView.Header>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="West" WidthRequest="28" TextColor="Gray"/>
-                        <Label Text="North" WidthRequest="30" TextColor="Gray"/>
-                        <Label Text="East" WidthRequest="28" TextColor="Gray"/>
-                        <Label Text="South" WidthRequest="30" TextColor="Gray"/>
+                    <StackLayout Orientation="Horizontal" >
+                        <Label Text="West" TextColor="Gray"/>
+                        <Label Text="North" TextColor="Gray"/>
+                        <Label Text="East" TextColor="Gray"/>
+                        <Label Text="South" TextColor="Gray"/>
                     </StackLayout>
                 </CollectionView.Header> 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <CollectionView ItemsSource="{Binding}" HeightRequest="25">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
-                                        <Label Text="{Binding Value}" FontSize="Micro" WidthRequest="30" TextColor="Gray"/>
-                                    </StackLayout>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>                            
-                            <CollectionView.ItemsLayout>
-                                <LinearItemsLayout Orientation="Horizontal"/>
-                            </CollectionView.ItemsLayout>
-                        </CollectionView>
+                        <Label Text="{Binding}" FontSize="Micro" TextColor="Gray" />
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Label Grid.Row="0" Text="?" FontSize="Micro" 
-                   Padding="{Binding Auction.CurrentBiddingRound, Converter={StaticResource BiddingRoundToPaddingConverter}}"
-                   IsVisible="{Binding Auction.CurrentPlayer, Converter={StaticResource PlayerToVisibilityConverter}}"/>
         </Grid>
   </ContentView.Content>
 </ContentView>

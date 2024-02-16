@@ -49,7 +49,7 @@ namespace Maui.BidTrainer.Views
             InitializeComponent();
             Application.Current!.ModalPopping += PopModel;
             BiddingBoxViewModel.DoBid = new AsyncCommand<object>(ClickBiddingBoxButton, ButtonCanExecute);
-            AuctionViewModel.Auction = auction;
+            AuctionViewModel.Bids.Clear();
         }
         private async Task Start()
         {
@@ -151,7 +151,9 @@ namespace Maui.BidTrainer.Views
         private void UpdateBidControls(Bid bid)
         {
             auction.AddBid(bid);
-            AuctionViewModel.Auction = ObjectCloner.ObjectCloner.DeepClone(auction);
+            if (AuctionViewModel.Bids.Any() && AuctionViewModel.Bids.Last() == "?")
+                AuctionViewModel.Bids.RemoveAt(AuctionViewModel.Bids.Count - 1);
+            AuctionViewModel.Bids.Add(bid.ToString());
             BiddingBoxViewModel.DoBid.RaiseCanExecuteChanged();
         }
 
@@ -189,7 +191,7 @@ namespace Maui.BidTrainer.Views
         private async Task StartBidding()
         {
             auction.Clear(Dealer);
-            AuctionViewModel.Auction = ObjectCloner.ObjectCloner.DeepClone(auction);
+            AuctionViewModel.Bids.Clear();
             BiddingBoxViewModel.DoBid.RaiseCanExecuteChanged();
             startTimeBoard = DateTime.Now;
             currentResult = new Result();
@@ -210,6 +212,7 @@ namespace Maui.BidTrainer.Views
             {
                 var bid = BidManager.GetBid(auction, Deal[auction.CurrentPlayer]);
                 UpdateBidControls(bid);
+                AuctionViewModel.Bids.Add("?");
             }
 
             if (auction.IsEndOfBidding())
