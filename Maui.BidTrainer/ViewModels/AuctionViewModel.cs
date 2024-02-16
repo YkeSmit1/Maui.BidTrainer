@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using Common;
 using MvvmHelpers;
 
 namespace Maui.BidTrainer.ViewModels

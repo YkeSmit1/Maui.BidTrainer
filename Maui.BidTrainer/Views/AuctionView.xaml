@@ -2,31 +2,34 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
-             xmlns:converters="clr-namespace:Maui.BidTrainer.Converters"
              x:Class="Maui.BidTrainer.Views.AuctionView">
     <ContentView.BindingContext>
         <viewModels:AuctionViewModel/>
     </ContentView.BindingContext>
-  <ContentView.Content>
-        <Grid Padding="3" BackgroundColor="White" HeightRequest="150">
-            <CollectionView Grid.Row="0" ItemsSource="{Binding Bids}">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="4"/>
-                </CollectionView.ItemsLayout>
-                <CollectionView.Header>
-                    <StackLayout Orientation="Horizontal" >
-                        <Label Text="West" TextColor="Gray"/>
-                        <Label Text="North" TextColor="Gray"/>
-                        <Label Text="East" TextColor="Gray"/>
-                        <Label Text="South" TextColor="Gray"/>
-                    </StackLayout>
-                </CollectionView.Header> 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Label Text="{Binding}" FontSize="Micro" TextColor="Gray" />
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </Grid>
-  </ContentView.Content>
+    <VerticalStackLayout Padding="5" BackgroundColor="White">
+        <CollectionView ItemsSource="{Binding Bids}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="4"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Text="West" TextColor="Gray"/>
+                    <Label Grid.Column="1" Text="North" TextColor="Gray"/>
+                    <Label Grid.Column="2" Text="East" TextColor="Gray"/>
+                    <Label Grid.Column="3" Text="South" TextColor="Gray"/>
+                </Grid>
+            </CollectionView.Header> 
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Label Text="{Binding}" TextColor="Gray"/>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
 </ContentView>
