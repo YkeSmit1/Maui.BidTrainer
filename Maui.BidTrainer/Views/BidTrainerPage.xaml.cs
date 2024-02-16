@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using System.Collections.ObjectModel;
+using Common;
 using EngineWrapper;
 using Maui.BidTrainer.ViewModels;
 using MvvmHelpers.Commands;
@@ -191,7 +192,7 @@ namespace Maui.BidTrainer.Views
         private async Task StartBidding()
         {
             auction.Clear(Dealer);
-            AuctionViewModel.Bids.Clear();
+            AuctionViewModel.Bids = new ObservableCollection<string>(auction.Bids.SelectMany(x => x.Value.Values).Select(_ => ""));
             BiddingBoxViewModel.DoBid.RaiseCanExecuteChanged();
             startTimeBoard = DateTime.Now;
             currentResult = new Result();
@@ -212,8 +213,8 @@ namespace Maui.BidTrainer.Views
             {
                 var bid = BidManager.GetBid(auction, Deal[auction.CurrentPlayer]);
                 UpdateBidControls(bid);
-                AuctionViewModel.Bids.Add("?");
             }
+            AuctionViewModel.Bids.Add("?");
 
             if (auction.IsEndOfBidding())
             {
