@@ -102,8 +102,8 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y $(TargetPath) $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows10.0.19041.0\win10-$(PlatformTarget)\AppX
-xcopy /Y $(TargetDir)SQLiteCpp.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows\
-xcopy /Y $(TargetDir)sqlite3.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows\</Command>
+xcopy /Y $(TargetDir)SQLiteCpp.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows10.0.19041.0\win10-$(PlatformTarget)\AppX
+xcopy /Y $(TargetDir)sqlite3.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows10.0.19041.0\win10-$(PlatformTarget)\AppX</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -128,8 +128,8 @@ xcopy /Y $(TargetDir)sqlite3.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configurati
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y $(TargetPath) $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows10.0.19041.0\win10-$(PlatformTarget)\AppX
-xcopy /Y $(TargetDir)SQLiteCpp.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows\
-xcopy /Y $(TargetDir)sqlite3.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows\</Command>
+xcopy /Y $(TargetDir)SQLiteCpp.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows10.0.19041.0\win10-$(PlatformTarget)\AppX
+xcopy /Y $(TargetDir)sqlite3.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows10.0.19041.0\win10-$(PlatformTarget)\AppX</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -150,8 +150,8 @@ xcopy /Y $(TargetDir)sqlite3.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configurati
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y $(TargetPath) $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows10.0.19041.0\win10-$(PlatformTarget)\AppX
-xcopy /Y $(TargetDir)SQLiteCpp.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows\
-xcopy /Y $(TargetDir)sqlite3.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows\</Command>
+xcopy /Y $(TargetDir)SQLiteCpp.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows10.0.19041.0\win10-$(PlatformTarget)\AppX
+xcopy /Y $(TargetDir)sqlite3.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows10.0.19041.0\win10-$(PlatformTarget)\AppX</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -176,8 +176,8 @@ xcopy /Y $(TargetDir)sqlite3.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configurati
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y $(TargetPath) $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows10.0.19041.0\win10-$(PlatformTarget)\AppX
-xcopy /Y $(TargetDir)SQLiteCpp.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows\
-xcopy /Y $(TargetDir)sqlite3.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows\</Command>
+xcopy /Y $(TargetDir)SQLiteCpp.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows10.0.19041.0\win10-$(PlatformTarget)\AppX
+xcopy /Y $(TargetDir)sqlite3.dll $(SolutionDir)Maui.Bidtrainer\bin\$(Configuration)\net8.0-windows10.0.19041.0\win10-$(PlatformTarget)\AppX</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -58,6 +58,8 @@
 	<ItemGroup>
 	  <None Remove="Resources\Images\correct.png" />
 	  <None Remove="Resources\Images\dotnet_bot.png" />
+	  <None Remove="Resources\Images\Embedded\cardfaces.png" />
+	  <None Remove="Resources\Images\Embedded\cardfaces2.jpg" />
 	  <None Remove="Resources\Images\icons8_flashcards_32.png" />
 	  <None Remove="Resources\Images\icons8_leaderboard_32.png" />
 	  <None Remove="Resources\Images\icons8_next_32.png" />
@@ -97,6 +99,11 @@
     <AndroidNativeLibrary Include="..\Engine\Engine.Android\ARM\$(Configuration)\libEngine.so">
       <Link>lib\armeabi-v7a\libEngine.so</Link>
     </AndroidNativeLibrary>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Images\Embedded\cardfaces.png" />
+    <EmbeddedResource Include="Resources\Images\Embedded\cardfaces2.jpg" />
   </ItemGroup>
 
   <ItemGroup>

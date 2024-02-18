@@ -18,6 +18,8 @@ namespace Maui.BidTrainer.ViewModels
         {
             var settings = CardImageSettings.GetCardImageSettings(cardProfile);
             Cards.Clear();
+            var dictionary = SplitImages.Split(settings);
+
             var suitOrder = alternateSuits ?
                 new List<Suit> { Suit.Spades, Suit.Hearts, Suit.Clubs, Suit.Diamonds } :
                 new List<Suit> { Suit.Spades, Suit.Hearts, Suit.Diamonds, Suit.Clubs };
@@ -31,25 +33,12 @@ namespace Maui.BidTrainer.ViewModels
                 foreach (var card in suit.x)
                 {
                     var cardwidth = index == 12 ? width : settings.CardDistance;
-
-                    var face = Util.GetFaceFromDescription(card);
-                    var faceInt = settings.FirstCardIsAce ? (int)face : face == Face.Ace ? 12 : (int)face - 1;
-                    var topx = settings.XOffSet + (width * faceInt);
-                    var topy = suit.Item2 switch
-                    {
-                        Suit.Clubs => settings.TopClubs,
-                        Suit.Diamonds => settings.TopDiamonds,
-                        Suit.Hearts => settings.TopHearts,
-                        Suit.Spades => settings.TopSpades,
-                        _ => throw new ArgumentException(nameof(suit)),
-                    };
-
+                    var valueTuple = (Util.GetSuitDescriptionASCII(suit.Item2), card.ToString());
                     Cards.Add(new Card
                     {
                         Width = cardwidth - settings.XCardPadding,
                         Height = height,
-                        Source = settings.CardImage,
-                        Clip = new RectangleGeometry(new Rect(topx, topy, topx + cardwidth, topy + height))
+                        Source = dictionary[valueTuple],
                     });
                     index++;
                 }

@@ -8,7 +8,7 @@
         <viewModels:HandViewModel/>
     </ContentView.BindingContext>
     <ContentView.Content>
-        <StackLayout>
+        <StackLayout WidthRequest="250" HeightRequest="150">
             <CollectionView ItemsSource="{Binding Cards}">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal"/>
@@ -17,10 +17,9 @@
                         <DataTemplate x:DataType="bidTrainer:Card">
                         <StackLayout>
                             <Image Source="{Binding Source}" 
-                                   Aspect="AspectFit" 
+                                   Aspect="Center" 
                                    WidthRequest="{Binding Width}"
-                                   HeightRequest="{Binding Height}"
-                                   Clip="{Binding Clip}"/>
+                                   HeightRequest="{Binding Height}"/>
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

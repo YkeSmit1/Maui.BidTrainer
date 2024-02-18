@@ -7,6 +7,5 @@ namespace Maui.BidTrainer
         public int Width { get; set; }
         public int Height { get; set; }
         public string Source { get; set; }
-        public RectangleGeometry Clip { get; set; }
     }
 }
