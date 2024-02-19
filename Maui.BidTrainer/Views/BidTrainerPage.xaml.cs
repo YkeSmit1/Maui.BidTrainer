@@ -7,15 +7,14 @@ using Newtonsoft.Json;
 
 namespace Maui.BidTrainer.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BidTrainerPage
     {
-        private readonly StartPage startPage = new StartPage();
-        private readonly SettingsPage settingsPage = new SettingsPage();
+        private readonly StartPage startPage = new();
+        private readonly SettingsPage settingsPage = new();
 
         // Bidding
-        private readonly Auction auction = new Auction();
-        private readonly Pbn pbn = new Pbn();
+        private readonly Auction auction = new();
+        private readonly Pbn pbn = new();
         private bool isInHintMode;
 
         // Lesson
@@ -37,7 +36,7 @@ namespace Maui.BidTrainer.Views
         // Results
         private Result currentResult;
         private DateTime startTimeBoard;
-        private Results results = new Results();
+        private Results results = new();
 
         // ViewModels
         private BiddingBoxViewModel BiddingBoxViewModel => (BiddingBoxViewModel)BiddingBoxView.BindingContext;
@@ -239,8 +238,10 @@ namespace Maui.BidTrainer.Views
             if (username != "")
             {
                 var res = results.AllResults.Values.SelectMany(x => x.Results.Values).ToList();
-                await UpdateOrCreateAccount(username, res.Count(), res.Count(x => x.AnsweredCorrectly), res.Sum(x => x.TimeElapsed.Ticks));
+                await UpdateOrCreateAccount(username, res.Count, res.Count(x => x.AnsweredCorrectly), res.Sum(x => x.TimeElapsed.Ticks));
             }
+
+            return;
 
             static async Task UpdateOrCreateAccount(string username, int boardPlayed, int correctBoards, long timeElapsed)
             {

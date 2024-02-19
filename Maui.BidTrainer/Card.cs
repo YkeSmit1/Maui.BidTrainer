@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Controls.Shapes;
-
-namespace Maui.BidTrainer
+﻿namespace Maui.BidTrainer
 {
     public class Card
     {

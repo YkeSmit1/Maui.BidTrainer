@@ -1,13 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using Common;
-using Microsoft.Maui.Controls.Shapes;
 using MvvmHelpers;
 
 namespace Maui.BidTrainer.ViewModels
 {
     public class HandViewModel : BaseViewModel
     {
-        public ObservableCollection<Card> Cards { get; set; } = new ObservableCollection<Card>();
+        public ObservableCollection<Card> Cards { get; set; } = [];
 
         public HandViewModel()
         {
@@ -32,11 +31,11 @@ namespace Maui.BidTrainer.ViewModels
             {
                 foreach (var card in suit.x)
                 {
-                    var cardwidth = index == 12 ? width : settings.CardDistance;
+                    var cardWidth = index == 12 ? width : settings.CardDistance;
                     var valueTuple = (Util.GetSuitDescriptionASCII(suit.Item2), card.ToString());
                     Cards.Add(new Card
                     {
-                        Width = cardwidth - settings.XCardPadding,
+                        Width = cardWidth - settings.XCardPadding,
                         Height = height,
                         Source = dictionary[valueTuple],
                     });

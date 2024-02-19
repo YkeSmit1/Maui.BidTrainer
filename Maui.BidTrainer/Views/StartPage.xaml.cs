@@ -2,7 +2,6 @@
 
 namespace Maui.BidTrainer.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class StartPage
     {
         public StartPage ()
@@ -10,7 +9,7 @@ namespace Maui.BidTrainer.Views
             InitializeComponent();
         }
 
-        protected async override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
             await ((StartViewModel)BindingContext).LoadLessonsAsync();
