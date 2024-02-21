@@ -12,7 +12,7 @@ namespace Maui.BidTrainer.Platforms.Windows
             var queryDefinition = new QueryDefinition("select * from c");
             using var query = Container.GetItemQueryIterator<Account>(queryDefinition);
             return await query.ReadNextAsync();
-                }
+        }
 
         public async Task<Account?> GetAccount(string username)
         {
@@ -20,7 +20,7 @@ namespace Maui.BidTrainer.Platforms.Windows
             using var query = Container.GetItemQueryIterator<Account>(queryDefinition);
                 var account = await query.ReadNextAsync();
             return account.FirstOrDefault();
-            }
+        }
 
         public async Task InsertAccount(Account account)
         {
@@ -31,5 +31,5 @@ namespace Maui.BidTrainer.Platforms.Windows
         {
             await Container.UpsertItemAsync(account);
         }
-        }
+    }
 }

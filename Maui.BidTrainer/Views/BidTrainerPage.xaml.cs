@@ -60,8 +60,15 @@ namespace Maui.BidTrainer.Views
                 lessons = JsonConvert.DeserializeObject<List<Lesson>>(await lessonsReader.ReadToEndAsync());
 
                 var resultsFile = Path.Combine(FileSystem.AppDataDirectory, "results.json");
-                if (File.Exists(resultsFile)) 
-                    results = JsonConvert.DeserializeObject<Results>(await File.ReadAllTextAsync(resultsFile));
+                if (File.Exists(resultsFile))
+                    try
+                    {
+                        results = JsonConvert.DeserializeObject<Results>(await File.ReadAllTextAsync(resultsFile));
+                    }
+                    catch (Exception)
+                    {
+                        // incorrect format. Don't load
+                    }
 
                 if (!File.Exists(Path.Combine(FileSystem.AppDataDirectory, "four_card_majors.db3")))
                 {
