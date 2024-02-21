@@ -1,14 +1,12 @@
-﻿using System.Collections.ObjectModel;
-using MvvmHelpers;
+﻿using MvvmHelpers;
 
 namespace Maui.BidTrainer.ViewModels
 {
     public class LeaderboardViewModel : ObservableObject
     {
+        private List<Account> accounts = [];
 
-        private ObservableCollection<Account> accounts;
-
-        public ObservableCollection<Account> Accounts
+        public List<Account> Accounts
         {
             get => accounts;
             set => SetProperty(ref accounts, value);

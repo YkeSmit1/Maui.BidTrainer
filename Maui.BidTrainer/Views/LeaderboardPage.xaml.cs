@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using Maui.BidTrainer.ViewModels;
+﻿using Maui.BidTrainer.ViewModels;
 
 namespace Maui.BidTrainer.Views
 {
@@ -9,7 +8,7 @@ namespace Maui.BidTrainer.Views
         {
             InitializeComponent();
 
-            ((LeaderboardViewModel)BindingContext).Accounts = new ObservableCollection<Account>(accounts);
+            ((LeaderboardViewModel)BindingContext).Accounts = [..accounts];
         }
     }
 }
