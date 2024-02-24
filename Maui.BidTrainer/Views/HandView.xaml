@@ -9,21 +9,16 @@
     </ContentView.BindingContext>
     <ContentView.Content>
         <StackLayout WidthRequest="250" HeightRequest="150">
-            <CollectionView ItemsSource="{Binding Cards}" x:DataType="viewModels:HandViewModel">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Horizontal"/>
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
+            <AbsoluteLayout BindableLayout.ItemsSource="{Binding Cards}" x:DataType="viewModels:HandViewModel">
+                <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="bidTrainer:Card">
-                        <StackLayout>
                             <Image Source="{Binding Source}" 
-                                   Aspect="Center" 
-                                   WidthRequest="{Binding Width}"
-                                   HeightRequest="{Binding Height}"/>
-                        </StackLayout>
+                                   AbsoluteLayout.LayoutBounds="{Binding Rect}"
+                                   WidthRequest="{Binding Rect.Width}"
+                                   HeightRequest="{Binding Rect.Height}"/>
                     </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                </BindableLayout.ItemTemplate>
+            </AbsoluteLayout>
         </StackLayout>
     </ContentView.Content>
 </ContentView>

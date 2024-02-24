@@ -24,19 +24,15 @@ namespace Maui.BidTrainer.ViewModels
                 new List<Suit> { Suit.Spades, Suit.Hearts, Suit.Diamonds, Suit.Clubs };
             var suits = hand.Split(',').Select((x, index) => (x, (Suit)(3 - index))).OrderBy(x => suitOrder.IndexOf(x.Item2));
             var index = 0;
-            var width = settings.CardWidth;
-            var height = settings.CardHeight;
 
             foreach (var suit in suits)
             {
                 foreach (var card in suit.x)
                 {
-                    var cardWidth = index == 12 ? width : settings.CardDistance;
                     var valueTuple = (Util.GetSuitDescriptionASCII(suit.Item2), card.ToString());
                     Cards.Add(new Card
                     {
-                        Width = cardWidth - settings.XCardPadding,
-                        Height = height,
+                        Rect = new Rect(index * settings.CardDistance, 0, settings.CardWidth, settings.CardHeight),
                         Source = dictionary[valueTuple],
                     });
                     index++;

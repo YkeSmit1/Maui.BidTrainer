@@ -2,8 +2,7 @@
 {
     public class Card
     {
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public Rect Rect { get; set; }
         public string Source { get; set; }
     }
 }

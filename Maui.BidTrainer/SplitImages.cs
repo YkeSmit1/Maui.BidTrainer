@@ -32,19 +32,23 @@ namespace Maui.BidTrainer
                         canvas.DrawBitmap(bitmap, source, dest);
                     }
 
-                    yield return SaveBitmapToFile(newBitmap, counter);
+                    yield return SaveBitmapToFile(newBitmap, counter, imageSettings);
                     counter++;
                 }
 
-            static string SaveBitmapToFile(SKBitmap bitmap, int counter)
+            static string SaveBitmapToFile(SKBitmap bitmap, int counter, CardImageSettings imageSettings)
             {
                 SKImage image = SKImage.FromBitmap(bitmap);
                 SKData encodedData = image.Encode(SKEncodedImageFormat.Png, 100);
-                string imagePath = Path.Combine(FileSystem.CacheDirectory, $"image{counter}.png");
-                var bitmapImageStream = File.Open(imagePath, FileMode.Create, FileAccess.Write, FileShare.None);
-                encodedData.SaveTo(bitmapImageStream);
-                bitmapImageStream.Flush(true);
-                bitmapImageStream.Dispose();
+                string imagePath = Path.Combine(FileSystem.CacheDirectory, $"{imageSettings.CardImage}-image-{counter}.png");
+                if (!File.Exists(imagePath))
+                {
+                    var bitmapImageStream = File.Open(imagePath, FileMode.Create, FileAccess.Write, FileShare.None);
+                    encodedData.SaveTo(bitmapImageStream);
+                    bitmapImageStream.Flush(true);
+                    bitmapImageStream.Dispose();
+                }
+
                 return imagePath;
             }
         }
