@@ -73,9 +73,9 @@
 	<ItemGroup>
 		<PackageReference Include="akgul.Maui.DataGrid" Version="4.0.1" />
 		<PackageReference Include="Common.BridgeClasses" Version="1.0.7" />
-		<PackageReference Include="Microsoft.Azure.Cosmos" Version="3.38.0" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Azure.Cosmos" Version="3.38.1" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.7" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.7" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="NLog" Version="5.2.8" />

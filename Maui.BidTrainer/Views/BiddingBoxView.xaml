@@ -16,6 +16,7 @@
                         TextColor="Black"
                         HorizontalOptions="Center" VerticalOptions="Center"
                         Command="{Binding Path=DoBid, Source={RelativeSource AncestorType={x:Type viewModels:BiddingBoxViewModel}} }" 
+                        x:DataType="viewModels:BiddingBoxViewModel"
                         CommandParameter="{Binding}" />
             </Frame>
         </DataTemplate>
@@ -30,6 +31,7 @@
             <!--Bids-->
             <CollectionView Grid.Row="0"
                             ItemsSource="{Binding SuitBids}" 
+                            x:DataType="viewModels:BiddingBoxViewModel"
                             ItemTemplate="{StaticResource BidButtonsTemplate}">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Horizontal" Span="7"/>
@@ -38,6 +40,7 @@
             <!--NonBids (Pass, Dbl, Rdbl)-->
             <CollectionView Grid.Row="1"
                             ItemsSource="{Binding NonSuitBids}" 
+                            x:DataType="viewModels:BiddingBoxViewModel"
                             ItemTemplate="{StaticResource BidButtonsTemplate}">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Horizontal"/>

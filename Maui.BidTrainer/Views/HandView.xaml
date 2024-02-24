@@ -9,7 +9,7 @@
     </ContentView.BindingContext>
     <ContentView.Content>
         <StackLayout WidthRequest="250" HeightRequest="150">
-            <CollectionView ItemsSource="{Binding Cards}">
+            <CollectionView ItemsSource="{Binding Cards}" x:DataType="viewModels:HandViewModel">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal"/>
                 </CollectionView.ItemsLayout>

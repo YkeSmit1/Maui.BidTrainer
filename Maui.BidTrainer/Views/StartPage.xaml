@@ -21,7 +21,7 @@
                 <RowDefinition Height="400"/>
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
-            <CollectionView Grid.Row="0" ItemsSource="{Binding Lessons}">
+            <CollectionView Grid.Row="0" ItemsSource="{Binding Lessons}" x:DataType="viewModels:StartViewModel">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type bidTrainer:Lesson}">
                         <StackLayout>
@@ -36,7 +36,7 @@
             </CollectionView>
             <StackLayout Grid.Row="1">
                 <Button Text="Continue where I left off" 
-                        Command="{Binding ContinueWhereLeftOffCommand}" />
+                        Command="{Binding ContinueWhereLeftOffCommand}" x:DataType="viewModels:StartViewModel"/>
                 <BoxView Color="Black" WidthRequest="100" HeightRequest="2"/>
             </StackLayout>
         </Grid>

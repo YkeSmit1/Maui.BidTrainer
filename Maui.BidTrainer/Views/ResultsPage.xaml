@@ -14,7 +14,7 @@
         <Grid>
             <StackLayout>
                 <Label Text="Overview" FontSize="Medium" Margin="5"/>
-                <Label Text="{Binding Results.Title}" Padding="10" HeightRequest="60" FontSize="Micro"/>
+                <Label Text="{Binding Results.Title}" x:DataType="viewModels:ResultsViewModel" Padding="10" HeightRequest="60" FontSize="Micro"/>
                 <BoxView Color="Black" WidthRequest="100" HeightRequest="2"/>
                 <CollectionView ItemsSource="{Binding Results.AllResults}">
                     <CollectionView.ItemTemplate>

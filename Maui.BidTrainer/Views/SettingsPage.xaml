@@ -11,7 +11,7 @@
         <converters:CardImageConverter x:Key="CardImageConverter"/>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid>
+        <Grid x:DataType="viewModels:SettingsViewModel">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>

@@ -9,7 +9,7 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <dataGrid:DataGrid ItemsSource="{Binding Accounts}"
+            <dataGrid:DataGrid ItemsSource="{Binding Accounts}" x:DataType="viewModels:LeaderboardViewModel"
                          RowHeight="30" HeaderHeight="50" 
                          BorderColor="#CCCCCC" HeaderBackground="#E0E6F8"
                          FontSize="9">
