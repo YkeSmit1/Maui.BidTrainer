@@ -30,13 +30,13 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="270"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <Label Grid.Row="0" Grid.Column="0" x:Name="StatusLabel" FontSize="Micro" Padding="10" BackgroundColor="SeaGreen"/>
             <!-- NorthHand-->
-            <views:HandView Grid.Row="1" Grid.Column="0" Padding="20,0,0,0" x:Name="PanelNorth"/>
+            <views:HandView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Padding="20,0,0,0" x:Name="PanelNorth"/>
             <StackLayout Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Center">
                 <Label x:Name="LabelMode" Text="Bid"/>
                 <Switch ThumbColor="SandyBrown" OnColor="RosyBrown" Toggled="Switch_Toggled"/>
@@ -48,8 +48,8 @@
                 <views:AuctionView x:Name="AuctionView"/>
             </Frame>
             <!-- SouthHand-->
-            <views:HandView Grid.Row="4" Grid.Column="0"  x:Name="PanelSouth"/>
-            <Label Grid.Row="5" Grid.Column="0" Text="South" FontSize="Micro" FontAttributes="Bold" 
+            <views:HandView Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" x:Name="PanelSouth"/>
+            <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Text="South" FontSize="Micro" FontAttributes="Bold" 
                    HorizontalTextAlignment="Center"/>
             <StackLayout Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"  Orientation="Horizontal" BackgroundColor="SeaGreen" Padding="10">
                 <Button Text="NextBoard" Clicked="ButtonClickedNextBoard" ImageSource="icons8_next_32.png" Style="{StaticResource ToolbarButton}"/>
