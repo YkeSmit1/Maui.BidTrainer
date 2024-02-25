@@ -6,13 +6,6 @@
     <ContentView.BindingContext>
         <viewModels:AuctionViewModel/>
     </ContentView.BindingContext>
-    <ContentView.Resources>
-        <Style TargetType="Label">
-            <Setter Property="FontSize" Value="10"/>
-            <Setter Property="FontAttributes" Value="Bold"/>
-            <Setter Property="HeightRequest" Value="20"/>
-        </Style>
-    </ContentView.Resources>
 
     <VerticalStackLayout BackgroundColor="White" Padding="-5" HeightRequest="180">
         <CollectionView ItemsSource="{Binding Bids}" x:DataType="viewModels:AuctionViewModel" Margin="10">
@@ -27,15 +20,15 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Text="West" TextColor="Black"/>
-                    <Label Grid.Column="1" Text="North" TextColor="Black"/>
-                    <Label Grid.Column="2" Text="East" TextColor="Black"/>
-                    <Label Grid.Column="3" Text="South" TextColor="Black"/>
+                    <Label Grid.Column="0" Text="West" TextColor="Black" FontAttributes="Bold" FontSize="10"/>
+                    <Label Grid.Column="1" Text="North" TextColor="Black" FontAttributes="Bold" FontSize="10"/>
+                    <Label Grid.Column="2" Text="East" TextColor="Black" FontAttributes="Bold" FontSize="10"/>
+                    <Label Grid.Column="3" Text="South" TextColor="Black" FontAttributes="Bold" FontSize="10"/>
                 </Grid>
             </CollectionView.Header> 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Label Text="{Binding}" TextColor="Gray"/>
+                    <Label Text="{Binding}" TextColor="Gray" FontAttributes="Bold" FontSize="10" VerticalTextAlignment="Center"/>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
