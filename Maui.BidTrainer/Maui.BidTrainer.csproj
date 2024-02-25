@@ -194,11 +194,19 @@
     </MauiXaml>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">
-    <PackageReference Include="ImageCropper.Maui">
-      <Version>1.0.3</Version>
-    </PackageReference>
+  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+    <ContentWithTargetPath Include="..\x64\$(Configuration)\Engine.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>Engine.dll</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="..\x64\$(Configuration)\sqlite3.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>sqlite3.dll</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="..\x64\$(Configuration)\SQLiteCpp.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>SQLiteCpp.dll</TargetPath>
+    </ContentWithTargetPath>
   </ItemGroup>
-
 
 </Project>
