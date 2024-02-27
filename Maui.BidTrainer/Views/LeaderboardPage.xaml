@@ -8,8 +8,8 @@
         <viewModels:LeaderboardViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
-            <dataGrid:DataGrid ItemsSource="{Binding Accounts}" x:DataType="viewModels:LeaderboardViewModel"
+        <Grid RowDefinitions="10,*">
+            <dataGrid:DataGrid Grid.Row="1" ItemsSource="{Binding Accounts}" x:DataType="viewModels:LeaderboardViewModel"
                          RowHeight="30" HeaderHeight="50" 
                          BorderColor="#CCCCCC" HeaderBackground="#E0E6F8"
                          FontSize="9">
@@ -24,7 +24,13 @@
                     <dataGrid:DataGridColumn Title="Correct boards" PropertyName="numberOfCorrectBoards" HorizontalContentAlignment="Center"/>
                     <dataGrid:DataGridColumn Title="Time spent" PropertyName="timeElapsed" StringFormat="{}{0:h\:mm\:ss}" HorizontalContentAlignment="Center"/>
                 </dataGrid:DataGrid.Columns>
+                <dataGrid:DataGrid.RowsBackgroundColorPalette>
+                    <dataGrid:PaletteCollection>
+                        <Color>#F2F2F2</Color>
+                        <Color>#FFFFFF</Color>
+                    </dataGrid:PaletteCollection>
+                </dataGrid:DataGrid.RowsBackgroundColorPalette>
             </dataGrid:DataGrid>
-        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
