@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
+             xmlns:bidTrainer="clr-namespace:Maui.BidTrainer"
+             xmlns:converters="clr-namespace:Maui.BidTrainer.Converters"
+             x:Class="Maui.BidTrainer.Views.ResultsPage2">
+    <ContentPage.Resources>
+        <converters:BoolToImageConverter x:Key="BoolToImageConverter" />
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <viewModels:ResultsViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <VerticalStackLayout>
+            <Label Text="{Binding Results.Title}" Padding="20"/>
+            <CollectionView ItemsSource="{Binding Results.ResultList}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="bidTrainer:Result">
+                        <HorizontalStackLayout Padding="20, 5">
+                            <Label Text="{Binding Lesson, StringFormat='Lesson:{0} '}" Padding="5"></Label>
+                            <Label Text="{Binding Board, StringFormat='Board:{0} '}" Padding="5"></Label>
+                            <Image Source="{Binding AnsweredCorrectly, Converter={StaticResource BoolToImageConverter}}" WidthRequest="25"/>
+                            <Label Text="{Binding TimeElapsed, StringFormat='Time {0:mm}:{0:ss}'}" Padding="5"></Label>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</ContentPage>

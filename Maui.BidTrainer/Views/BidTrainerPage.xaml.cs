@@ -227,6 +227,8 @@ namespace Maui.BidTrainer.Views
                 BiddingBoxView.IsEnabled = false;
                 PanelNorth.IsVisible = true;
                 currentResult.TimeElapsed = DateTime.Now - startTimeBoard;
+                currentResult.Lesson = CurrentLesson;
+                currentResult.Board = CurrentBoardIndex;
                 await DisplayAlert("Info", $"Hand is done. Contract:{auction.currentContract}", "OK");
                 results.AddResult(Lesson.LessonNr, CurrentBoardIndex, currentResult);
                 await UploadResultsAsync();
@@ -277,8 +279,16 @@ namespace Maui.BidTrainer.Views
 
         private void ShowReport()
         {
-            var resultsPage = new ResultsPage(results);
-            Application.Current!.MainPage!.Navigation.PushAsync(resultsPage);
+            if (DeviceInfo.Platform == DevicePlatform.WinUI)
+            {
+                var resultsPage2 = new ResultsPage2(results);
+                Application.Current!.MainPage!.Navigation.PushAsync(resultsPage2);
+            }
+            else
+            {
+                var resultsPage = new ResultsPage(results);
+                Application.Current!.MainPage!.Navigation.PushAsync(resultsPage);
+            }
         }
 
         private async void ButtonClickedStartLesson(object sender, EventArgs e)

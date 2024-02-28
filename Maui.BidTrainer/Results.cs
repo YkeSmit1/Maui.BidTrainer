@@ -5,6 +5,8 @@ namespace Maui.BidTrainer
 {
     public class Result
     {
+        public int Lesson { get; set; }
+        public int  Board { get; set; }
         public TimeSpan TimeElapsed { get; set; }
         public bool UsedHint { get; set; } = false;
         public bool AnsweredCorrectly { get; set; } = true;
@@ -42,5 +44,6 @@ namespace Maui.BidTrainer
             return sb.ToString();
         }
 
+        public List<Result> ResultList => AllResults.SelectMany(x => x.Value.Results.Values).ToList();
     }
 }
