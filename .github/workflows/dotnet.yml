@@ -46,7 +46,7 @@ jobs:
         $VCPKG_ROOT/vcpkg integrate install
       shell: bash      
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.3
+      uses: microsoft/setup-msbuild@v2
     - name: build x64 .so files
       run: msbuild Engine\Engine.Android\Engine.Android.vcxproj /p:Configuration=Release /p:Platform=x64
     - name: build x86 .so files
