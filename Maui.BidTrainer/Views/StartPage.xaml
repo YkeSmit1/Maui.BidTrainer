@@ -25,10 +25,11 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type bidTrainer:Lesson}">
                         <StackLayout>
+                            <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                             <Button Text="{Binding Content}"
-                                Command="{Binding Path=StartLessonCommand, 
+                                    Command="{Binding Path=StartLessonCommand, 
                                     Source={RelativeSource AncestorType={x:Type viewModels:StartViewModel}}}" 
-                                CommandParameter="{Binding LessonNr}"/>
+                                    CommandParameter="{Binding LessonNr}"/>
                             <BoxView Color="Black" WidthRequest="100" HeightRequest="2"/>
                         </StackLayout>
                     </DataTemplate>
