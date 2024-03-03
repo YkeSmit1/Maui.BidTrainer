@@ -63,4 +63,14 @@ jobs:
       with:
         name: distribute
         path: .\Maui.BidTrainer\bin\Release\net8.0-android\com.companyname.maui.bidtrainer-Signed.apk
+    # build and deploy windows
+    - name: build engine dll
+      run: msbuild Engine\Windows.Engine\Windows.Engine.vcxproj /p:Configuration=Release /p:Platform=x64
+    - name: Build
+      run: msbuild Maui.BidTrainer\Maui.BidTrainer.csproj /p:Configuration=Release /p:TargetFramework=net8.0-windows10.0.19041.0
+    - uses: actions/upload-artifact@v4
+      with:
+        name: distribute
+        path: .\Maui.BidTrainer\bin\Release\net8.0-windows10.0.19041.0\win10-x64\AppPackages
+
 
