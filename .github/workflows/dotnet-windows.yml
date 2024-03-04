@@ -35,6 +35,8 @@ jobs:
         $VCPKG_ROOT/vcpkg install nlohmann-json:x64-windows
         $VCPKG_ROOT/vcpkg integrate install
       shell: bash      
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v2
     - name: build x64 windows dll
       run: msbuild Engine\Windows.Engine\Windows.Engine.vcxproj /p:Configuration=Release /p:Platform=x64
     #- name: Restore dependencies
