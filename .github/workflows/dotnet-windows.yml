@@ -42,6 +42,10 @@ jobs:
     #- name: Restore dependencies
     #  run: dotnet restore
     - name: Build
-      run: dotnet build maui.bidtrainer\maui.bidtrainer.csproj -c Release -f:net8.0-windows10.0.19041.0
+      run: dotnet build maui.bidtrainer\maui.bidtrainer.csproj -c Release -f net8.0-windows10.0.19041.0
     #- name: Test
     #  run: dotnet test --no-build --verbosity normal
+    - uses: actions/upload-artifact@v4
+      with:
+        name: distribute
+        path: .\Maui.BidTrainer\bin\Release\net8.0-windows10.0.19041.0\win10-x64
