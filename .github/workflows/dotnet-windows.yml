@@ -23,6 +23,18 @@ jobs:
         source-url: https://nuget.pkg.github.com/YkeSmit1/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}   
+    - name: Restore from cache and install vcpkg
+      # Download and build vcpkg, without installing any port. If content is cached already, it is a no-op.
+      uses: lukka/run-vcpkg@v11
+      # Now that vcpkg is installed, it is being used to run with desired arguments.
+    - name: Install SQLiteCpp and nlohmann-json using vcpg      
+      run: |
+        $VCPKG_ROOT/vcpkg install SQLiteCpp:x64-windows
+        $VCPKG_ROOT/vcpkg install nlohmann-json:x64-windows
+        $VCPKG_ROOT/vcpkg integrate install
+      shell: bash      
+    - name: build x64 windows dll
+      run: msbuild Engine\Windows.Engine\Windows.Engine.vcxproj /p:Configuration=Release /p:Platform=x64
     #- name: Restore dependencies
     #  run: dotnet restore
     - name: Build
