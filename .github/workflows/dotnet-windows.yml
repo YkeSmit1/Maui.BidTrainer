@@ -38,7 +38,7 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v2
     - name: build x64 windows dll
-      run: msbuild Engine\Windows.Engine\Windows.Engine.vcxproj /p:Configuration=Release /p:Platform=x64
+      run: msbuild Engine\Engine.Windows\Engine.Windows.vcxproj /p:Configuration=Release /p:Platform=x64
     #- name: Restore dependencies
     #  run: dotnet restore
     - name: Build
