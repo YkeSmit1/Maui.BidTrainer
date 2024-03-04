@@ -14,8 +14,8 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <VerticalStackLayout>
-            <Label Text="{Binding Results.Title}" Padding="20"/>
-            <CollectionView ItemsSource="{Binding Results.ResultList}">
+            <Label Text="{Binding Results.Title}" Padding="20" x:DataType="viewModels:ResultsViewModel"/>
+            <CollectionView ItemsSource="{Binding Results.ResultList}" x:DataType="viewModels:ResultsViewModel">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical"/>
                 </CollectionView.ItemsLayout>

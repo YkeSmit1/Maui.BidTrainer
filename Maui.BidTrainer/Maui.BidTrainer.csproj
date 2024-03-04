@@ -195,15 +195,15 @@
   </ItemGroup>
 
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
-    <ContentWithTargetPath Include="..\x64\$(Configuration)\Engine.dll">
+    <ContentWithTargetPath Include="..\Engine\Engine.Windows\bin\x64\$(Configuration)\Engine.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>Engine.dll</TargetPath>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Include="..\x64\$(Configuration)\sqlite3.dll">
+    <ContentWithTargetPath Include="..\Engine\Engine.Windows\bin\x64\$(Configuration)\sqlite3.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>sqlite3.dll</TargetPath>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Include="..\x64\$(Configuration)\SQLiteCpp.dll">
+    <ContentWithTargetPath Include="..\Engine\Engine.Windows\bin\x64\$(Configuration)\SQLiteCpp.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>SQLiteCpp.dll</TargetPath>
     </ContentWithTargetPath>
