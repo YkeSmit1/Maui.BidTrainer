@@ -1,10 +1,10 @@
 ﻿using System;
 using Common;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace EngineWrapper
 {
@@ -31,11 +31,11 @@ namespace EngineWrapper
                 if ((long)info["minHcpPartner"] == 0)
                     return Bid.PassBid;
                 var suits = handsString.Split(',');
-                var minSuitLengthsPartner = ((JArray)info["minSuitLengthsPartner"]).ToObject<int[]>();
+                var minSuitLengthsPartner = info["minSuitLengthsPartner"]?.AsArray();
                 if (minSuitLengthsPartner == null)
                     throw new InvalidOperationException(nameof(minSuitLengthsPartner));
-                var majorFits = (minSuitLengthsPartner)
-                    .Zip(suits, (x, y) => x + y.Length)
+                var majorFits = minSuitLengthsPartner
+                    .Zip(suits, (x, y) => (int)x + y.Length)
                     .Take(2)
                     .Select((x, index) => (x, (Suit)(3 - index)))
                     .Where(z => z.x >= 8).ToList();
@@ -56,11 +56,11 @@ namespace EngineWrapper
 
                 return new Bid(rank, playingSuit);
 
-                Dictionary<string, object> GetInformationFromAuction()
+                JsonNode GetInformationFromAuction()
                 {
                     var stringBuilder = new StringBuilder(8129);
                     Pinvoke.GetInformationFromAuction(auction.GetBidsAsStringASCII(), stringBuilder);
-                    return JsonConvert.DeserializeObject<Dictionary<string, object>>(stringBuilder.ToString());
+                    return JsonNode.Parse(stringBuilder.ToString());
                 }
 
                 bool SlamIsPossible()
@@ -70,12 +70,12 @@ namespace EngineWrapper
                     var totalKeyCards = Util.GetKeyCards(handsString, playingSuit) + (long)info["keyCardsPartner"];
                     var totalTrumpQueen = Util.GetHasTrumpQueen(handsString, playingSuit) || (bool)info["trumpQueenPartner"];
 
-                    var controlsPartner = ((JArray)info["controls"]).ToObject<bool[]>();
+                    var controlsPartner = info["controls"]?.AsArray();
                     if (controlsPartner == null)
                         throw new InvalidOperationException(nameof(controlsPartner));
 
                     var controls = handsString.Split(",").Select((x, index) => (HasControl(x), index));
-                    var controlsPartnership = controls.Select(x => x.Item1 || controlsPartner[x.index]);
+                    var controlsPartnership = controls.Select(x => x.Item1 || (bool)controlsPartner[x.index]);
 
                     var slamIsPossible = ((totalKeyCards == 4 && totalTrumpQueen) || totalKeyCards == 5) && controlsPartnership.All(x => x);
                     return slamIsPossible;
@@ -90,21 +90,9 @@ namespace EngineWrapper
             var informationJson = new StringBuilder(8192);
             Pinvoke.GetRulesByBid(Bid.GetBidId(bid), auction.GetBidsAsStringASCII(), informationJson);
 
-            var records = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(informationJson.ToString());
+            var records = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(informationJson.ToString());
             var bidInformation = new BidInformation(records);
             return bidInformation.GetInformation();
-        }
-
-        public static Auction GetAuction(Dictionary<Player, string> deal, Player dealer)
-        {
-            var auction = new Auction();
-            auction.Clear(dealer);
-            while (!auction.IsEndOfBidding())
-            {
-                var bid = GetBid(auction, deal[auction.CurrentPlayer]);
-                auction.AddBid(bid);
-            }
-            return auction;
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using System.Text.Json;
 using Common;
+using CommunityToolkit.Mvvm.Input;
 using EngineWrapper;
 using Maui.BidTrainer.ViewModels;
-using MvvmHelpers.Commands;
-using Newtonsoft.Json;
 
 namespace Maui.BidTrainer.Views
 {
@@ -48,7 +48,7 @@ namespace Maui.BidTrainer.Views
         {
             InitializeComponent();
             Application.Current!.ModalPopping += PopModel;
-            BiddingBoxViewModel.DoBid = new AsyncCommand<object>(ClickBiddingBoxButton, ButtonCanExecute);
+            BiddingBoxViewModel.DoBid = new AsyncRelayCommand<object>(ClickBiddingBoxButton, ButtonCanExecute);
             AuctionViewModel.Bids.Clear();
         }
         private async Task Start()
@@ -57,13 +57,13 @@ namespace Maui.BidTrainer.Views
             {
 
                 using var lessonsReader = new StreamReader(await FileSystem.OpenAppPackageFileAsync("lessons.json"));
-                lessons = JsonConvert.DeserializeObject<List<Lesson>>(await lessonsReader.ReadToEndAsync());
+                lessons = JsonSerializer.Deserialize<List<Lesson>>(await lessonsReader.ReadToEndAsync());
 
                 var resultsFile = Path.Combine(FileSystem.AppDataDirectory, "results.json");
                 if (File.Exists(resultsFile))
                     try
                     {
-                        results = JsonConvert.DeserializeObject<Results>(await File.ReadAllTextAsync(resultsFile));
+                        results = JsonSerializer.Deserialize<Results>(await File.ReadAllTextAsync(resultsFile));
                     }
                     catch (Exception)
                     {
@@ -161,7 +161,7 @@ namespace Maui.BidTrainer.Views
             if (AuctionViewModel.Bids.Any() && AuctionViewModel.Bids.Last() == "?")
                 AuctionViewModel.Bids.RemoveAt(AuctionViewModel.Bids.Count - 1);
             AuctionViewModel.Bids.Add(bid.ToString());
-            BiddingBoxViewModel.DoBid.RaiseCanExecuteChanged();
+            BiddingBoxViewModel.DoBid.NotifyCanExecuteChanged();
         }
 
         private async Task StartNextBoard()
@@ -199,7 +199,7 @@ namespace Maui.BidTrainer.Views
         {
             auction.Clear(Dealer);
             AuctionViewModel.Bids = new ObservableCollection<string>(auction.Bids.SelectMany(x => x.Value.Values).Select(_ => ""));
-            BiddingBoxViewModel.DoBid.RaiseCanExecuteChanged();
+            BiddingBoxViewModel.DoBid.NotifyCanExecuteChanged();
             startTimeBoard = DateTime.Now;
             currentResult = new Result();
             await BidTillSouth();
@@ -235,7 +235,7 @@ namespace Maui.BidTrainer.Views
                 CurrentBoardIndex++;
 
                 var resultsFile = Path.Combine(FileSystem.AppDataDirectory, "results.json");
-                await File.WriteAllTextAsync(resultsFile, JsonConvert.SerializeObject(results, Formatting.Indented));
+                await File.WriteAllTextAsync(resultsFile, JsonSerializer.Serialize(results, new JsonSerializerOptions() { WriteIndented = true }));
 
                 await StartNextBoard();
             }
@@ -309,9 +309,7 @@ namespace Maui.BidTrainer.Views
 
         private async void ButtonClickedLeaderBoard(object sender, EventArgs e)
         {
-            var accounts = await DependencyService.Get<ICosmosDbHelper>().GetAllAccounts();
-            var leaderboardPage = new LeaderboardPage(accounts.OrderByDescending(x => (double)x.numberOfCorrectBoards / x.numberOfBoardsPlayed));
-            await Application.Current!.MainPage!.Navigation.PushAsync(leaderboardPage);
+            await Application.Current!.MainPage!.Navigation.PushAsync(new LeaderboardPage());
         }
 
         private async void ButtonClickedSettings(object sender, EventArgs e)

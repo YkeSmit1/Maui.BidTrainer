@@ -1,29 +1,15 @@
-﻿using MvvmHelpers;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Maui.BidTrainer.ViewModels
 {
-    public class SettingsViewModel : BaseViewModel
+    public partial class SettingsViewModel : ObservableObject
     {
+        [ObservableProperty]
         private string username;
+        [ObservableProperty]
         private bool alternateSuits;
-
-        public string Username
-        {
-            get => username;
-            set => SetProperty(ref username, value);
-        }
-        public bool AlternateSuits 
-        { 
-            get => alternateSuits; 
-            set => SetProperty(ref alternateSuits, value); 
-        }
-
+        [ObservableProperty]
         private string cardImage;
-        public string CardImage
-        {
-            get => cardImage;
-            set => SetProperty(ref cardImage, value);
-        }
 
         public SettingsViewModel()
         {

@@ -1,21 +1,20 @@
 ﻿using System.Collections.ObjectModel;
-using MvvmHelpers;
-using MvvmHelpers.Commands;
-using MvvmHelpers.Interfaces;
-using Newtonsoft.Json;
+using System.Text.Json;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Maui.BidTrainer.ViewModels
 {
     public class StartViewModel : ObservableObject
     {
         public ObservableCollection<Lesson> Lessons { get; set; }
-        public IAsyncCommand<int> StartLessonCommand { get; set; } = new AsyncCommand<int>(ChooseLesson);
-        public IAsyncCommand ContinueWhereLeftOffCommand { get; set; } = new AsyncCommand(ContinueWhereLeftOff);
+        public IAsyncRelayCommand<int> StartLessonCommand { get; set; } = new AsyncRelayCommand<int>(ChooseLesson);
+        public IAsyncRelayCommand ContinueWhereLeftOffCommand { get; set; } = new AsyncRelayCommand(ContinueWhereLeftOff);
 
         public async Task LoadLessonsAsync()
         {
             using var reader = new StreamReader(await FileSystem.Current.OpenAppPackageFileAsync("lessons.json"));
-            Lessons = JsonConvert.DeserializeObject<ObservableCollection<Lesson>>(await reader.ReadToEndAsync());
+            Lessons = JsonSerializer.Deserialize<ObservableCollection<Lesson>>(await reader.ReadToEndAsync());
             OnPropertyChanged(nameof(Lessons));
         }
 

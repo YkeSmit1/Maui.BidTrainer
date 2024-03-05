@@ -1,10 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using Common;
-using MvvmHelpers;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Maui.BidTrainer.ViewModels
 {
-    public class HandViewModel : BaseViewModel
+    public class HandViewModel : ObservableObject
     {
         public ObservableCollection<Card> Cards { get; set; } = [];
 

@@ -1,14 +1,10 @@
-﻿using Maui.BidTrainer.ViewModels;
-
-namespace Maui.BidTrainer.Views
+﻿namespace Maui.BidTrainer.Views
 {
     public partial class LeaderboardPage
     {
-        public LeaderboardPage(IEnumerable<Account> accounts)
+        public LeaderboardPage()
         {
             InitializeComponent();
-
-            ((LeaderboardViewModel)BindingContext).Accounts = [..accounts];
         }
     }
 }

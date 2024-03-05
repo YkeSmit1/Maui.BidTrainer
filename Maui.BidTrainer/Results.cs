@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Maui.BidTrainer
 {
@@ -15,7 +15,7 @@ namespace Maui.BidTrainer
     {
         public class ResultsPerLesson
         {
-            [JsonProperty]
+            [JsonInclude]
             public Dictionary<int, Result> Results { get; set; } = new Dictionary<int, Result>();
             public void AddResult(int board, Result result)
             {
@@ -25,7 +25,7 @@ namespace Maui.BidTrainer
             public string Title => GetOverview(Results.ToList());
         }
 
-        [JsonProperty]
+        [JsonInclude]
         public SortedDictionary<int, ResultsPerLesson> AllResults { get; set; } = new SortedDictionary<int, ResultsPerLesson>();
         public void AddResult(int lesson, int board, Result result)
         {

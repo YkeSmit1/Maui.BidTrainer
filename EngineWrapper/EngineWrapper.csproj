@@ -4,7 +4,5 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Common.BridgeClasses" Version="1.0.7" />
-    <PackageReference Include="morelinq" Version="3.4.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 </Project>

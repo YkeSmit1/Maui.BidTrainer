@@ -1,15 +1,11 @@
 ﻿using System.Collections.ObjectModel;
-using MvvmHelpers;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Maui.BidTrainer.ViewModels
 {
-    public class AuctionViewModel : BaseViewModel
+    public partial class AuctionViewModel : ObservableObject
     {
+        [ObservableProperty]
         private ObservableCollection<string> bids = [];
-        public ObservableCollection<string> Bids
-        {
-            get => bids;
-            set => SetProperty(ref bids, value);
-        }
     }
 }

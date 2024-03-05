@@ -1,14 +1,10 @@
-﻿using MvvmHelpers;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Maui.BidTrainer.ViewModels
 {
-    public class ResultsViewModel : BaseViewModel
+    public partial class ResultsViewModel : ObservableObject
     {
-        private Results results = new Results();
-        public Results Results
-        {
-            get => results;
-            set => SetProperty(ref results, value);
-        }
+        [ObservableProperty]
+        private Results results = new();
     }
 }
