@@ -70,11 +70,7 @@ namespace Maui.BidTrainer.Views
                         // incorrect format. Don't load
                     }
 
-                if (!File.Exists(Path.Combine(FileSystem.AppDataDirectory, "four_card_majors.db3")))
-                {
-                    await CopyFileToAppDataDirectory("four_card_majors.db3");
-                }
-
+                await CopyFileToAppDataDirectory("four_card_majors.db3");
                 Pinvoke.Setup(Path.Combine(FileSystem.Current.AppDataDirectory, "four_card_majors.db3"));
                 await StartLessonAsync();
                 await StartNextBoard();
@@ -89,6 +85,8 @@ namespace Maui.BidTrainer.Views
         private static async Task CopyFileToAppDataDirectory(string filename)
         {
             var filePath = Path.Combine(FileSystem.AppDataDirectory, filename);
+            if (File.Exists(filePath))
+                return;
 
             await using Stream inputStream = await FileSystem.OpenAppPackageFileAsync(filename);
             using BinaryReader reader = new BinaryReader(inputStream);
@@ -161,7 +159,7 @@ namespace Maui.BidTrainer.Views
             if (AuctionViewModel.Bids.Any() && AuctionViewModel.Bids.Last() == "?")
                 AuctionViewModel.Bids.RemoveAt(AuctionViewModel.Bids.Count - 1);
             AuctionViewModel.Bids.Add(bid.ToString());
-            BiddingBoxViewModel.DoBid.NotifyCanExecuteChanged();
+            BiddingBoxViewModel.DoBid?.NotifyCanExecuteChanged();
         }
 
         private async Task StartNextBoard()
@@ -199,7 +197,7 @@ namespace Maui.BidTrainer.Views
         {
             auction.Clear(Dealer);
             AuctionViewModel.Bids = new ObservableCollection<string>(auction.Bids.SelectMany(x => x.Value.Values).Select(_ => ""));
-            BiddingBoxViewModel.DoBid.NotifyCanExecuteChanged();
+            BiddingBoxViewModel.DoBid?.NotifyCanExecuteChanged();
             startTimeBoard = DateTime.Now;
             currentResult = new Result();
             await BidTillSouth();

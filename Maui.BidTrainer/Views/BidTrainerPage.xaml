@@ -15,26 +15,25 @@
             <Setter Property="WidthRequest" Value="70"/>
             <Setter Property="HeightRequest" Value="65"/>
             <Setter Property="ContentLayout" Value="Top,0"/>
-            <Setter Property="TextTransform" Value="None"/>
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid BackgroundColor="MediumSeaGreen">
             <Grid.RowDefinitions>
-                <RowDefinition Height="90"/>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="90"/> 
+                <RowDefinition Height="120"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="120"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition/>
+                <RowDefinition Height="70"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="270"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" x:Name="StatusLabel" FontSize="Micro" Padding="10" BackgroundColor="SeaGreen"/>
+            <Label Grid.Row="0" Grid.Column="0" x:Name="StatusLabel" Padding="10" BackgroundColor="SeaGreen"/>
             <!-- NorthHand-->
             <views:HandView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,10,0,0" x:Name="PanelNorth"/>
             <StackLayout Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Center">
@@ -47,7 +46,7 @@
             <views:AuctionView Grid.Row="3" Grid.Column="1" x:Name="AuctionView"/>
             <!-- SouthHand-->
             <views:HandView Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,10,0,0" x:Name="PanelSouth"/>
-            <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Text="South" FontSize="Micro" FontAttributes="Bold" 
+            <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Text="South" FontAttributes="Bold" 
                    HorizontalTextAlignment="Center"/>
             <StackLayout Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"  Orientation="Horizontal" BackgroundColor="SeaGreen" Padding="10">
                 <Button Text="NextBoard" Clicked="ButtonClickedNextBoard" ImageSource="icons8_next_32.png" Style="{StaticResource ToolbarButton}"/>

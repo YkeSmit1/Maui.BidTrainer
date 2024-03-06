@@ -7,7 +7,7 @@
         <viewModels:AuctionViewModel/>
     </ContentView.BindingContext>
 
-    <VerticalStackLayout BackgroundColor="White" Padding="-5" HeightRequest="180">
+    <VerticalStackLayout BackgroundColor="White" Padding="-5" HeightRequest="180" WidthRequest="140">
         <CollectionView ItemsSource="{Binding Bids}" x:DataType="viewModels:AuctionViewModel" Margin="10">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="4"/>

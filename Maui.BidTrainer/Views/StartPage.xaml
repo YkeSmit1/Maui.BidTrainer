@@ -8,8 +8,6 @@
         <Style TargetType="Button">
             <Setter Property="Background" Value="BlanchedAlmond"/>
             <Setter Property="TextColor" Value="Blue"/>
-            <Setter Property="FontSize" Value="Small"/>
-            <Setter Property="TextTransform" Value="None"/>
         </Style>
     </ContentPage.Resources>
     <ContentPage.BindingContext>

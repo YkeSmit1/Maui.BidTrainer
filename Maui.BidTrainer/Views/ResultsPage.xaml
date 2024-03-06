@@ -13,18 +13,18 @@
     <ContentPage.Content>
         <Grid>
             <StackLayout>
-                <Label Text="Overview" FontSize="Medium" Margin="5"/>
-                <Label Text="{Binding Results.Title}" x:DataType="viewModels:ResultsViewModel" Padding="10" HeightRequest="60" FontSize="Micro"/>
+                <Label Text="Overview" Margin="5"/>
+                <Label Text="{Binding Results.Title}" x:DataType="viewModels:ResultsViewModel" Padding="10" HeightRequest="60"/>
                 <BoxView Color="Black" WidthRequest="100" HeightRequest="2"/>
                 <CollectionView ItemsSource="{Binding Results.AllResults}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>
                                 <StackLayout Orientation="Horizontal" Margin="5" HeightRequest="20">
-                                    <Label Text="Lesson:" FontSize="Medium"/>
-                                    <Label Text="{Binding Key}" FontSize="Medium"/>
+                                    <Label Text="Lesson:"/>
+                                    <Label Text="{Binding Key}"/>
                                 </StackLayout>
-                                <Label Padding="10" Text="{Binding Value.Title}" HeightRequest="60" FontSize="Micro"/>
+                                <Label Padding="10" Text="{Binding Value.Title}" HeightRequest="60"/>
                                 <CollectionView ItemsSource="{Binding Value.Results}" HeightRequest="60">
                                     <CollectionView.ItemsLayout>
                                         <LinearItemsLayout Orientation="Horizontal"/>

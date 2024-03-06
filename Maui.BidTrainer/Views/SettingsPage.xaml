@@ -37,11 +37,14 @@
                         <RowDefinition Height="100"/>
                         <RowDefinition Height="100"/>
                     </Grid.RowDefinitions>
-                    <RadioButton GroupName="Cards" Grid.Row="0" Grid.Column="0" Content="default" FontSize="Small"
-                                 IsChecked="{Binding CardImage, Converter={StaticResource CardImageConverter}, ConverterParameter='default'}"/>
+                    <RadioButton GroupName="Cards" Grid.Row="0" Grid.Column="0" Content="default"
+                                 IsChecked="{Binding CardImage, Converter={StaticResource CardImageConverter}, ConverterParameter='default'}"
+                                 WidthRequest="100"/>
                     <Image Grid.Row="0" Grid.Column="1" Source="cardfaces.png"/>
-                    <RadioButton GroupName="Cards" Grid.Row="1" Grid.Column="0" Content="bbo" FontSize="Small"
-                                 IsChecked="{Binding CardImage, Converter={StaticResource CardImageConverter}, ConverterParameter='bbo'}"/>
+                    <RadioButton GroupName="Cards" Grid.Row="1" Grid.Column="0" Content="bbo"
+                                 IsChecked="{Binding CardImage, Converter={StaticResource CardImageConverter}, ConverterParameter='bbo'}"
+                                 WidthRequest="100"/>
+
                     <Image Grid.Row="1" Grid.Column="1" Source="cardfaces2.jpg"/>
                 </Grid>
             </StackLayout>

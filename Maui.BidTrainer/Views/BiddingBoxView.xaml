@@ -9,7 +9,7 @@
   </ContentView.BindingContext>
     <ContentView.Resources>
         <DataTemplate x:Key="BidButtonsTemplate" x:DataType="{x:Type common:Bid }">
-            <Frame Padding="1" WidthRequest="50" BackgroundColor="MediumSeaGreen" CornerRadius="5">
+            <Frame Padding="1" BackgroundColor="MediumSeaGreen">
                 <Button Text="{Binding}" 
                         FontSize="9"
                         BackgroundColor="White"
@@ -23,7 +23,7 @@
     </ContentView.Resources>
     
   <ContentView.Content>
-        <Grid>
+        <Grid WidthRequest="250" HeightRequest="290">
             <Grid.RowDefinitions>
                 <RowDefinition Height="250"/>
                 <RowDefinition Height="35"/>
