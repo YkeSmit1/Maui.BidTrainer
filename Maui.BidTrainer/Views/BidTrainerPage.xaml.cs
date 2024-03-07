@@ -11,6 +11,7 @@ namespace Maui.BidTrainer.Views
     {
         private readonly StartPage startPage = new();
         private readonly SettingsPage settingsPage = new();
+        private Dictionary<(string suit, string card), string> dictionary;
 
         // Bidding
         private readonly Auction auction = new();
@@ -51,11 +52,19 @@ namespace Maui.BidTrainer.Views
             BiddingBoxViewModel.DoBid = new AsyncRelayCommand<object>(ClickBiddingBoxButton, ButtonCanExecute);
             AuctionViewModel.Bids.Clear();
         }
+
+        private void GenerateCardImages()
+        {
+            var cardProfile = Preferences.Get("CardImageSettings", "default");
+            var settings = CardImageSettings.GetCardImageSettings(cardProfile);
+            dictionary = SplitImages.Split(settings);
+        }
+
         private async Task Start()
         {
             try
             {
-
+                GenerateCardImages();
                 using var lessonsReader = new StreamReader(await FileSystem.OpenAppPackageFileAsync("lessons.json"));
                 lessons = JsonSerializer.Deserialize<List<Lesson>>(await lessonsReader.ReadToEndAsync());
 
@@ -112,6 +121,8 @@ namespace Maui.BidTrainer.Views
                 ((SettingsViewModel)settingsPage.BindingContext).Save();
                 MainThread.BeginInvokeOnMainThread(() =>
                     StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}");
+                GenerateCardImages();
+                ShowBothHands();
             }
         }
 
@@ -207,8 +218,8 @@ namespace Maui.BidTrainer.Views
         {
             var alternateSuits = Preferences.Get("AlternateSuits", true);
             var cardProfile = Preferences.Get("CardImageSettings", "default");
-            HandViewModelNorth.ShowHand(Deal[Player.North], alternateSuits, cardProfile);
-            HandViewModelSouth.ShowHand(Deal[Player.South], alternateSuits, cardProfile);
+            HandViewModelNorth.ShowHand(Deal[Player.North], alternateSuits, cardProfile, dictionary);
+            HandViewModelSouth.ShowHand(Deal[Player.South], alternateSuits, cardProfile, dictionary);
         }
 
         private async Task BidTillSouth()
@@ -312,7 +323,7 @@ namespace Maui.BidTrainer.Views
 
         private async void ButtonClickedSettings(object sender, EventArgs e)
         {
-            await Application.Current!.MainPage!.Navigation.PushAsync(settingsPage);
+            await Application.Current!.MainPage!.Navigation.PushModalAsync(settingsPage);
         }
 
         protected override async void OnAppearing()

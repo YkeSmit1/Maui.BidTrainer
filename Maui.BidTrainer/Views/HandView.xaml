@@ -8,7 +8,7 @@
         <viewModels:HandViewModel/>
     </ContentView.BindingContext>
     <ContentView.Content>
-        <StackLayout WidthRequest="250" HeightRequest="150">
+        <StackLayout HeightRequest="150" HorizontalOptions="Center">
             <AbsoluteLayout BindableLayout.ItemsSource="{Binding Cards}" x:DataType="viewModels:HandViewModel">
                 <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="bidTrainer:Card">

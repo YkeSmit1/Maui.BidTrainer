@@ -31,5 +31,10 @@ namespace Maui.BidTrainer.Views
 
             settingsViewModel.Save();
         }
+
+        private async void ButtonSave_OnClicked(object sender, EventArgs e)
+        {
+            await Navigation.PopModalAsync();
+        }
     }
 }

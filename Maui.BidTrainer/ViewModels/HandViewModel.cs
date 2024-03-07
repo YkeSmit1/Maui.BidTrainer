@@ -8,16 +8,10 @@ namespace Maui.BidTrainer.ViewModels
     {
         public ObservableCollection<Card> Cards { get; set; } = [];
 
-        public HandViewModel()
-        {
-            ShowHand("AQJ4,K32,843,QT9", true, "default");
-        }
-
-        public void ShowHand(string hand, bool alternateSuits, string cardProfile)
+        public void ShowHand(string hand, bool alternateSuits, string cardProfile, Dictionary<(string suit ,string card), string> dictionary)
         {
             var settings = CardImageSettings.GetCardImageSettings(cardProfile);
             Cards.Clear();
-            var dictionary = SplitImages.Split(settings);
 
             var suitOrder = alternateSuits ?
                 new List<Suit> { Suit.Spades, Suit.Hearts, Suit.Clubs, Suit.Diamonds } :

@@ -39,15 +39,10 @@ namespace Maui.BidTrainer
             static string SaveBitmapToFile(SKBitmap bitmap, int counter, CardImageSettings imageSettings)
             {
                 SKImage image = SKImage.FromBitmap(bitmap);
-                SKData encodedData = image.Encode(SKEncodedImageFormat.Png, 100);
+                using SKData encodedData = image.Encode(SKEncodedImageFormat.Png, 100);
                 string imagePath = Path.Combine(FileSystem.CacheDirectory, $"{imageSettings.CardImage}-image-{counter}.png");
-                if (!File.Exists(imagePath))
-                {
-                    var bitmapImageStream = File.Open(imagePath, FileMode.Create, FileAccess.Write, FileShare.None);
-                    encodedData.SaveTo(bitmapImageStream);
-                    bitmapImageStream.Flush(true);
-                    bitmapImageStream.Dispose();
-                }
+                using var bitmapImageStream = File.Open(imagePath, FileMode.Create, FileAccess.Write, FileShare.None);
+                encodedData.SaveTo(bitmapImageStream);
 
                 return imagePath;
             }
