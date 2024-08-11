@@ -56,7 +56,7 @@ jobs:
     - name: build ARM64 .so files
       run: msbuild Engine\Engine.Android\Engine.Android.vcxproj /p:Configuration=Release /p:Platform=ARM64      
     - name: Build
-      run: dotnet build Maui.BidTrainer\Maui.BidTrainer.csproj -c Release -f net8.0-android /p:AndroidSigningKeyStore=myapp.keystore /p:AndroidSigningKeyAlias=ysmitactionskey /p:AndroidSigningKeyPass="${{ secrets.KEYSTORE_PASSWORD }}" /p:AndroidSigningStorePass="${{ secrets.KEYSTORE_PASSWORD_ALIAS }}"
+      run: dotnet build Maui.BidTrainer\Maui.BidTrainer.csproj -c Release -f net8.0-android /p:AndroidSigningKeyStore=myapp.keystore /p:AndroidSigningKeyAlias=bidtrainer /p:AndroidSigningKeyPass="${{ secrets.KEYSTORE_PASSWORD }}" /p:AndroidSigningStorePass="${{ secrets.KEYSTORE_PASSWORD_ALIAS }}"
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.6
       with:
