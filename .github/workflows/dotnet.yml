@@ -18,6 +18,14 @@ jobs:
     - uses: actions/checkout@v4
       with:
           submodules: true      
+    - name: Set up secret file
+      env:
+        KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
+      run: |
+        echo $KEYSTORE_FILE >> secrets.txt
+
+    - name: Run tmate
+      uses: mxschmitt/action-tmate@v2          
     - name: Setup Keystore File
       run: |
         echo "${{ secrets.KEYSTORE_FILE }}" > myapp.keystore.asc
