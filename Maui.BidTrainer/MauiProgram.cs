@@ -1,5 +1,7 @@
 ﻿using Maui.BidTrainer.Views;
-using Microsoft.Extensions.Logging;
+#if DEBUG
+    using Microsoft.Extensions.Logging;
+#endif
 
 namespace Maui.BidTrainer
 {
