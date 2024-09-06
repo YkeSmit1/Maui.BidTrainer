@@ -103,7 +103,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\AppIcon\playing_cards_512x512.jpg" />
+	  <None Remove="Resources\AppIcon\ic_launcher.png" />
+	  <None Remove="Resources\AppIcon\ic_launcher_round.png" />
 	  <None Remove="Resources\Images\correct.png" />
 	  <None Remove="Resources\Images\dotnet_bot.png" />
 	  <None Remove="Resources\Images\Embedded\cardfaces.png" />
@@ -155,7 +156,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <MauiIcon Include="Resources\AppIcon\playing_cards_512x512.jpg" />
+    <MauiIcon Include="Resources\AppIcon\ic_launcher.png" />
+    <MauiIcon Include="Resources\AppIcon\ic_launcher_round.png" />
   </ItemGroup>
 
   <ItemGroup>
