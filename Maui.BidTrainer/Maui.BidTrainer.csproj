@@ -47,42 +47,42 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>4</ApplicationVersion>
+	  <ApplicationVersion>5</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>4</ApplicationVersion>
+	  <ApplicationVersion>5</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
-	  <ApplicationVersion>4</ApplicationVersion>
+	  <ApplicationVersion>5</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationVersion>4</ApplicationVersion>
+	  <ApplicationVersion>5</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>4</ApplicationVersion>
+	  <ApplicationVersion>5</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>4</ApplicationVersion>
+	  <ApplicationVersion>5</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
-	  <ApplicationVersion>4</ApplicationVersion>
+	  <ApplicationVersion>5</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationVersion>4</ApplicationVersion>
+	  <ApplicationVersion>5</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	</PropertyGroup>
 
@@ -103,7 +103,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\AppIcon\playing_cards_512x512.jpg" />
+	  <None Remove="Resources\AppIcon\ic_launcher.png" />
+	  <None Remove="Resources\AppIcon\ic_launcher_round.png" />
 	  <None Remove="Resources\Images\correct.png" />
 	  <None Remove="Resources\Images\dotnet_bot.png" />
 	  <None Remove="Resources\Images\Embedded\cardfaces.png" />
@@ -155,7 +156,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <MauiIcon Include="Resources\AppIcon\playing_cards_512x512.jpg" />
+    <MauiIcon Include="Resources\AppIcon\ic_launcher.png" />
+    <MauiIcon Include="Resources\AppIcon\ic_launcher_round.png" />
   </ItemGroup>
 
   <ItemGroup>
