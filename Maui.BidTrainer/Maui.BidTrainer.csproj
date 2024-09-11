@@ -13,6 +13,8 @@
 		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
 		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
 
+    <RunAOTCompilation>false</RunAOTCompilation>
+
 		<OutputType>Exe</OutputType>
 		<RootNamespace>Maui.BidTrainer</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -36,6 +38,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<PublishAot>False</PublishAot>
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -47,42 +50,43 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>5</ApplicationVersion>
+	  <ApplicationVersion>7</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>5</ApplicationVersion>
+	  <ApplicationVersion>7</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
-	  <ApplicationVersion>5</ApplicationVersion>
+	  <ApplicationVersion>7</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationVersion>5</ApplicationVersion>
+	  <ApplicationVersion>7</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>5</ApplicationVersion>
+	  <ApplicationVersion>7</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
+	  <PublishTrimmed>False</PublishTrimmed>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>5</ApplicationVersion>
+	  <ApplicationVersion>7</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
-	  <ApplicationVersion>5</ApplicationVersion>
+	  <ApplicationVersion>7</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationVersion>5</ApplicationVersion>
+	  <ApplicationVersion>7</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	</PropertyGroup>
 

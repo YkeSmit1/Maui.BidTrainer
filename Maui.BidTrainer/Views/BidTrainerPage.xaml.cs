@@ -161,7 +161,7 @@ namespace Maui.BidTrainer.Views
         private bool ButtonCanExecute(object param)
         {
             var bid = (Bid)param;
-            return auction != null && auction.BidIsPossible(bid);
+            return auction != null && bid != null && auction.BidIsPossible(bid);
         }
 
         private void UpdateBidControls(Bid bid)
