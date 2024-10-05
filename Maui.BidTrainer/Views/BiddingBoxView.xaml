@@ -12,8 +12,8 @@
             <Frame Padding="1" BackgroundColor="MediumSeaGreen">
                 <Button Text="{Binding}" 
                         FontSize="9"
-                        BackgroundColor="White"
-                        TextColor="Black"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
+                        TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                         HorizontalOptions="Center" VerticalOptions="Center"
                         Command="{Binding Path=DoBid, Source={RelativeSource AncestorType={x:Type viewModels:BiddingBoxViewModel}} }" 
                         x:DataType="viewModels:BiddingBoxViewModel"
