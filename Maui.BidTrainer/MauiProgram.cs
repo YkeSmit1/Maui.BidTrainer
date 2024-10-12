@@ -1,4 +1,5 @@
 ﻿using Maui.BidTrainer.Views;
+using Serilog;
 #if DEBUG
     using Microsoft.Extensions.Logging;
 #endif
@@ -17,7 +18,17 @@ namespace Maui.BidTrainer
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-            Routing.RegisterRoute("BidTrainer", typeof(BidTrainerPage));
+            
+            IServiceCollection services = builder.Services;
+
+            var combine = Path.Combine(FileSystem.Current.AppDataDirectory, "logs", "log.txt");
+            services.AddSerilog(
+                new LoggerConfiguration()
+                    .WriteTo.Debug()
+                    .WriteTo.File(combine, rollingInterval: RollingInterval.Day)
+                    .CreateLogger());
+            services.AddLogging(logging => logging.AddSerilog());
+            
 
 #if DEBUG
     		builder.Logging.AddDebug();

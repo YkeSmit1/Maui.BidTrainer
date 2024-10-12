@@ -4,6 +4,7 @@ using Common;
 using CommunityToolkit.Mvvm.Input;
 using EngineWrapper;
 using Maui.BidTrainer.ViewModels;
+using Serilog;
 
 namespace Maui.BidTrainer.Views
 {
@@ -51,6 +52,8 @@ namespace Maui.BidTrainer.Views
             Application.Current!.ModalPopping += PopModel;
             BiddingBoxViewModel.DoBid = new AsyncRelayCommand<object>(ClickBiddingBoxButton, ButtonCanExecute);
             AuctionViewModel.Bids.Clear();
+            var logger = IPlatformApplication.Current!.Services.GetService<ILogger>();
+            logger.Information("Test");
         }
 
         private void GenerateCardImages()
@@ -336,6 +339,11 @@ namespace Maui.BidTrainer.Views
         {
             isInHintMode = e.Value;
             LabelMode.Text = isInHintMode ? "Hint" : "Bid";
+        }
+
+        private async void Button_OnClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(LogPage));
         }
     }
 }
