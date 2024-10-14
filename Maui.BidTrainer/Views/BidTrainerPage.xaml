@@ -34,7 +34,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Row="0" Grid.Column="0" x:Name="StatusLabel" Padding="10" BackgroundColor="SeaGreen"/>
-            <Button Grid.Row="0" Grid.Column="1" Clicked="Button_OnClicked" Text="Log"></Button>
+            <Button Grid.Row="0" Grid.Column="1" Clicked="Button_OnClicked" Text="Log" IsVisible="False"></Button>
             <!-- NorthHand-->
             <views:HandView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,10,0,0" x:Name="PanelNorth"/>
             <StackLayout Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Center">

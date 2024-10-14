@@ -16,7 +16,7 @@
                         TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                         HorizontalOptions="Center" VerticalOptions="Center"
                         Command="{Binding Path=DoBid, Source={RelativeSource AncestorType={x:Type viewModels:BiddingBoxViewModel}} }" 
-                        x:DataType="viewModels:BiddingBoxViewModel"
+                        x:DataType="common:Bid"
                         CommandParameter="{Binding}" />
             </Frame>
         </DataTemplate>

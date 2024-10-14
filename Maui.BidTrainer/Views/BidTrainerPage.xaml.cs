@@ -45,6 +45,7 @@ namespace Maui.BidTrainer.Views
         private AuctionViewModel AuctionViewModel => (AuctionViewModel)AuctionView.BindingContext;
         private HandViewModel HandViewModelNorth => (HandViewModel)PanelNorth.BindingContext;
         private HandViewModel HandViewModelSouth => (HandViewModel)PanelSouth.BindingContext;
+        private readonly ILogger logger = IPlatformApplication.Current!.Services.GetService<ILogger>();
 
         public BidTrainerPage()
         {
@@ -52,7 +53,6 @@ namespace Maui.BidTrainer.Views
             Application.Current!.ModalPopping += PopModel;
             BiddingBoxViewModel.DoBid = new AsyncRelayCommand<object>(ClickBiddingBoxButton, ButtonCanExecute);
             AuctionViewModel.Bids.Clear();
-            var logger = IPlatformApplication.Current!.Services.GetService<ILogger>();
             logger.Information("Test");
         }
 
@@ -77,9 +77,9 @@ namespace Maui.BidTrainer.Views
                     {
                         results = JsonSerializer.Deserialize<Results>(await File.ReadAllTextAsync(resultsFile));
                     }
-                    catch (Exception)
+                    catch (Exception exception)
                     {
-                        // incorrect format. Don't load
+                        logger.Error(exception, "Error when loading results");
                     }
 
                 await CopyFileToAppDataDirectory("four_card_majors.db3");
@@ -163,8 +163,7 @@ namespace Maui.BidTrainer.Views
 
         private bool ButtonCanExecute(object param)
         {
-            var bid = (Bid)param;
-            return auction != null && bid != null && auction.BidIsPossible(bid);
+            return auction.BidIsPossible((Bid)param);
         }
 
         private void UpdateBidControls(Bid bid)

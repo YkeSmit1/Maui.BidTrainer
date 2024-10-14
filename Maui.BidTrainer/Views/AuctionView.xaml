@@ -29,7 +29,7 @@
             </CollectionView.Header> 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Label Text="{Binding}" FontAttributes="Bold" FontSize="10" VerticalTextAlignment="Center"/>
+                    <Label Text="{Binding}" FontAttributes="Bold" FontSize="10" VerticalTextAlignment="Center" x:DataType="x:String"/>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
