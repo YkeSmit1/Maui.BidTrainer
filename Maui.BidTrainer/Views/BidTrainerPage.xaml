@@ -21,10 +21,10 @@
         <Grid BackgroundColor="MediumSeaGreen">
             <Grid.RowDefinitions>
                 <RowDefinition Height="90"/> 
-                <RowDefinition Height="120"/>
+                <RowDefinition Height="110"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="120"/>
+                <RowDefinition Height="110"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="70"/>
             </Grid.RowDefinitions>
