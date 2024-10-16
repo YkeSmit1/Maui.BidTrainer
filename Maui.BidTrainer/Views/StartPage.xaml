@@ -8,6 +8,7 @@
         <Style TargetType="Button">
             <Setter Property="Background" Value="BlanchedAlmond"/>
             <Setter Property="TextColor" Value="Blue"/>
+            <Setter Property="MinimumHeightRequest" Value="50"/>
         </Style>
     </ContentPage.Resources>
     <ContentPage.BindingContext>
