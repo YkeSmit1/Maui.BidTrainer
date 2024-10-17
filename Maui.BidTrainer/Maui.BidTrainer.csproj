@@ -50,50 +50,50 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>10</ApplicationVersion>
+	  <ApplicationVersion>12</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	  <ApplicationId>com.companyname.maui.bidtrainer2</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>10</ApplicationVersion>
+	  <ApplicationVersion>12</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	  <ApplicationId>com.companyname.maui.bidtrainer2</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
-	  <ApplicationVersion>10</ApplicationVersion>
+	  <ApplicationVersion>12</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	  <ApplicationId>com.companyname.maui.bidtrainer2</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationVersion>10</ApplicationVersion>
+	  <ApplicationVersion>12</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	  <ApplicationId>com.companyname.maui.bidtrainer2</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-	  <ApplicationVersion>10</ApplicationVersion>
+	  <ApplicationVersion>12</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	  <PublishTrimmed>False</PublishTrimmed>
 	  <ApplicationId>com.companyname.maui.bidtrainer2</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-	  <ApplicationVersion>10</ApplicationVersion>
+	  <ApplicationVersion>12</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	  <ApplicationId>com.companyname.maui.bidtrainer2</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
-	  <ApplicationVersion>10</ApplicationVersion>
+	  <ApplicationVersion>12</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	  <ApplicationId>com.companyname.maui.bidtrainer2</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationVersion>10</ApplicationVersion>
+	  <ApplicationVersion>12</ApplicationVersion>
 	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
 	  <ApplicationId>com.companyname.maui.bidtrainer2</ApplicationId>
 	</PropertyGroup>
