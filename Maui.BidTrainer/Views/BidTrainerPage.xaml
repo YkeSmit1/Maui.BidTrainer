@@ -11,7 +11,7 @@
             <Setter Property="FontSize" Value="8"/>
             <Setter Property="BackgroundColor" Value="Transparent"/>
             <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource SeaGreen}, Dark={StaticResource DarkGreen}}"/>
-            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"/>
             <Setter Property="WidthRequest" Value="70"/>
             <Setter Property="HeightRequest" Value="65"/>
             <Setter Property="ContentLayout" Value="Top,0"/>

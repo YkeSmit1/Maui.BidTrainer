@@ -11,7 +11,7 @@
         <Grid RowDefinitions="10,*">
             <dataGrid:DataGrid Grid.Row="1" ItemsSource="{Binding Accounts}" x:DataType="viewModels:LeaderboardViewModel"
                          RowHeight="30" HeaderHeight="50" 
-                         BorderColor="#CCCCCC" HeaderBackground="#E0E6F8"
+                         BorderColor="#CCCCCC" HeaderBackground="{AppThemeBinding Light=#E0E6F8, Dark={StaticResource Black}}"
                          FontSize="9">
                 <dataGrid:DataGrid.HeaderLabelStyle>
                     <Style TargetType="Label">
@@ -30,6 +30,9 @@
                         <Color>#FFFFFF</Color>
                     </dataGrid:PaletteCollection>
                 </dataGrid:DataGrid.RowsBackgroundColorPalette>
+                <dataGrid:DataGrid.NoDataView>
+                    <Label Text="No data to show" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                </dataGrid:DataGrid.NoDataView>
             </dataGrid:DataGrid>
         </Grid>
     </ContentPage.Content>
