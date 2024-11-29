@@ -114,18 +114,25 @@ namespace Maui.BidTrainer.Views
 
         private async void PopModel(object sender, ModalPoppingEventArgs e)
         {
-            if (e.Modal == startPage)
+            try
             {
-                await StartLessonAsync();
-                await StartNextBoard();
+                if (e.Modal == startPage)
+                {
+                    await StartLessonAsync();
+                    await StartNextBoard();
+                }
+                else if (e.Modal == settingsPage)
+                {
+                    ((SettingsViewModel)settingsPage.BindingContext).Save();
+                    MainThread.BeginInvokeOnMainThread(() =>
+                        StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}");
+                    GenerateCardImages();
+                    ShowBothHands();
+                }
             }
-            else if (e.Modal == settingsPage)
+            catch (Exception exception)
             {
-                ((SettingsViewModel)settingsPage.BindingContext).Save();
-                MainThread.BeginInvokeOnMainThread(() =>
-                    StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}");
-                GenerateCardImages();
-                ShowBothHands();
+                await DisplayAlert("Error", exception.Message, "OK");
             }
         }
 
@@ -304,13 +311,27 @@ namespace Maui.BidTrainer.Views
 
         private async void ButtonClickedStartLesson(object sender, EventArgs e)
         {
-            await Application.Current!.MainPage!.Navigation.PushAsync(startPage);
+            try
+            {
+                await Application.Current!.MainPage!.Navigation.PushAsync(startPage);
+            }
+            catch (Exception exception)
+            {
+                await DisplayAlert("Error", exception.Message, "OK");
+            }
         }
 
         private async void ButtonClickedNextBoard(object sender, EventArgs e)
         {
-            CurrentBoardIndex++;
-            await StartNextBoard();
+            try
+            {
+                CurrentBoardIndex++;
+                await StartNextBoard();
+            }
+            catch (Exception exception)
+            {
+                await DisplayAlert("Error", exception.Message, "OK");
+            }
         }
 
         private void ButtonClickedResults(object sender, EventArgs e)
@@ -320,18 +341,39 @@ namespace Maui.BidTrainer.Views
 
         private async void ButtonClickedLeaderBoard(object sender, EventArgs e)
         {
-            await Application.Current!.MainPage!.Navigation.PushAsync(new LeaderboardPage());
+            try
+            {
+                await Application.Current!.MainPage!.Navigation.PushAsync(new LeaderboardPage());
+            }
+            catch (Exception exception)
+            {
+                await DisplayAlert("Error", exception.Message, "OK");
+            }
         }
 
         private async void ButtonClickedSettings(object sender, EventArgs e)
         {
-            await Application.Current!.MainPage!.Navigation.PushModalAsync(settingsPage);
+            try
+            {
+                await Application.Current!.MainPage!.Navigation.PushModalAsync(settingsPage);
+            }
+            catch (Exception exception)
+            {
+                await DisplayAlert("Error", exception.Message, "OK");
+            }
         }
 
         protected override async void OnAppearing()
         {
-            base.OnAppearing();
-            await Start();
+            try
+            {
+                base.OnAppearing();
+                await Start();
+            }
+            catch (Exception exception)
+            {
+                await DisplayAlert("Error", exception.Message, "OK");
+            }
         }
 
         private void Switch_Toggled(object sender, ToggledEventArgs e)
@@ -342,7 +384,14 @@ namespace Maui.BidTrainer.Views
 
         private async void Button_OnClicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(LogPage));
+            try
+            {
+                await Shell.Current.GoToAsync(nameof(LogPage));
+            }
+            catch (Exception exception)
+            {
+                await DisplayAlert("Error", exception.Message, "OK");
+            }
         }
     }
 }
