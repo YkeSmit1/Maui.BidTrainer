@@ -1,0 +1,212 @@
+[Event "Bridge in een flits - Slotdrive"]
+[Board "1"]
+[Dealer "N"]
+[Vulnerable "None"]
+[Deal "N:A8752.A93.A83.JT KQ6.QT52.K5.AQ94 T9.J86.964.86532 J43.K74.QJT72.K7"]
+[Declarer "E"]
+[Auction "N"]
+	1S	1NT	Pass
+3NT	Pass	Pass	Pass
+
+[Event ""]
+[Board "2"]
+[Dealer "E"]
+[Vulnerable "NS"]
+[Deal "E:842.J9.A986.A543 KQT.AT863.KQ4.KQ J9763.752.2.JT86 A5.KQ4.JT753.972"]
+[Declarer "S"]
+[Auction "E"]
+		Pass	1H
+Pass	2D	Pass	2NT
+Pass	3NT	Pass	Pass
+Pass
+
+[Event ""]
+[Board "3"]
+[Dealer "S"]
+[Vulnerable "EW"]
+[Deal "S:KQJT974.86.94.32 A82.752.KJT2.K98 5.QJT3.A53.JT754 63.AK94.Q876.AQ6"]
+[Declarer "E"]
+[Auction "S"]
+			Pass
+Pass	Pass	1NT	Pass
+3NT	Pass	Pass	Pass
+
+[Event ""]
+[Board "4"]
+[Dealer "W"]
+[Vulnerable "All"]
+[Deal "W:86.AK653.962.KQ3 AQJ95.92.KQ4.T82 742.J87.J753.AJ5 KT3.QT4.AT8.9764"]
+[Declarer "N"]
+[Auction "W"]
+1H	1S	1NT	2S
+Pass	Pass	Pass
+
+[Event ""]
+[Board "5"]
+[Dealer "N"]
+[Vulnerable "NS"]
+[Deal "N:K42.96.KJT42.AK3 J83.QJT82.AQ.T84 A76.AK74.873.QJ7 QT95.53.965.9652"]
+[Declarer "S"]
+[Auction "N"]
+	1D	1H	3NT
+Pass	Pass	Pass
+
+[Event ""]
+[Board "6"]
+[Dealer "E"]
+[Vulnerable "EW"]
+[Deal "E:AK75.874.J73.J92 QJT93.Q6.A84.A75 84.AK92.KQT6.Q84 62.JT53.952.KT63"]
+[Declarer "S"]
+[Auction "E"]
+		Pass	1S
+X	Pass	Pass	1NT
+Pass	Pass	Pass
+
+[Event ""]
+[Board "7"]
+[Dealer "S"]
+[Vulnerable "All"]
+[Deal "S:J9.KT97.AQT.T954 AK542.AQJ.86.732 Q83.653.KJ2.QJ86 T76.842.97543.AK"]
+[Declarer "E"]
+[Auction "S"]
+			Pass
+1S	Pass	1NT	Pass
+Pass	Pass
+
+[Event ""]
+[Board "8"]
+[Dealer "W"]
+[Vulnerable "None"]
+[Deal "W:J5.Q42.K98.QT732 97632.AK5.QT3.K6 AT4.T986.A52.J94 KQ8.J73.J764.A85"]
+[Declarer "S"]
+[Auction "W"]
+Pass	1S	Pass	2NT
+Pass	Pass	Pass
+
+[Event ""]
+[Board "9"]
+[Dealer "N"]
+[Vulnerable "EW"]
+[Deal "N:J4.AK2.AK64.J632 A8.T76543.J97.T9 T76532.Q9.82.AKQ KQ9.J8.QT53.8754"]
+[Declarer "N"]
+[Auction "N"]
+	1NT	Pass	2H
+Pass	2S	Pass	4S
+Pass	Pass	Pass
+
+[Event ""]
+[Board "10"]
+[Dealer "E"]
+[Vulnerable "All"]
+[Deal "E:JT63.Q932.AK.KQ4 A8.KJ864.T875.72 KQ4.T5.9643.A963 9752.A7.QJ2.JT85"]
+[Declarer "E"]
+[Auction "E"]
+		1NT	Pass
+2NT	Pass	Pass	Pass
+
+[Event ""]
+[Board "11"]
+[Dealer "S"]
+[Vulnerable "None"]
+[Deal "S:6.AKJT753.854.96 AKJT53.6.92.AT75 874.842.KQT6.QJ4 Q92.Q9.AJ73.K832"]
+[Declarer "E"]
+[Auction "S"]
+			Pass
+1S	Pass	3NT	Pass
+Pass	Pass
+
+[Event ""]
+[Board "12"]
+[Dealer "W"]
+[Vulnerable "NS"]
+[Deal "W:AQJ.KJ976.T8.Q32 9872.A4.QJ53.AK4 43.Q82.A764.9876 KT65.T53.K92.JT5"]
+[Declarer "S"]
+[Auction "W"]
+1H	X	1NT	2S
+Pass	Pass	Pass
+
+[Event ""]
+[Board "13"]
+[Dealer "N"]
+[Vulnerable "All"]
+[Deal "N:K75.8762.QT4.A52 J63.AK5.A962.943 AQ982.T93.85.KQJ T4.QJ4.KJ73.T876"]
+[Declarer "S"]
+[Auction "N"]
+	Pass	1D	1S
+2D	2S	Pass	Pass
+Pass
+
+[Event ""]
+[Board "14"]
+[Dealer "E"]
+[Vulnerable "None"]
+[Deal "E:73.KQJT652.8.965 QJ96.93.Q754.KJ3 AK42.8.AJ32.A742 T85.A74.KT96.QT8"]
+[Declarer "W"]
+[Auction "E"]
+		Pass	Pass
+1C	Pass	1H	Pass
+1S	Pass	Pass	Pass
+
+[Event ""]
+[Board "15"]
+[Dealer "S"]
+[Vulnerable "NS"]
+[Deal "S:AQJT76.AK7.652.A 984.9854.AKQ.JT9 K32.62.J84.Q5432 5.QJT3.T973.K876"]
+[Declarer "N"]
+[Auction "S"]
+			1S
+Pass	1NT	Pass	2NT
+Pass	Pass	Pass
+
+[Event ""]
+[Board "16"]
+[Dealer "W"]
+[Vulnerable "EW"]
+[Deal "W:AKT43.AK2.T8.A84 J6.QJ76.KQJ9.J93 9875.T543.A764.Q Q2.98.532.KT7652"]
+[Declarer "W"]
+[Auction "W"]
+1S	Pass	2S	Pass
+3S	Pass	Pass	Pass
+
+[Event ""]
+[Board "17"]
+[Dealer "N"]
+[Vulnerable "None"]
+[Deal "N:85.96.KQJ9743.T4 AKJ2.AK75.T6.J83 QT4.JT42.2.AKQ52 9763.Q83.A85.976"]
+[Declarer "S"]
+[Auction "N"]
+	Pass	1NT	2C
+Pass	Pass	Pass
+
+[Event ""]
+[Board "18"]
+[Dealer "E"]
+[Vulnerable "NS"]
+[Deal "E:86.AKT43.A6.K972 AKQ7.86.KQ4.AJ54 954.J52.9872.QT3 JT32.Q97.JT53.86"]
+[Declarer "E"]
+[Auction "E"]
+		1H	X
+Pass	1S	2C	Pass
+Pass	Pass
+
+[Event ""]
+[Board "19"]
+[Dealer "S"]
+[Vulnerable "EW"]
+[Deal "S:T7.J83.KQJ72.AK9 AK632.Q54.A84.T6 J984.9.T3.J75432 Q5.AKT762.965.Q8"]
+[Declarer "S"]
+[Auction "S"]
+			1D
+1S	Pass	Pass	1NT
+Pass	Pass	Pass
+
+[Event ""]
+[Board "20"]
+[Dealer "W"]
+[Vulnerable "All"]
+[Deal "W:A52.A75.KT85.K75 KQJ963.86.93.Q94 T87.QJ92.QJ2.JT6 4.KT43.A764.A832"]
+[Declarer "E"]
+[Auction "W"]
+1D	1S	1NT	Pass
+Pass	Pass
+

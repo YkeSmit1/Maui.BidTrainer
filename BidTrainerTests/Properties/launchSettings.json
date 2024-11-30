@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BidTrainerTests": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

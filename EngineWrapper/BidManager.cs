@@ -94,5 +94,18 @@ namespace EngineWrapper
             var bidInformation = new BidInformation(records);
             return bidInformation.GetInformation();
         }
+        
+        public static Auction GetAuction(Dictionary<Player, string> deal, Player dealer)
+        {
+            var auction = new Auction();
+            auction.Clear(dealer);
+            while (!auction.IsEndOfBidding())
+            {
+                var bid = GetBid(auction, deal[auction.CurrentPlayer]);
+                auction.AddBid(bid);
+            }
+            return auction;
+        }
+        
     }
 }

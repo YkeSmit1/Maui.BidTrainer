@@ -1,0 +1,83 @@
+[Event "Bridge in een flits - Les 8"]
+[Board "1"]
+[Dealer "E"]
+[Vulnerable "None"]
+[Deal "E:86.AJ4.AQJT64.T3 AQJ94.T986.K2.97 KT7.KQ2.83.AK852 532.753.975.QJ64"]
+[Declarer "W"]
+[Auction "E"]
+		1D	1S
+3NT	Pass	Pass	Pass
+
+[Event ""]
+[Board "2"]
+[Dealer "N"]
+[Vulnerable "NS"]
+[Deal "N:9875.75.A75.A752 K42.AQJ964.Q9.63 AJ3.T3.KT6.KQT94 QT6.K82.J8432.J8"]
+[Declarer "S"]
+[Auction "N"]
+	Pass	1H	2C
+Pass	3C	Pass	Pass
+Pass
+
+[Event ""]
+[Board "3"]
+[Dealer "E"]
+[Vulnerable "EW"]
+[Deal "E:AK975.A6.94.K872 Q6.KQ92.AQJ8.T96 JT.JT843.752.QJ3 8432.75.KT63.A54"]
+[Declarer "N"]
+[Auction "E"]
+		1S	X
+Pass	2D	Pass	Pass
+Pass
+
+[Event ""]
+[Board "4"]
+[Dealer "E"]
+[Vulnerable "All"]
+[Deal "E:A7.KQT84.T64.A75 KQJ9832.6.K75.84 T54.752.A83.QJT2 6.AJ93.QJ92.K963"]
+[Declarer "W"]
+[Auction "E"]
+		1H	1S
+1NT	Pass	Pass	Pass
+
+[Event ""]
+[Board "5"]
+[Dealer "E"]
+[Vulnerable "NS"]
+[Deal "E:KQJ72.KT8.A7.T98 AT3.AJ4.KJ82.QJ3 84.Q653.T53.K742 965.972.Q964.A65"]
+[Declarer "S"]
+[Auction "E"]
+		1S	1NT
+Pass	Pass	Pass
+
+[Event ""]
+[Board "6"]
+[Dealer "W"]
+[Vulnerable "EW"]
+[Deal "W:J93.AQ.A974.KT95 842.KJ763.KJ.AQ6 QT65.T84.Q8532.8 AK7.952.T6.J7432"]
+[Declarer "N"]
+[Auction "W"]
+1C	1H	Pass	2H
+Pass	Pass	Pass
+
+[Event ""]
+[Board "7"]
+[Dealer "E"]
+[Vulnerable "All"]
+[Deal "E:AK.KT63.KQ865.87 84.AQJ942.74.542 JT75.7.T92.AJ963 Q9632.85.AJ3.KQT"]
+[Declarer "W"]
+[Auction "E"]
+		1D	Pass
+1S	Pass	Pass	Pass
+
+[Event ""]
+[Board "8"]
+[Dealer "S"]
+[Vulnerable "None"]
+[Deal "S:T73.Q942.QJ642.T KQ.J.AKT97.KJ753 A842.A765.8.AQ96 J965.KT83.53.842"]
+[Declarer "W"]
+[Auction "S"]
+			Pass
+1D	X	Pass	1H
+2C	Pass	Pass	Pass
+
