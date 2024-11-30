@@ -7,7 +7,7 @@
   xmlns:uap18="http://schemas.microsoft.com/appx/manifest/uap/windows10/18"
   IgnorableNamespaces="uap rescap uap18">
 
-  <Identity Name="YkeSmit.BidTrainer" Publisher="CN=9B8CEB8E-9437-4036-8431-2CCEAD853516" Version="0.0.45.0" />
+  <Identity Name="YkeSmit.BidTrainer" Publisher="CN=9B8CEB8E-9437-4036-8431-2CCEAD853516" Version="0.0.80.0" />
 
   <mp:PhoneIdentity PhoneProductId="79DA1F8D-034D-4519-BDED-96C36E2D4FBA" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

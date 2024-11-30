@@ -81,7 +81,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>$(ProjectDir)..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\SQLiteCpp.lib;$(ProjectDir)..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\sqlite3.lib;$(MSBuildThisFileDirectory)..\..\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x86\Debug\gtest_maind.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(ProjectDir)..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\SQLiteCpp.lib;$(ProjectDir)..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -100,7 +100,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>$(ProjectDir)..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\SQLiteCpp.lib;$(ProjectDir)..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -119,7 +118,7 @@
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalDependencies>$(ProjectDir)..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\SQLiteCpp.lib;$(ProjectDir)..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\sqlite3.lib;$(MSBuildThisFileDirectory)..\..\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x86\Release\gtest_main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(ProjectDir)..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\SQLiteCpp.lib;$(ProjectDir)..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -139,7 +138,6 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <AdditionalDependencies>$(ProjectDir)..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\SQLiteCpp.lib;$(ProjectDir)..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
