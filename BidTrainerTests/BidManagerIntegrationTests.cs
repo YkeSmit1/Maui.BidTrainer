@@ -55,7 +55,7 @@ namespace BidTrainerTests
             {
                 "lesson2.pbn" => 1,
                 "lesson3.pbn" => 1,
-                "lesson4.pbn" => 1,
+                "lesson4.pbn" => 5,
                 "CursusSlotdrive.pbn" => 1,
                 "lesson5.pbn" => 6,
                 "lesson6.pbn" => 30,
