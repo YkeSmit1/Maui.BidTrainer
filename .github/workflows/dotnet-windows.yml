@@ -44,7 +44,7 @@ jobs:
     - name: test c# test
       run: dotnet test .\BidTrainerTests\BidTrainerTests.csproj -c Release --no-restore
     - name: build c++ tests
-      run: msbuild EnginTests\EngineTests.vcxproj /p:Configuration=Release /p:Platform=x64      
+      run: msbuild EngineTests\EngineTests.vcxproj /p:Configuration=Release /p:Platform=x64      
     - name: run c++ tests
       run: x64\Release\EngineTests.exe
     - uses: actions/upload-artifact@v4
