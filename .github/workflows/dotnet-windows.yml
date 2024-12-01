@@ -44,7 +44,7 @@ jobs:
     - name: test c# test
       run: dotnet test .\BidTrainerTests\BidTrainerTests.csproj -c Release --no-restore
     - name: restore nuget
-      run: dotnet restore .\EngineTests\EngineTests.csproj
+      run: dotnet restore .\EngineTests\EngineTests.vcxproj
     - name: build c++ tests
       run: msbuild EngineTests\EngineTests.vcxproj /p:Configuration=Release /p:Platform=x64      
     - name: run c++ tests
