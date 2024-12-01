@@ -43,12 +43,12 @@ jobs:
       run: dotnet publish maui.bidtrainer\maui.bidtrainer.csproj -c Release -f net8.0-windows10.0.19041.0 -p:RuntimeIdentifierOverride=win10-x64 --self-contained true 
     - name: test c# test
       run: dotnet test .\BidTrainerTests\BidTrainerTests.csproj -c Release --no-restore
-    # - name: restore nuget
-    #   run: dotnet restore .\EngineTests\EngineTests.vcxproj
-    - name: build c++ tests
+    - name: restore nuget
       run: msbuild EngineTests\EngineTests.vcxproj /p:Configuration=Release /p:Platform=x64 -t:Restore
+    - name: build c++ tests
+      run: msbuild EngineTests\EngineTests.vcxproj /p:Configuration=Release /p:Platform=x64
     - name: run c++ tests
-      run: x64\Release\EngineTests.exe
+      run: .\x64\Release\EngineTests.exe
     - uses: actions/upload-artifact@v4
       with:
         name: distribute
