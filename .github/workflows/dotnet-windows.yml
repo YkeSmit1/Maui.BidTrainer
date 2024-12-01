@@ -43,8 +43,8 @@ jobs:
       run: dotnet publish maui.bidtrainer\maui.bidtrainer.csproj -c Release -f net8.0-windows10.0.19041.0 -p:RuntimeIdentifierOverride=win10-x64 --self-contained true 
     - name: test c# test
       run: dotnet test .\BidTrainerTests\BidTrainerTests.csproj -c Release --no-restore
-    - name: restore nuget
-      run: msbuild EngineTests\EngineTests.vcxproj /p:Configuration=Release /p:Platform=x64 -t:Restore
+    - name: NuGet Restore
+      run: nuget restore Maui.BidTrainer.sln
     - name: build c++ tests
       run: msbuild EngineTests\EngineTests.vcxproj /p:Configuration=Release /p:Platform=x64
     - name: run c++ tests
