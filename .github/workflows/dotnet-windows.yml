@@ -40,7 +40,7 @@ jobs:
     - name: build x64 windows dll
       run: msbuild Engine\Engine.Windows\Engine.Windows.vcxproj /p:Configuration=Release /p:Platform=x64
     - name: Build
-      run: dotnet publish maui.bidtrainer\maui.bidtrainer.csproj -c Release -f net8.0-windows10.0.19041.0 -p:RuntimeIdentifierOverride=win10-x64 --self-contained true 
+      run: dotnet publish maui.bidtrainer\maui.bidtrainer.csproj -c Release -f net8.0-windows10.0.19041.0 -p:RuntimeIdentifierOverride=win10-x64 --self-contained true -p:PublishReadyToRun=false
     - name: test c# test
       run: dotnet test .\BidTrainerTests\BidTrainerTests.csproj -c Release --no-restore
     - name: NuGet Restore
