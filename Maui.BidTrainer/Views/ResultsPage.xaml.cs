@@ -1,13 +1,12 @@
 ﻿using Maui.BidTrainer.ViewModels;
 
-namespace Maui.BidTrainer.Views
+namespace Maui.BidTrainer.Views;
+
+public partial class ResultsPage
 {
-    public partial class ResultsPage
+    public ResultsPage(Results results)
     {
-        public ResultsPage(Results results)
-        {
-            InitializeComponent();
-            ((ResultsViewModel)BindingContext).Results = results;
-        }
+        InitializeComponent();
+        ((ResultsViewModel)BindingContext).Results = results;
     }
 }

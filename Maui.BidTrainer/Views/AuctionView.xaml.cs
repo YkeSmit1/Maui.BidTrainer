@@ -1,10 +1,9 @@
-﻿namespace Maui.BidTrainer.Views
+﻿namespace Maui.BidTrainer.Views;
+
+public partial class AuctionView
 {
-    public partial class AuctionView
+    public AuctionView()
     {
-        public AuctionView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

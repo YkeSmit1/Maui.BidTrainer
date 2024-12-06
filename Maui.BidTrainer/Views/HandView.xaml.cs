@@ -1,10 +1,9 @@
-﻿namespace Maui.BidTrainer.Views
+﻿namespace Maui.BidTrainer.Views;
+
+public partial class HandView 
 {
-    public partial class HandView 
+    public HandView()
     {
-        public HandView()
-        {
             InitializeComponent();
         }
-    }
 }

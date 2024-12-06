@@ -2,35 +2,34 @@
 using Common;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Maui.BidTrainer.ViewModels
+namespace Maui.BidTrainer.ViewModels;
+
+public class HandViewModel : ObservableObject
 {
-    public class HandViewModel : ObservableObject
+    public ObservableCollection<Card> Cards { get; set; } = [];
+
+    public void ShowHand(string hand, bool alternateSuits, string cardProfile, Dictionary<(string suit, string card), string> dictionary)
     {
-        public ObservableCollection<Card> Cards { get; set; } = [];
+        var settings = CardImageSettings.GetCardImageSettings(cardProfile);
+        Cards.Clear();
 
-        public void ShowHand(string hand, bool alternateSuits, string cardProfile, Dictionary<(string suit ,string card), string> dictionary)
+        List<Suit> suitOrder = alternateSuits
+            ? [Suit.Spades, Suit.Hearts, Suit.Clubs, Suit.Diamonds]
+            : [Suit.Spades, Suit.Hearts, Suit.Diamonds, Suit.Clubs];
+        var suits = hand.Split(',').Select((x, index) => (x, (Suit)(3 - index))).OrderBy(x => suitOrder.IndexOf(x.Item2));
+        var index = 0;
+
+        foreach (var suit in suits)
         {
-            var settings = CardImageSettings.GetCardImageSettings(cardProfile);
-            Cards.Clear();
-
-            var suitOrder = alternateSuits ?
-                new List<Suit> { Suit.Spades, Suit.Hearts, Suit.Clubs, Suit.Diamonds } :
-                new List<Suit> { Suit.Spades, Suit.Hearts, Suit.Diamonds, Suit.Clubs };
-            var suits = hand.Split(',').Select((x, index) => (x, (Suit)(3 - index))).OrderBy(x => suitOrder.IndexOf(x.Item2));
-            var index = 0;
-
-            foreach (var suit in suits)
+            foreach (var card in suit.x)
             {
-                foreach (var card in suit.x)
+                var valueTuple = (Util.GetSuitDescriptionASCII(suit.Item2), card.ToString());
+                Cards.Add(new Card
                 {
-                    var valueTuple = (Util.GetSuitDescriptionASCII(suit.Item2), card.ToString());
-                    Cards.Add(new Card
-                    {
-                        Rect = new Rect(index * settings.CardDistance, 0, settings.CardWidth, settings.CardHeight),
-                        Source = dictionary[valueTuple],
-                    });
-                    index++;
-                }
+                    Rect = new Rect(index * settings.CardDistance, 0, settings.CardWidth, settings.CardHeight),
+                    Source = dictionary[valueTuple],
+                });
+                index++;
             }
         }
     }

@@ -3,8 +3,8 @@
     using Microsoft.Extensions.Logging;
 #endif
 
-namespace Maui.BidTrainer
-{
+    namespace Maui.BidTrainer;
+
     public static class MauiProgram
     {
         public static MauiApp CreateMauiApp()
@@ -30,10 +30,9 @@ namespace Maui.BidTrainer
             
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
         }
     }
-}

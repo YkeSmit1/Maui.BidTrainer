@@ -1,8 +1,7 @@
-﻿namespace Maui.BidTrainer
+﻿namespace Maui.BidTrainer;
+
+public class Card
 {
-    public class Card
-    {
-        public Rect Rect { get; set; }
-        public string Source { get; set; }
-    }
+    public Rect Rect { get; set; }
+    public string Source { get; set; }
 }

@@ -1,10 +1,9 @@
-﻿namespace Maui.BidTrainer.Views
+﻿namespace Maui.BidTrainer.Views;
+
+public partial class LeaderboardPage
 {
-    public partial class LeaderboardPage
+    public LeaderboardPage()
     {
-        public LeaderboardPage()
-        {
             InitializeComponent();
         }
-    }
 }

@@ -1,13 +1,12 @@
-﻿namespace Maui.BidTrainer
+﻿namespace Maui.BidTrainer;
+
+public interface ICosmosDbHelper
 {
-    public interface ICosmosDbHelper
-    {
-        Task<IEnumerable<Account>> GetAllAccounts();
+    Task<IEnumerable<Account>> GetAllAccounts();
 
-        Task<Account?> GetAccount(string username);
+    Task<Account?> GetAccount(string username);
 
-        Task InsertAccount(Account account);
+    Task InsertAccount(Account account);
 
-        Task UpdateAccount(Account account);
-    }
+    Task UpdateAccount(Account account);
 }

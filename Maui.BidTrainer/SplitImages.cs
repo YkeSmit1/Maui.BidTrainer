@@ -1,18 +1,18 @@
 ﻿using SkiaSharp;
 using System.Reflection;
 
-namespace Maui.BidTrainer
+namespace Maui.BidTrainer;
+
+public static class SplitImages
 {
-    public static class SplitImages
+    public static Dictionary<(string suit ,string card), string> Split(CardImageSettings imageSettings)
     {
-        public static Dictionary<(string suit ,string card), string> Split(CardImageSettings imageSettings)
-        {
             var fileNames = ExtractAndSaveImages(imageSettings);
             return CreateLookup(imageSettings, fileNames.ToArray());
         }
 
-        private static IEnumerable<string> ExtractAndSaveImages(CardImageSettings imageSettings)
-        {
+    private static IEnumerable<string> ExtractAndSaveImages(CardImageSettings imageSettings)
+    {
             using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"Maui.BidTrainer.Resources.Images.Embedded.{imageSettings.CardImage}");
             var bitmap = SKBitmap.Decode(stream);
             var counter = 0;
@@ -49,8 +49,8 @@ namespace Maui.BidTrainer
         }
 
 
-        private static Dictionary<(string suit ,string card), string> CreateLookup(CardImageSettings cardImageSettings, IReadOnlyList<string> fileNames)
-        {
+    private static Dictionary<(string suit ,string card), string> CreateLookup(CardImageSettings cardImageSettings, IReadOnlyList<string> fileNames)
+    {
             Dictionary<(string suit ,string card), string> lookup = [];
 
             int counter = 0;
@@ -66,5 +66,4 @@ namespace Maui.BidTrainer
             return lookup;
         }
 
-    }
 }
