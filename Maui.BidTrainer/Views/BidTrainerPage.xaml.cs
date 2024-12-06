@@ -135,13 +135,17 @@ public partial class BidTrainerPage
         else
         {
             var engineBid = BidManager.GetBid(auction, Deal[Player.South]);
-            UpdateBidControls(engineBid);
 
             if (bid != engineBid)
             {
-                await DisplayAlert("Incorrect bid", $"The correct bid is {engineBid}. Description: {engineBid.description}.", "OK");
+                var message = $"The correct bid is {engineBid}. Description: {engineBid.description}.";
+                var engineBidInformation = BidManager.GetInformation(engineBid, auction);
+                var bidInformation = BidManager.GetInformation(bid, auction);
+                var s = $"{message}\n\nCorrect bid {engineBid}\n{engineBidInformation}\n\nYour bid {bid}\n{bidInformation}";
+                await DisplayAlert("Incorrect bid", s, "OK");
                 currentResult.AnsweredCorrectly = false;
             }
+            UpdateBidControls(engineBid);
 
             await BidTillSouth();
         }
