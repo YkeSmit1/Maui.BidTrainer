@@ -1,4 +1,8 @@
-﻿** Overcall **
+﻿************************************************
+*         Overcall and take-out double         *
+************************************************
+
+** Overcall **
 
 At the one level		Good five card suit and 8-17 points
 At the two level		Good five card suit and 10-17 points

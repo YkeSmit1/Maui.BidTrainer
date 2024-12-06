@@ -1,4 +1,8 @@
-﻿** Openings **
+﻿************************************************
+*          One openings and responses          *
+************************************************
+
+** Openings **
 
 Opening in a suit		            12-19
 Longest suit

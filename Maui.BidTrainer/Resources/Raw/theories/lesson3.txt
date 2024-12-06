@@ -1,4 +1,8 @@
-﻿** No four or five card major
+﻿************************************************
+*          1NT openings and responses          *
+************************************************
+
+** No four or five card major
 
 2NT		8-9
 3NT		10+

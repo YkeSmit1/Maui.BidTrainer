@@ -1,4 +1,8 @@
-﻿** control bidding **
+﻿*******************************************
+*       Control bidding and RKCB          *
+*******************************************
+
+** control bidding **
 
 If you do a controlbid, it means the opponents cannot immediately cash two tricks in the bid suit. So you have Ace, King or singleton or void
 

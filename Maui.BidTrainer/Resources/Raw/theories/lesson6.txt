@@ -1,4 +1,8 @@
-﻿** Negative double **
+﻿*******************************************
+*      Negative double and reverse        *
+*******************************************
+
+** Negative double **
 
 Double shows a fourcard in the unbid major and 6+ points
 If you bid a new suit, it shows a five card

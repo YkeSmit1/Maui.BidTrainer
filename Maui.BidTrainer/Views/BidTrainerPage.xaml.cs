@@ -100,12 +100,7 @@ public partial class BidTrainerPage
     {
         try
         {
-            if (e.Modal == startPage)
-            {
-                await StartLessonAsync();
-                await StartNextBoard();
-            }
-            else if (e.Modal == settingsPage)
+            if (e.Modal == settingsPage)
             {
                 ((SettingsViewModel)settingsPage.BindingContext).Save();
                 MainThread.BeginInvokeOnMainThread(() =>
@@ -180,6 +175,7 @@ public partial class BidTrainerPage
             if (Lesson.LessonNr != lessons.Last().LessonNr)
             {
                 CurrentLesson++;
+                await Shell.Current.GoToAsync($"{nameof(TheoryPage)}?Lesson={CurrentLesson}");
                 await StartLessonAsync();
             }
             else

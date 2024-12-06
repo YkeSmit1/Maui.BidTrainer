@@ -1,4 +1,8 @@
-﻿** Five card majors **
+﻿************************************************
+*  Five card majors and 2 openings and higher  *
+************************************************
+
+** Five card majors **
 
 1♣		2+ clubs
 1♦  	       4+ diamonds
