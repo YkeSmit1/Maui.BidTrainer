@@ -1,5 +1,4 @@
-﻿using Maui.BidTrainer.Views;
-using Serilog;
+﻿using Serilog;
 #if DEBUG
     using Microsoft.Extensions.Logging;
 #endif
@@ -21,7 +20,7 @@ namespace Maui.BidTrainer
             
             IServiceCollection services = builder.Services;
 
-            var combine = Path.Combine(FileSystem.Current.AppDataDirectory, "logs", "log.txt");
+            var combine = Path.Combine(FileSystem.AppDataDirectory, "logs", "log.txt");
             services.AddSerilog(
                 new LoggerConfiguration()
                     .WriteTo.Debug()

@@ -2,6 +2,7 @@
 using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Maui.BidTrainer.Views;
 
 namespace Maui.BidTrainer.ViewModels
 {
@@ -13,7 +14,7 @@ namespace Maui.BidTrainer.ViewModels
 
         public async Task LoadLessonsAsync()
         {
-            using var reader = new StreamReader(await FileSystem.Current.OpenAppPackageFileAsync("lessons.json"));
+            using var reader = new StreamReader(await FileSystem.OpenAppPackageFileAsync("lessons.json"));
             Lessons = JsonSerializer.Deserialize<ObservableCollection<Lesson>>(await reader.ReadToEndAsync());
             OnPropertyChanged(nameof(Lessons));
         }
@@ -22,12 +23,12 @@ namespace Maui.BidTrainer.ViewModels
         {
             Preferences.Set("CurrentLesson", lessonNr);
             Preferences.Set("CurrentBoardIndex", 0);
-            await Shell.Current.GoToAsync("BidTrainer");
+            await Shell.Current.GoToAsync($"{nameof(TheoryPage)}?Lesson={lessonNr}");
         }
 
         private static async Task ContinueWhereLeftOff()
         {
-            await Shell.Current.GoToAsync("BidTrainer");
+            await Shell.Current.GoToAsync(nameof(BidTrainerPage));
         }
     }
 }

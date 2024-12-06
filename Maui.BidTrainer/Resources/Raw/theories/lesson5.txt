@@ -1,0 +1,30 @@
+﻿** Five card majors **
+
+1♣		2+ clubs
+1♦  	       4+ diamonds
+1♥		5+ hearts
+1♠  	       5+ spades
+
+You can support 1♣ if you have five, and 1♥/1♠ if you have 3
+
+
+** 2♣ opening **
+
+20+ unbalanced 23+ balanced
+
+Responder has to bid 2♦
+
+
+** 2NT opening **
+
+20-22 points and balanced
+
+Stayman and transfers, but one level higher
+
+
+** Preempts **
+
+Designed to make it difficult for the opponents
+
+At the two level 	6-10	6 card suit
+At the three level 	6-10	7 card suit

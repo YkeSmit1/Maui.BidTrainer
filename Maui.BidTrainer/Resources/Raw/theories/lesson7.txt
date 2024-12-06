@@ -1,0 +1,30 @@
+﻿** control bidding **
+
+If you do a controlbid, it means the opponents cannot immediately cash two tricks in the bid suit. So you have Ace, King or singleton or void
+
+If you skip a suit, you deny a control in this suit
+
+If you know a control is missing, you bid the trump suit
+
+A bid is a control bid if you already have a fit
+But also if it is a strange jump which cannot mean something else
+
+
+** RKC (Aces) **
+
+There are five keycards, the king of trumps also counts
+
+RKC is always with 4NT, but a trump suit has to be set
+
+Responses
+5♣			 1 or 4 keycards
+5♦  		        0 or 3 keycards
+5♥	    	        2 or 5 keycards, no trump queen
+5♠		        2 or 5 keycards with trump queen
+
+After a response which doesn’t tell anything about the trump queen, you can ask with the next bid which is not the trumpsuit for the trump queen
+
+After a trump queen ask, the trumpsuit denies the trump queen amd something else shows the trump queen and a King in the bid suit
+
+
+

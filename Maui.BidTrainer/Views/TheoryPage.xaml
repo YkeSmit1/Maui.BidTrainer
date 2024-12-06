@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="using:Maui.BidTrainer.ViewModels"
+             xmlns:converters="using:Maui.BidTrainer.Converters"
+             x:Class="Maui.BidTrainer.Views.TheoryPage">
+    <ContentPage.Resources>
+        <converters:LessonToTextConverter x:Key="LessonToTextConverter" />
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <viewModels:TheoryViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Text="{Binding Lesson, Converter={StaticResource LessonToTextConverter}}" Margin="10"
+                   FontFamily="Courier New">
+            </Label>
+            <Button Grid.Row="1" Text="Close" Clicked="ButtonCloseClicked"></Button>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

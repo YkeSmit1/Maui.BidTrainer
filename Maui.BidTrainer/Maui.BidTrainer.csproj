@@ -298,6 +298,7 @@
 
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
+    <Folder Update="Resources\Raw\Theories" />
   </ItemGroup>
 
 </Project>

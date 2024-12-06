@@ -82,8 +82,8 @@ namespace Maui.BidTrainer.Views
                         logger.Error(exception, "Error when loading results");
                     }
 
-                await CopyFileToAppDataDirectory("four_card_majors.db3");
-                Pinvoke.Setup(Path.Combine(FileSystem.Current.AppDataDirectory, "four_card_majors.db3"));
+                await Utils.CopyFileToAppDataDirectory("four_card_majors.db3");
+                Pinvoke.Setup(Path.Combine(FileSystem.AppDataDirectory, "four_card_majors.db3"));
                 await StartLessonAsync();
                 await StartNextBoard();
             }
@@ -91,24 +91,6 @@ namespace Maui.BidTrainer.Views
             {
                 await DisplayAlert("Error", e.ToString(), "OK");
                 throw;
-            }
-        }
-
-        private static async Task CopyFileToAppDataDirectory(string filename)
-        {
-            var filePath = Path.Combine(FileSystem.AppDataDirectory, filename);
-            if (File.Exists(filePath))
-                return;
-
-            await using Stream inputStream = await FileSystem.OpenAppPackageFileAsync(filename);
-            using BinaryReader reader = new BinaryReader(inputStream);
-            await using FileStream outputStream = File.Create(filePath);
-            await using BinaryWriter writer = new BinaryWriter(outputStream);
-            byte[] buffer = new byte[4096];
-            int bytesRead;
-            while ((bytesRead = reader.Read(buffer, 0, buffer.Length)) > 0)
-            {
-                writer.Write(buffer, 0, bytesRead);
             }
         }
 
@@ -138,7 +120,7 @@ namespace Maui.BidTrainer.Views
 
         private async Task StartLessonAsync()
         {
-            await CopyFileToAppDataDirectory(Lesson.PbnFile);
+            await Utils.CopyFileToAppDataDirectory(Lesson.PbnFile);
             await pbn.LoadAsync(Path.Combine(FileSystem.AppDataDirectory, Lesson.PbnFile));
             Pinvoke.SetModules(Lesson.Modules);
             if (CurrentBoardIndex == 0)

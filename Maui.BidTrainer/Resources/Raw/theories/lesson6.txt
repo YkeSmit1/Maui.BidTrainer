@@ -1,0 +1,13 @@
+﻿** Negative double **
+
+Double shows a fourcard in the unbid major and 6+ points
+If you bid a new suit, it shows a five card
+If there is no unbid major, double shows both minors
+
+
+** Reverse **
+
+Reverse bidding means bidding a new suit higher than two in your own suit
+ 
+Example : 1♣ 1♠ 2♥ 
+Reverse shows 16+ points and it is forcing

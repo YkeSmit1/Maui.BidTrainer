@@ -7,8 +7,9 @@ namespace Maui.BidTrainer
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(BidTrainer), typeof(BidTrainerPage));
+            Routing.RegisterRoute(nameof(BidTrainerPage), typeof(BidTrainerPage));
             Routing.RegisterRoute(nameof(LogPage), typeof(LogPage));
+            Routing.RegisterRoute(nameof(TheoryPage), typeof(TheoryPage));
         }
     }
 }
