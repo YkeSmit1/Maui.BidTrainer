@@ -53,7 +53,7 @@ public partial class BidTrainerPage
     {
         InitializeComponent();
         Application.Current!.ModalPopping += PopModel;
-        BiddingBoxViewModel.DoBid = new AsyncRelayCommand<object>(ClickBiddingBoxButton, ButtonCanExecute);
+        BiddingBoxViewModel.DoBid = new AsyncRelayCommand<object>(ClickBiddingBoxButton, param => auction.BidIsPossible((Bid)param));
         AuctionViewModel.Bids.Clear();
         logger.Information("Test");
     }
@@ -77,7 +77,6 @@ public partial class BidTrainerPage
         catch (Exception e)
         {
             await DisplayAlert("Error", e.ToString(), "OK");
-            throw;
         }
     }
     
@@ -106,14 +105,12 @@ public partial class BidTrainerPage
     {
         try
         {
-            if (e.Modal == settingsPage)
-            {
-                ((SettingsViewModel)settingsPage.BindingContext).Save();
-                MainThread.BeginInvokeOnMainThread(() =>
-                    StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}");
-                GenerateCardImages();
-                ShowBothHands();
-            }
+            if (e.Modal != settingsPage) return;
+            ((SettingsViewModel)settingsPage.BindingContext).Save();
+            MainThread.BeginInvokeOnMainThread(() =>
+                StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}");
+            GenerateCardImages();
+            ShowBothHands();
         }
         catch (Exception exception)
         {
@@ -155,11 +152,6 @@ public partial class BidTrainerPage
 
             await BidTillSouth();
         }
-    }
-
-    private bool ButtonCanExecute(object param)
-    {
-        return auction.BidIsPossible((Bid)param);
     }
 
     private void UpdateBidControls(Bid bid)
@@ -253,12 +245,9 @@ public partial class BidTrainerPage
     private async Task UploadResultsAsync()
     {
         var username = Preferences.Get("Username", "");
-        if (username != "")
-        {
-            var res = results.AllResults.Values.SelectMany(x => x.Results.Values).ToList();
-            await UpdateOrCreateAccount(username, res.Count, res.Count(x => x.AnsweredCorrectly), res.Sum(x => x.TimeElapsed.Ticks));
-        }
-
+        if (username == "") return;
+        var res = results.AllResults.Values.SelectMany(x => x.Results.Values).ToList();
+        await UpdateOrCreateAccount(username, res.Count, res.Count(x => x.AnsweredCorrectly), res.Sum(x => x.TimeElapsed.Ticks));
         return;
 
         static async Task UpdateOrCreateAccount(string username, int boardPlayed, int correctBoards, long timeElapsed)
@@ -325,9 +314,16 @@ public partial class BidTrainerPage
         }
     }
 
-    private void ButtonClickedResults(object sender, EventArgs e)
+    private async void ButtonClickedResults(object sender, EventArgs e)
     {
-        ShowReport();
+        try
+        {
+            ShowReport();
+        }
+        catch (Exception exception)
+        {
+            await DisplayAlert("Error", exception.Message, "OK");
+        }
     }
 
     private async void ButtonClickedLeaderBoard(object sender, EventArgs e)
@@ -367,13 +363,20 @@ public partial class BidTrainerPage
         }
     }
 
-    private void Switch_Toggled(object sender, ToggledEventArgs e)
+    private async void Switch_Toggled(object sender, ToggledEventArgs e)
     {
-        isInHintMode = e.Value;
-        LabelMode.Text = isInHintMode ? "Hint" : "Bid";
+        try
+        {
+            isInHintMode = e.Value;
+            LabelMode.Text = isInHintMode ? "Hint" : "Bid";
+        }
+        catch (Exception exception)
+        {
+            await DisplayAlert("Error", exception.Message, "OK");
+        }
     }
 
-    private async void Button_OnClicked(object sender, EventArgs e)
+    private async void ButtonClickedShowLog(object sender, EventArgs e)
     {
         try
         {
