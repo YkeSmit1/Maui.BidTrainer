@@ -69,23 +69,8 @@ public partial class BidTrainerPage
     {
         try
         {
-            GenerateCardImages();
-            using var lessonsReader = new StreamReader(await FileSystem.OpenAppPackageFileAsync("lessons.json"));
-            lessons = JsonSerializer.Deserialize<List<Lesson>>(await lessonsReader.ReadToEndAsync());
-
-            var resultsFile = Path.Combine(FileSystem.AppDataDirectory, "results.json");
-            if (File.Exists(resultsFile))
-                try
-                {
-                    results = JsonSerializer.Deserialize<Results>(await File.ReadAllTextAsync(resultsFile));
-                }
-                catch (Exception exception)
-                {
-                    logger.Error(exception, "Error when loading results");
-                }
-
-            await Utils.CopyFileToAppDataDirectory("four_card_majors.db3");
-            Pinvoke.Setup(Path.Combine(FileSystem.AppDataDirectory, "four_card_majors.db3"));
+            if (!startPage.IsLoaded)
+                await Initialize();
             await StartLessonAsync();
             await StartNextBoard();
         }
@@ -94,6 +79,27 @@ public partial class BidTrainerPage
             await DisplayAlert("Error", e.ToString(), "OK");
             throw;
         }
+    }
+    
+    private async Task Initialize()
+    {
+        GenerateCardImages();
+        using var lessonsReader = new StreamReader(await FileSystem.OpenAppPackageFileAsync("lessons.json"));
+        lessons = JsonSerializer.Deserialize<List<Lesson>>(await lessonsReader.ReadToEndAsync());
+
+        var resultsFile = Path.Combine(FileSystem.AppDataDirectory, "results.json");
+        if (File.Exists(resultsFile))
+            try
+            {
+                results = JsonSerializer.Deserialize<Results>(await File.ReadAllTextAsync(resultsFile));
+            }
+            catch (Exception exception)
+            {
+                logger.Error(exception, "Error when loading results");
+            }
+
+        await Utils.CopyFileToAppDataDirectory("four_card_majors.db3");
+        Pinvoke.Setup(Path.Combine(FileSystem.AppDataDirectory, "four_card_majors.db3"));
     }
 
     private async void PopModel(object sender, ModalPoppingEventArgs e)
@@ -167,11 +173,6 @@ public partial class BidTrainerPage
 
     private async Task StartNextBoard()
     {
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            PanelNorth.IsVisible = false;
-            BiddingBoxView.IsEnabled = true;
-        });
         if (CurrentBoardIndex > pbn.Boards.Count - 1)
         {
             CurrentBoardIndex = 0;
@@ -184,15 +185,18 @@ public partial class BidTrainerPage
             }
             else
             {
-                BiddingBoxView.IsEnabled = false;
                 await DisplayAlert("Info", "End of lessons", "OK");
                 CurrentLesson = 2;
                 ShowReport();
-                return;
             }
         }
-        MainThread.BeginInvokeOnMainThread(() => 
-            StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}");
+
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            PanelNorth.IsVisible = false;
+            BiddingBoxView.IsEnabled = true;
+            StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}";
+        });
         ShowBothHands();
         await StartBidding();
     }
