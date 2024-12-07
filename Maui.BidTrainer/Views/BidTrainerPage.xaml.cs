@@ -179,6 +179,8 @@ public partial class BidTrainerPage
 
             if (Lesson.LessonNr != lessons.Last().LessonNr)
             {
+                var percentage = results.AllResults[Lesson.LessonNr].Percentage;
+                await DisplayAlert("Info", $"End of lesson. Your have scored {percentage}", "OK");
                 CurrentLesson++;
                 await Shell.Current.GoToAsync($"{nameof(TheoryPage)}?Lesson={CurrentLesson}");
                 await StartLessonAsync();

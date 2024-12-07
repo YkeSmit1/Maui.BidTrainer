@@ -23,6 +23,7 @@ public class Results
             }
 
         public string Title => GetOverview(Results.ToList());
+        public string Percentage => (double)Results.Count(x => x.Value.AnsweredCorrectly) / Results.Count * 100 + "%";
     }
 
     [JsonInclude]
