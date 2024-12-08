@@ -6,11 +6,10 @@ namespace Maui.BidTrainer.Platforms.Android;
 [Application]
 public class MainApplication : MauiApplication
 {
-    public MainApplication(IntPtr handle, JniHandleOwnership ownership)
-        : base(handle, ownership)
+    public MainApplication(IntPtr handle, JniHandleOwnership ownership) : base(handle, ownership)
     {
-            DependencyService.Register<ICosmosDbHelper, CosmosDbHelper>();
-        }
+        DependencyService.Register<ICosmosDbHelper, CosmosDbHelper>();
+    }
 
     protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
 }

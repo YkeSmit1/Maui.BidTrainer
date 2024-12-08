@@ -3,36 +3,36 @@
     using Microsoft.Extensions.Logging;
 #endif
 
-    namespace Maui.BidTrainer;
+namespace Maui.BidTrainer;
 
-    public static class MauiProgram
+public static class MauiProgram
+{
+    public static MauiApp CreateMauiApp()
     {
-        public static MauiApp CreateMauiApp()
-        {
-            var builder = MauiApp.CreateBuilder();
-            builder
-                .UseMauiApp<App>()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
-            
-            IServiceCollection services = builder.Services;
+        var builder = MauiApp.CreateBuilder();
+        builder
+            .UseMauiApp<App>()
+            .ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            });
+        
+        IServiceCollection services = builder.Services;
 
-            var combine = Path.Combine(FileSystem.AppDataDirectory, "logs", "log.txt");
-            services.AddSerilog(
-                new LoggerConfiguration()
-                    .WriteTo.Debug()
-                    .WriteTo.File(combine, rollingInterval: RollingInterval.Day)
-                    .CreateLogger());
-            services.AddLogging(logging => logging.AddSerilog());
-            
+        var combine = Path.Combine(FileSystem.AppDataDirectory, "logs", "log.txt");
+        services.AddSerilog(
+            new LoggerConfiguration()
+                .WriteTo.Debug()
+                .WriteTo.File(combine, rollingInterval: RollingInterval.Day)
+                .CreateLogger());
+        services.AddLogging(logging => logging.AddSerilog());
+        
 
 #if DEBUG
-            builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
 
-            return builder.Build();
-        }
+        return builder.Build();
     }
+}

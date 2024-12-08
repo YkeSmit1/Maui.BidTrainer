@@ -4,6 +4,6 @@ public partial class BiddingBoxView
 {
     public BiddingBoxView()
     {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 }

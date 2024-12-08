@@ -10,26 +10,26 @@ public class CosmosDbHelper : ICosmosDbHelper
 
     public async Task<IEnumerable<Account>> GetAllAccounts()
     {
-            var queryDefinition = new QueryDefinition("select * from c");
-            using var query = Container.GetItemQueryIterator<Account>(queryDefinition);
-            return await query.ReadNextAsync();
-                }
+        var queryDefinition = new QueryDefinition("select * from c");
+        using var query = Container.GetItemQueryIterator<Account>(queryDefinition);
+        return await query.ReadNextAsync();
+    }
 
     public async Task<Account?> GetAccount(string username)
     {
-            var queryDefinition = new QueryDefinition($"select * from c where c.username = '{username}'");
-            using var query = Container.GetItemQueryIterator<Account>(queryDefinition);
-                var account = await query.ReadNextAsync();
-            return account.FirstOrDefault();
-            }
+        var queryDefinition = new QueryDefinition($"select * from c where c.username = '{username}'");
+        using var query = Container.GetItemQueryIterator<Account>(queryDefinition);
+        var account = await query.ReadNextAsync();
+        return account.FirstOrDefault();
+    }
 
     public async Task InsertAccount(Account account)
     {
-            await Container.CreateItemAsync(account);
-        }
+        await Container.CreateItemAsync(account);
+    }
 
     public async Task UpdateAccount(Account account)
     {
-            await Container.UpsertItemAsync(account);
-        }
+        await Container.UpsertItemAsync(account);
+    }
 }

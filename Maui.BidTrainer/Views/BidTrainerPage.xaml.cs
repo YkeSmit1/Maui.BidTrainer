@@ -129,28 +129,35 @@ public partial class BidTrainerPage
 
     private async Task ClickBiddingBoxButton(object parameter)
     {
-        var bid = (Bid)parameter;
-        if (isInHintMode)
+        try
         {
-            currentResult.UsedHint = true;
-            await DisplayAlert("Information", BidManager.GetInformation(bid, auction), "OK");
-        }
-        else
-        {
-            var engineBid = BidManager.GetBid(auction, Deal[Player.South]);
-
-            if (bid != engineBid)
+            var bid = (Bid)parameter;
+            if (isInHintMode)
             {
-                var message = $"The correct bid is {engineBid}. Description: {engineBid.description}.";
-                var engineBidInformation = BidManager.GetInformation(engineBid, auction);
-                var bidInformation = BidManager.GetInformation(bid, auction);
-                var s = $"{message}\n\nCorrect bid {engineBid}\n{engineBidInformation}\n\nYour bid {bid}\n{bidInformation}";
-                await DisplayAlert("Incorrect bid", s, "OK");
-                currentResult.AnsweredCorrectly = false;
+                currentResult.UsedHint = true;
+                await DisplayAlert("Information", BidManager.GetInformation(bid, auction), "OK");
             }
-            UpdateBidControls(engineBid);
+            else
+            {
+                var engineBid = BidManager.GetBid(auction, Deal[Player.South]);
 
-            await BidTillSouth();
+                if (bid != engineBid)
+                {
+                    var message = $"The correct bid is {engineBid}. Description: {engineBid.description}.";
+                    var engineBidInformation = BidManager.GetInformation(engineBid, auction);
+                    var bidInformation = BidManager.GetInformation(bid, auction);
+                    var s = $"{message}\n\nCorrect bid {engineBid}\n{engineBidInformation}\n\nYour bid {bid}\n{bidInformation}";
+                    await DisplayAlert("Incorrect bid", s, "OK");
+                    currentResult.AnsweredCorrectly = false;
+                }
+                UpdateBidControls(engineBid);
+
+                await BidTillSouth();
+            }
+        }
+        catch (Exception exception)
+        {
+            await DisplayAlert("Error", exception.Message, "OK");
         }
     }
 

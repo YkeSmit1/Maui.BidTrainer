@@ -9,10 +9,10 @@ public partial class LeaderboardViewModel : ObservableObject
 
     public LeaderboardViewModel()
     {
-            Task.Run(async () =>
-            {
-                var lAccounts = await DependencyService.Get<ICosmosDbHelper>().GetAllAccounts();
-                Accounts = [..lAccounts.OrderByDescending(x => (double)x.numberOfCorrectBoards / x.numberOfBoardsPlayed)];
-            });
-        }
+        Task.Run(async () =>
+        {
+            var lAccounts = await DependencyService.Get<ICosmosDbHelper>().GetAllAccounts();
+            Accounts = [..lAccounts.OrderByDescending(x => (double)x.numberOfCorrectBoards / x.numberOfBoardsPlayed)];
+        });
+    }
 }

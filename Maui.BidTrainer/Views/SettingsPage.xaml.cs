@@ -17,23 +17,37 @@ public partial class SettingsPage
 
     protected override async void OnDisappearing()
     {
-        base.OnDisappearing();
-        var settingsViewModel = (SettingsViewModel)BindingContext;
-        if (Preferences.Get("Username", "") != settingsViewModel.Username)
+        try
         {
-            var account = await DependencyService.Get<ICosmosDbHelper>().GetAccount(settingsViewModel.Username);
-            if (account != null)
+            base.OnDisappearing();
+            var settingsViewModel = (SettingsViewModel)BindingContext;
+            if (Preferences.Get("Username", "") != settingsViewModel.Username)
             {
-                await DisplayAlert("Error", "Username already exists", "OK");
-                return;
+                var account = await DependencyService.Get<ICosmosDbHelper>().GetAccount(settingsViewModel.Username);
+                if (account != null)
+                {
+                    await DisplayAlert("Error", "Username already exists", "OK");
+                    return;
+                }
             }
-        }
 
-        settingsViewModel.Save();
+            settingsViewModel.Save();
+        }
+        catch (Exception exception)
+        {
+            await DisplayAlert("Error", exception.Message, "OK");
+        }
     }
 
     private async void ButtonSave_OnClicked(object sender, EventArgs e)
     {
-        await Navigation.PopModalAsync();
+        try
+        {
+            await Navigation.PopModalAsync();
+        }
+        catch (Exception exception)
+        {
+            await DisplayAlert("Error", exception.Message, "OK");
+        }
     }
 }

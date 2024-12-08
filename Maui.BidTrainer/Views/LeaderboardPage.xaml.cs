@@ -4,6 +4,6 @@ public partial class LeaderboardPage
 {
     public LeaderboardPage()
     {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 }

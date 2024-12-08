@@ -4,6 +4,6 @@ public partial class HandView
 {
     public HandView()
     {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 }

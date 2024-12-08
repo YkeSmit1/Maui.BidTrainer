@@ -43,12 +43,11 @@ public class CardImageSettings
 
     public static CardImageSettings GetCardImageSettings(string settings)
     {
-            return settings switch
-            {
-                "default" => DefaultCardImageSettings,
-                "bbo" => BboCardImageSettings,
-                _ => throw new NotImplementedException(),
-            };
-        }
-
+        return settings switch
+        {
+            "default" => DefaultCardImageSettings,
+            "bbo" => BboCardImageSettings,
+            _ => throw new NotImplementedException(),
+        };
+    }
 }

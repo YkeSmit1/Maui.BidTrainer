@@ -13,20 +13,20 @@ public partial class SettingsViewModel : ObservableObject
 
     public SettingsViewModel()
     {
-            Load();
-        }
+        Load();
+    }
 
     public void Load()
     {
-            Username = Preferences.Get("Username", "");
-            AlternateSuits = Preferences.Get("AlternateSuits", true);
-            CardImage = Preferences.Get("CardImageSettings", "default");
-        }
+        Username = Preferences.Get("Username", "");
+        AlternateSuits = Preferences.Get("AlternateSuits", true);
+        CardImage = Preferences.Get("CardImageSettings", "default");
+    }
 
     public void Save()
     {
-            Preferences.Set("Username", Username);
-            Preferences.Set("AlternateSuits", AlternateSuits);
-            Preferences.Set("CardImageSettings", CardImage);
-        }
+        Preferences.Set("Username", Username);
+        Preferences.Set("AlternateSuits", AlternateSuits);
+        Preferences.Set("CardImageSettings", CardImage);
+    }
 }

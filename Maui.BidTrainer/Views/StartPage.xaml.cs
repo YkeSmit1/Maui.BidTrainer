@@ -11,7 +11,14 @@ public partial class StartPage
 
     protected override async void OnAppearing()
     {
-        base.OnAppearing();
-        await ((StartViewModel)BindingContext).LoadLessonsAsync();
+        try
+        {
+            base.OnAppearing();
+            await ((StartViewModel)BindingContext).LoadLessonsAsync();
+        }
+        catch (Exception exception)
+        {
+            await DisplayAlert("Error", exception.Message, "OK");
+        }
     }
 }
