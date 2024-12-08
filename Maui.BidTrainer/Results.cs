@@ -20,6 +20,7 @@ public class Results
         public void AddResult(int board, Result result) => Results[board] = result;
         public string Title => GetOverview(Results.ToList());
         public string Percentage => (double)Results.Count(x => x.Value.AnsweredCorrectly) / Results.Count * 100 + "%";
+        public List<int> GetWrongBoards() => Results.Where(x => !x.Value.AnsweredCorrectly).Select(x => x.Key).ToList();
     }
 
     [JsonInclude]
@@ -28,7 +29,7 @@ public class Results
     {
         if (!AllResults.ContainsKey(lesson))
             AllResults[lesson] = new ResultsPerLesson();
-        AllResults[lesson].AddResult(board + 1, result);
+        AllResults[lesson].AddResult(board, result);
     }
     public string Title => GetOverview(AllResults.SelectMany(x => x.Value.Results).ToList());
 

@@ -41,6 +41,7 @@ public partial class BidTrainerPage
     private Result currentResult;
     private DateTime startTimeBoard;
     private Results results = new();
+    private bool repeatMistakesMode;
 
     // ViewModels
     private BiddingBoxViewModel BiddingBoxViewModel => (BiddingBoxViewModel)BiddingBoxView.BindingContext;
@@ -172,23 +173,34 @@ public partial class BidTrainerPage
 
     private async Task StartNextBoard()
     {
-        if (CurrentBoardIndex > pbn.Boards.Count - 1)
+        if (CurrentBoardIndex == -1)
         {
-            CurrentBoardIndex = 0;
-
-            if (Lesson.LessonNr != lessons.Last().LessonNr)
+            var wrongBoards = results.AllResults[CurrentLesson].GetWrongBoards();
+            if (!repeatMistakesMode && wrongBoards.Count > 0)
             {
-                var percentage = results.AllResults[Lesson.LessonNr].Percentage;
-                await DisplayAlert("Info", $"End of lesson. Your have scored {percentage}", "OK");
-                CurrentLesson++;
-                await Shell.Current.GoToAsync($"{nameof(TheoryPage)}?Lesson={CurrentLesson}");
-                await StartLessonAsync();
+                repeatMistakesMode = true;
+                CurrentBoardIndex = wrongBoards.First();
+                MistakeLabel.Text = "Previous mistakes";
             }
-            else
+            else 
             {
-                await DisplayAlert("Info", "End of lessons", "OK");
-                CurrentLesson = 2;
-                ShowReport();
+                MistakeLabel.Text = "";
+                CurrentBoardIndex = 0;
+
+                if (Lesson.LessonNr != lessons.Last().LessonNr)
+                {
+                    var percentage = results.AllResults[Lesson.LessonNr].Percentage;
+                    await DisplayAlert("Info", $"End of lesson. Your have scored {percentage}", "OK");
+                    CurrentLesson++;
+                    await Shell.Current.GoToAsync($"{nameof(TheoryPage)}?Lesson={CurrentLesson}");
+                    await StartLessonAsync();
+                }
+                else
+                {
+                    await DisplayAlert("Info", "End of lessons", "OK");
+                    CurrentLesson = 2;
+                    ShowReport();
+                }
             }
         }
 
@@ -234,19 +246,34 @@ public partial class BidTrainerPage
         {
             BiddingBoxView.IsEnabled = false;
             PanelNorth.IsVisible = true;
-            currentResult.TimeElapsed = DateTime.Now - startTimeBoard;
-            currentResult.Lesson = CurrentLesson;
-            currentResult.Board = CurrentBoardIndex;
+            if (!repeatMistakesMode)
+            {
+                currentResult.TimeElapsed = DateTime.Now - startTimeBoard;
+                currentResult.Lesson = CurrentLesson;
+                currentResult.Board = CurrentBoardIndex;
+                results.AddResult(Lesson.LessonNr, CurrentBoardIndex, currentResult);
+            }
             await DisplayAlert("Info", $"Hand is done. Contract:{auction.currentContract}", "OK");
-            results.AddResult(Lesson.LessonNr, CurrentBoardIndex, currentResult);
             await UploadResultsAsync();
-            CurrentBoardIndex++;
+            CurrentBoardIndex = GetNextBoardNumber();
 
             var resultsFile = Path.Combine(FileSystem.AppDataDirectory, "results.json");
-            await File.WriteAllTextAsync(resultsFile, JsonSerializer.Serialize(results, new JsonSerializerOptions() { WriteIndented = true }));
+            await File.WriteAllTextAsync(resultsFile, JsonSerializer.Serialize(results, new JsonSerializerOptions { WriteIndented = true }));
 
             await StartNextBoard();
         }
+    }
+
+    private int GetNextBoardNumber()
+    {
+        if (repeatMistakesMode)
+        {
+            var wrongBoards = results.AllResults[CurrentLesson].GetWrongBoards();
+            return wrongBoards.Last() == CurrentBoardIndex ? -1 : wrongBoards.SkipWhile(x => x != CurrentBoardIndex).ElementAt(1);
+        }
+        if (CurrentBoardIndex == pbn.Boards.Count - 1)
+            return -1;
+        return CurrentBoardIndex + 1;
     }
 
     private async Task UploadResultsAsync()
@@ -312,7 +339,7 @@ public partial class BidTrainerPage
     {
         try
         {
-            CurrentBoardIndex++;
+            CurrentBoardIndex = GetNextBoardNumber();
             await StartNextBoard();
         }
         catch (Exception exception)
