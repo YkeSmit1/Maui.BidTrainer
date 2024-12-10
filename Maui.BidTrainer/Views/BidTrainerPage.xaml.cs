@@ -296,7 +296,7 @@ public partial class BidTrainerPage
 
             var cosmosDbHelper = DependencyService.Get<ICosmosDbHelper>();
             var user = await cosmosDbHelper.GetAccount(username);
-            if (user == null)
+            if (user == null || string.IsNullOrWhiteSpace(user.Value.id))
             {
                 account.id = Guid.NewGuid().ToString();
                 await cosmosDbHelper.InsertAccount(account);
