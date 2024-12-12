@@ -250,7 +250,7 @@ public partial class BidTrainerPage
             {
                 currentResult.TimeElapsed = DateTime.Now - startTimeBoard;
                 currentResult.Lesson = CurrentLesson;
-                currentResult.Board = CurrentBoardIndex;
+                currentResult.Board = CurrentBoardIndex + 1;
                 results.AddResult(Lesson.LessonNr, CurrentBoardIndex, currentResult);
             }
             await DisplayAlert("Info", $"Hand is done. Contract:{auction.currentContract}", "OK");

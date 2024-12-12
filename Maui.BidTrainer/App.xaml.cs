@@ -15,11 +15,12 @@ public partial class App
 
 #if WINDOWS
         window.Width = 600;
-        window.Height = 1000;
+        window.Height = 900;
         
         var displayInfo = DeviceDisplay.Current.MainDisplayInfo;
+
         window.X = (displayInfo.Width / displayInfo.Density - window.Width) / 2;
-        window.Y = (displayInfo.Height / displayInfo.Density - window.Height) / 2;
+        window.Y = ((displayInfo.Height / displayInfo.Density - window.Height) / 2) - 20;
 #endif
         return window;
     }    

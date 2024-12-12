@@ -15,7 +15,7 @@ public class BiddingBoxViewModel : ObservableObject
     {
         SuitBids = new ObservableCollection<Bid>(Enum.GetValues(typeof(Suit)).Cast<Suit>()
             .SelectMany(_ => Enumerable.Range(1, 7), (suit, level) => new { suit, level })
-            .Select(x => new Bid(x.level, x.suit)));
+            .Select(x => new Bid(x.level, x.suit)).OrderBy(x => x.Suit).ThenBy(x => x.Rank));
         NonSuitBids = [Bid.PassBid, Bid.Dbl, Bid.Rdbl];
     }
 }
