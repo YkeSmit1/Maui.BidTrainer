@@ -20,12 +20,11 @@
     <ContentPage.Content>
         <Grid BackgroundColor="{AppThemeBinding Light={StaticResource MediumSeaGreen}, Dark={StaticResource DarkOliveGreen}}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="90"/> 
-                <RowDefinition Height="110"/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="auto"/> 
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="110"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="70"/>
             </Grid.RowDefinitions>
@@ -38,21 +37,23 @@
                    BackgroundColor="{AppThemeBinding Light={StaticResource SeaGreen}, Dark={StaticResource DarkGreen}}"/>
             <Button Grid.Row="0" Grid.Column="1" Clicked="ButtonClickedShowLog" Text="Log" IsVisible="False"></Button>
             <!-- NorthHand-->
-            <views:HandView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,10,0,0" x:Name="PanelNorth"/>
-            <StackLayout Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Center">
-                <Label x:Name="LabelMode" Text="Bid"/>
-                <Switch ThumbColor="SandyBrown" OnColor="RosyBrown" Toggled="Switch_Toggled"/>
-            </StackLayout>
-            <Label Grid.Row="3" Grid.Column="0" x:Name="MistakeLabel" TextColor="Coral" Padding="10"></Label>
+            <views:HandView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="PanelNorth"/>
+            <Label Grid.Row="2" Grid.Column="0" x:Name="MistakeLabel" TextColor="Coral" Padding="10"></Label>
             <!-- BiddingBox-->
-            <views:BiddingBoxView Grid.Row="4" Grid.Column="0" x:Name="BiddingBoxView" Margin="10"/>
+            <views:BiddingBoxView Grid.Row="3" Grid.Column="0" x:Name="BiddingBoxView" Margin="10"/>
             <!-- Auction-->
-            <views:AuctionView Grid.Row="4" Grid.Column="1" x:Name="AuctionView"/>
+            <StackLayout Grid.Row="3" Grid.Column="1" Orientation="Vertical">
+                <StackLayout  Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label x:Name="LabelMode" Text="Bid"/>
+                    <Switch ThumbColor="SandyBrown" OnColor="RosyBrown" Toggled="Switch_Toggled"/>
+                </StackLayout>
+                <views:AuctionView x:Name="AuctionView"/>
+            </StackLayout>
             <!-- SouthHand-->
-            <views:HandView Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,10,0,0" x:Name="PanelSouth"/>
-            <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Text="South" FontAttributes="Bold" 
+            <views:HandView Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" x:Name="PanelSouth"/>
+            <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Text="South" FontAttributes="Bold" 
                    HorizontalTextAlignment="Center"/>
-            <StackLayout Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2"  Orientation="Horizontal" Padding="10" 
+            <StackLayout Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"  Orientation="Horizontal" Padding="10" 
                          BackgroundColor="{AppThemeBinding Light={StaticResource SeaGreen}, Dark={StaticResource DarkGreen}}">
                 <Button Text="NextBoard" Clicked="ButtonClickedNextBoard" ImageSource="icons8_next_32.png" Style="{StaticResource ToolbarButton}"/>
                 <Button Text="Lesson" Clicked="ButtonClickedStartLesson" ImageSource="icons8_flashcards_32.png" Style="{StaticResource ToolbarButton}"/>
