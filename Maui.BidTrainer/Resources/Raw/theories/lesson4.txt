@@ -4,32 +4,32 @@
 
 ** Overcall **
 
-At the one level		Good five card suit and 8-17 points
-At the two level		Good five card suit and 10-17 points
+At the one level        Good five card suit and 8-17 points
+At the two level        Good five card suit and 10-17 points
 
 
 ** 1NT overcall **
 
-15-17 points
-Balanced hand
-Stopper in the opponent's suit
+- 15-17 points
+- Balanced hand
+- Stopper in the opponent's suit
 
 After this, the same as after a 1NT opening
 
 
 ** Take out double **
 
-Can be two different things 
+Can be two different things
 
-12+ points and minimal 3 cards in all unbid suits
-18+ any shape
+- 12+ points and minimal 3 cards in all unbid suits
+- 18+ any shape
 
 Responses
 
 You cannot pass, otherwise the contract will be one in a suit doubled
 
-New suit without a jump		0-9
-New suit with a jump			10-11
-Bid in the opponent's suit		12+ GF    
+New suit without a jump         0-9
+New suit with a jump            10-11
+Bid in the opponent's suit      12+ GF
 
 

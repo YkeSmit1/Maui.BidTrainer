@@ -4,7 +4,7 @@
 
 ** Openings **
 
-Opening in a suit		            12-19
+Opening in a suit                   12-19
 Longest suit
 Highest from two five card suits
 Lowest from two four card suits
@@ -12,25 +12,25 @@ Lowest from two four card suits
 
 ** Responses **
 
-One in a new suit		            6+
-Two in a new suit		            10+
+One in a new suit                   6+
+Two in a new suit                   10+
 
-1NT                                      6-9	Garbage bid
-2NT				            10-11
-3NT				            12+
+1NT                                 6-9    Garbage bid
+2NT                                 10-11
+3NT                                 12+
 
-Two in partners suit		            6-9
-Three in partners suit		     10-11
-Four in partners suit (Major) 	     12+
+Two in partners suit                6-9
+Three in partners suit              10-11
+Four in partners suit (Major)       12+
 
 
 ** Openers rebid **
 
-Cheapest NT			            12-14
-NT with jump			            18-19
+Cheapest NT                         12-14
+NT with jump                        18-19
 
-New suit			            12-17
-Jump in a new suit		            18-19
+New suit                            12-17
+Jump in a new suit                  18-19
 
-Rebid without a jump	        	     12-14
-Rebid with a jump		            15-17
+Rebid without a jump                12-14
+Rebid with a jump                   15-17

@@ -17,9 +17,11 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Text="{Binding Lesson, Converter={StaticResource LessonToTextConverter}}" Margin="10"
-                   FontFamily="Courier New">
-            </Label>
+            <ScrollView Grid.Row="0">
+                <Label Text="{Binding Lesson, Converter={StaticResource LessonToTextConverter}}" Margin="10" 
+                       FontSize="11" FontFamily="{OnPlatform WinUI='Courier New', Android='monospace'}">
+                </Label>
+            </ScrollView>
             <Button Grid.Row="1" Text="Close" Clicked="ButtonCloseClicked"></Button>
         </Grid>
     </ContentPage.Content>
