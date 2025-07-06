@@ -5,11 +5,11 @@ namespace Maui.BidTrainer.ViewModels;
 public partial class SettingsViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string username;
+    public partial string Username {get; set; }
     [ObservableProperty]
-    private bool alternateSuits;
+    public partial bool AlternateSuits {get; set; }
     [ObservableProperty]
-    private string cardImage;
+    public partial string CardImage {get; set; }
 
     public SettingsViewModel()
     {

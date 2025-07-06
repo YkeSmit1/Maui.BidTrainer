@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <OutputType>WinExe</OutputType>
   </PropertyGroup>
   <ItemGroup>
@@ -9,7 +9,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Common.BridgeClasses" Version="1.0.7" />
+    <PackageReference Include="Common.BridgeClasses" Version="1.0.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.1">

@@ -6,5 +6,5 @@ namespace Maui.BidTrainer.ViewModels;
 public partial class AuctionViewModel : ObservableObject
 {
     [ObservableProperty]
-    private ObservableCollection<string> bids = [];
+    public partial ObservableCollection<string> Bids {get; set;} = [];
 }

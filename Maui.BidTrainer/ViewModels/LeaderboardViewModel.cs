@@ -5,7 +5,7 @@ namespace Maui.BidTrainer.ViewModels;
 public partial class LeaderboardViewModel : ObservableObject
 {
     [ObservableProperty]
-    private List<Account> accounts = [];
+    public partial  List<Account> Accounts {get; set; } = [];
 
     public LeaderboardViewModel()
     {

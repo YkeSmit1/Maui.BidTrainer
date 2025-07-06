@@ -5,5 +5,5 @@ namespace Maui.BidTrainer.ViewModels;
 public partial class ResultsViewModel : ObservableObject
 {
     [ObservableProperty]
-    private Results results = new();
+    public partial Results Results {get; set; } = new();
 }

@@ -6,7 +6,7 @@ namespace Maui.BidTrainer.ViewModels;
 public partial class TheoryViewModel : ObservableObject, IQueryAttributable
 {
     [ObservableProperty] 
-    private int lesson;
+    public partial int Lesson {get; set; }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
