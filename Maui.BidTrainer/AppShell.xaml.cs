@@ -10,5 +10,10 @@ public partial class AppShell
         Routing.RegisterRoute(nameof(BidTrainerPage), typeof(BidTrainerPage));
         Routing.RegisterRoute(nameof(LogPage), typeof(LogPage));
         Routing.RegisterRoute(nameof(TheoryPage), typeof(TheoryPage));
+        Routing.RegisterRoute(nameof(ResultsPage2), typeof(ResultsPage2));
+        Routing.RegisterRoute(nameof(ResultsPage), typeof(ResultsPage));
+        Routing.RegisterRoute(nameof(StartPage), typeof(StartPage));
+        Routing.RegisterRoute(nameof(LeaderboardPage), typeof(LeaderboardPage));
+        Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
     }
 }

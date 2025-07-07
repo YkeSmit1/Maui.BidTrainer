@@ -311,23 +311,14 @@ public partial class BidTrainerPage
 
     private void ShowReport()
     {
-        if (DeviceInfo.Platform == DevicePlatform.WinUI)
-        {
-            var resultsPage2 = new ResultsPage2(results);
-            Application.Current!.MainPage!.Navigation.PushAsync(resultsPage2);
-        }
-        else
-        {
-            var resultsPage = new ResultsPage(results);
-            Application.Current!.MainPage!.Navigation.PushAsync(resultsPage);
-        }
+        Shell.Current.GoToAsync(DeviceInfo.Platform == DevicePlatform.WinUI ? nameof(ResultsPage2) : nameof(ResultsPage));
     }
 
     private async void ButtonClickedStartLesson(object sender, EventArgs e)
     {
         try
         {
-            await Application.Current!.MainPage!.Navigation.PushAsync(startPage);
+            await Shell.Current.GoToAsync(nameof(startPage));
         }
         catch (Exception exception)
         {
@@ -364,7 +355,7 @@ public partial class BidTrainerPage
     {
         try
         {
-            await Application.Current!.MainPage!.Navigation.PushAsync(new LeaderboardPage());
+            await Shell.Current.GoToAsync(nameof(LeaderboardPage));
         }
         catch (Exception exception)
         {
@@ -376,7 +367,7 @@ public partial class BidTrainerPage
     {
         try
         {
-            await Application.Current!.MainPage!.Navigation.PushModalAsync(settingsPage);
+            await Shell.Current.GoToAsync(nameof(settingsPage));
         }
         catch (Exception exception)
         {
