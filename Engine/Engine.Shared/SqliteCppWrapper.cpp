@@ -53,7 +53,7 @@ SqliteCppWrapper::SqliteCppWrapper(const std::string& database)
     try
     {
         db.release();
-        db = std::make_unique<SQLite::Database>(database);
+        db = std::make_unique<SQLite::Database>(database.c_str());
         db->createFunction("regex_match", 2, true, nullptr, &regex_match, nullptr, nullptr, nullptr);
         db->createFunction("getBidKindFromAuction", 2, true, nullptr, &getBidKindFromAuction, nullptr, nullptr, nullptr);
 

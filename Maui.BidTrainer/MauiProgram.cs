@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using Maui.BidTrainer.Services;
+using Serilog;
 #if DEBUG
     using Microsoft.Extensions.Logging;
 #endif
@@ -27,7 +28,7 @@ public static class MauiProgram
                 .WriteTo.File(combine, rollingInterval: RollingInterval.Day)
                 .CreateLogger());
         services.AddLogging(logging => logging.AddSerilog());
-        
+        builder.Services.AddSingleton<SettingsService>();
 
 #if DEBUG
         builder.Logging.AddDebug();

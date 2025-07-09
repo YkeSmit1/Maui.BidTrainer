@@ -3,6 +3,7 @@ using System.Text.Json;
 using Common;
 using CommunityToolkit.Mvvm.Input;
 using EngineWrapper;
+using Maui.BidTrainer.Services;
 using Maui.BidTrainer.ViewModels;
 using Serilog;
 
@@ -11,7 +12,7 @@ namespace Maui.BidTrainer.Views;
 public partial class BidTrainerPage
 {
     private readonly StartPage startPage = new();
-    private readonly SettingsPage settingsPage = new();
+    private readonly SettingsService settingsService;
     private Dictionary<(string suit, string card), string> dictionary;
 
     // Bidding
@@ -50,10 +51,12 @@ public partial class BidTrainerPage
     private HandViewModel HandViewModelSouth => (HandViewModel)PanelSouth.BindingContext;
     private readonly ILogger logger = IPlatformApplication.Current!.Services.GetService<ILogger>();
 
-    public BidTrainerPage()
+    public BidTrainerPage(SettingsService settingsService)
     {
         InitializeComponent();
-        Application.Current!.ModalPopping += PopModel;
+        this.settingsService = settingsService;
+        this.settingsService.SettingsChanged += (_, _) => UpdateUi();
+        
         BiddingBoxViewModel.DoBid = new AsyncRelayCommand<object>(ClickBiddingBoxButton, param => auction.BidIsPossible((Bid)param));
         AuctionViewModel.Bids.Clear();
         logger.Information("Test");
@@ -72,6 +75,7 @@ public partial class BidTrainerPage
         {
             if (!startPage.IsLoaded)
                 await Initialize();
+            UpdateUi();
             await StartLessonAsync();
             await StartNextBoard();
         }
@@ -80,10 +84,16 @@ public partial class BidTrainerPage
             await DisplayAlert("Error", e.ToString(), "OK");
         }
     }
-    
+
+    private void UpdateUi()
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+            StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}");
+        GenerateCardImages();
+    }
+
     private async Task Initialize()
     {
-        GenerateCardImages();
         using var lessonsReader = new StreamReader(await FileSystem.OpenAppPackageFileAsync("lessons.json"));
         lessons = JsonSerializer.Deserialize<List<Lesson>>(await lessonsReader.ReadToEndAsync());
 
@@ -100,23 +110,6 @@ public partial class BidTrainerPage
 
         await Utils.CopyFileToAppDataDirectory("four_card_majors.db3");
         Pinvoke.Setup(Path.Combine(FileSystem.AppDataDirectory, "four_card_majors.db3"));
-    }
-
-    private async void PopModel(object sender, ModalPoppingEventArgs e)
-    {
-        try
-        {
-            if (e.Modal != settingsPage) return;
-            ((SettingsViewModel)settingsPage.BindingContext).Save();
-            MainThread.BeginInvokeOnMainThread(() =>
-                StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}");
-            GenerateCardImages();
-            ShowBothHands();
-        }
-        catch (Exception exception)
-        {
-            await DisplayAlert("Error", exception.Message, "OK");
-        }
     }
 
     private async Task StartLessonAsync()
@@ -199,7 +192,7 @@ public partial class BidTrainerPage
                 {
                     await DisplayAlert("Info", "End of lessons", "OK");
                     CurrentLesson = 2;
-                    ShowReport();
+                    await ShowReport();
                 }
             }
         }
@@ -309,16 +302,16 @@ public partial class BidTrainerPage
         }
     }
 
-    private void ShowReport()
+    private async Task ShowReport()
     {
-        Shell.Current.GoToAsync(DeviceInfo.Platform == DevicePlatform.WinUI ? nameof(ResultsPage2) : nameof(ResultsPage));
+        await Shell.Current.GoToAsync(DeviceInfo.Platform == DevicePlatform.WinUI ? nameof(ResultsPage2) : nameof(ResultsPage), new Dictionary<string, object> { ["Results"] = results });
     }
 
     private async void ButtonClickedStartLesson(object sender, EventArgs e)
     {
         try
         {
-            await Shell.Current.GoToAsync(nameof(startPage));
+            await Shell.Current.GoToAsync(nameof(StartPage));
         }
         catch (Exception exception)
         {
@@ -343,7 +336,7 @@ public partial class BidTrainerPage
     {
         try
         {
-            ShowReport();
+            await ShowReport();
         }
         catch (Exception exception)
         {
@@ -367,7 +360,7 @@ public partial class BidTrainerPage
     {
         try
         {
-            await Shell.Current.GoToAsync(nameof(settingsPage));
+            await Shell.Current.GoToAsync(nameof(SettingsPage));
         }
         catch (Exception exception)
         {

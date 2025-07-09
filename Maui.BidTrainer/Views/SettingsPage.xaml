@@ -48,7 +48,6 @@
                     <Image Grid.Row="1" Grid.Column="1" Source="cardfaces2.jpg"/>
                 </Grid>
             </StackLayout>
-            <Button Grid.Row="3" Grid.Column="0" Text="Save" Clicked="ButtonSave_OnClicked" HeightRequest="50" Padding="10"></Button>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

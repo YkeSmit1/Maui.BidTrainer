@@ -2,7 +2,6 @@
 
 namespace Maui.BidTrainer.ViewModels;
 
-
 public partial class TheoryViewModel : ObservableObject, IQueryAttributable
 {
     [ObservableProperty] 

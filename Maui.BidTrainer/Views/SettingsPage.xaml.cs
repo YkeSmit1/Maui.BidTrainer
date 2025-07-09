@@ -1,12 +1,15 @@
-﻿using Maui.BidTrainer.ViewModels;
+﻿using Maui.BidTrainer.Services;
+using Maui.BidTrainer.ViewModels;
 
 namespace Maui.BidTrainer.Views;
 
 public partial class SettingsPage
 {
-    public SettingsPage()
+    private readonly SettingsService settingsService;
+    public SettingsPage(SettingsService settingsService)
     {
         InitializeComponent();
+        this.settingsService = settingsService;
     }
 
     protected override void OnAppearing()
@@ -32,18 +35,7 @@ public partial class SettingsPage
             }
 
             settingsViewModel.Save();
-        }
-        catch (Exception exception)
-        {
-            await DisplayAlert("Error", exception.Message, "OK");
-        }
-    }
-
-    private async void ButtonSave_OnClicked(object sender, EventArgs e)
-    {
-        try
-        {
-            await Navigation.PopModalAsync();
+            settingsService.NotifySettingsChanged();
         }
         catch (Exception exception)
         {

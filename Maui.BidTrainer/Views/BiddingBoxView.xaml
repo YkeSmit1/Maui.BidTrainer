@@ -9,7 +9,7 @@
   </ContentView.BindingContext>
     <ContentView.Resources>
         <DataTemplate x:Key="BidButtonsTemplate" x:DataType="{x:Type common:Bid }">
-            <Frame Padding="1" BackgroundColor="MediumSeaGreen">
+            <Border Padding="1" BackgroundColor="MediumSeaGreen">
                 <Button Text="{Binding}" 
                         FontSize="9"
                         BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
@@ -18,7 +18,7 @@
                         Command="{Binding Path=DoBid, Source={RelativeSource AncestorType={x:Type viewModels:BiddingBoxViewModel}} }" 
                         x:DataType="common:Bid"
                         CommandParameter="{Binding}"/>
-            </Frame>
+            </Border>
         </DataTemplate>
     </ContentView.Resources>
     
