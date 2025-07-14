@@ -8,15 +8,16 @@
       <viewModels:BiddingBoxViewModel/>
   </ContentView.BindingContext>
     <ContentView.Resources>
-        <DataTemplate x:Key="BidButtonsTemplate" x:DataType="{x:Type common:Bid }">
+        <DataTemplate x:Key="BidButtonsTemplate" x:DataType="common:Bid">
             <Border Padding="1" BackgroundColor="MediumSeaGreen">
+                <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                 <Button Text="{Binding}" 
                         FontSize="9"
                         BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                         TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
                         HorizontalOptions="Center" VerticalOptions="Center"
-                        Command="{Binding Path=DoBid, Source={RelativeSource AncestorType={x:Type viewModels:BiddingBoxViewModel}} }" 
-                        x:DataType="common:Bid"
+                        Command="{Binding Path=DoBidCommand, Source={RelativeSource AncestorType={x:Type viewModels:BiddingBoxViewModel}}, 
+                            x:DataType=viewModels:BiddingBoxViewModel}" 
                         CommandParameter="{Binding}"/>
             </Border>
         </DataTemplate>

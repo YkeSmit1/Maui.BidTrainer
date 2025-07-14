@@ -22,12 +22,12 @@
             </Grid.RowDefinitions>
             <CollectionView Grid.Row="0" ItemsSource="{Binding Lessons}" x:DataType="viewModels:StartViewModel">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type bidTrainer:Lesson}">
+                    <DataTemplate x:DataType="bidTrainer:Lesson">
                         <StackLayout>
                             <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                             <Button Text="{Binding Content}"
                                     Command="{Binding Path=StartLessonCommand, 
-                                        Source={RelativeSource AncestorType={x:Type viewModels:StartViewModel}}}" 
+                                        Source={RelativeSource AncestorType={x:Type viewModels:StartViewModel}}, x:DataType=viewModels:StartViewModel}" 
                                     CommandParameter="{Binding LessonNr}"/>
                             <BoxView Color="Black" WidthRequest="100" HeightRequest="2"/>
                         </StackLayout>

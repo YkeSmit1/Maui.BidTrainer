@@ -57,7 +57,7 @@ public partial class BidTrainerPage
         this.settingsService = settingsService;
         this.settingsService.SettingsChanged += (_, _) => UpdateUi();
         
-        BiddingBoxViewModel.DoBid = new AsyncRelayCommand<object>(ClickBiddingBoxButton, param => auction.BidIsPossible((Bid)param));
+        BiddingBoxViewModel.DoBidCommand = new AsyncRelayCommand<Bid>(ClickBiddingBoxButton, bid => auction.BidIsPossible(bid));
         AuctionViewModel.Bids.Clear();
         logger.Information("Test");
     }
@@ -121,11 +121,10 @@ public partial class BidTrainerPage
             results.AllResults.Remove(Lesson.LessonNr);
     }
 
-    private async Task ClickBiddingBoxButton(object parameter)
+    private async Task ClickBiddingBoxButton(Bid bid)
     {
         try
         {
-            var bid = (Bid)parameter;
             if (isInHintMode)
             {
                 currentResult.UsedHint = true;
@@ -161,7 +160,7 @@ public partial class BidTrainerPage
         if (AuctionViewModel.Bids.Any() && AuctionViewModel.Bids.Last() == "?")
             AuctionViewModel.Bids.RemoveAt(AuctionViewModel.Bids.Count - 1);
         AuctionViewModel.Bids.Add(bid.ToString());
-        BiddingBoxViewModel.DoBid?.NotifyCanExecuteChanged();
+        BiddingBoxViewModel.DoBidCommand?.NotifyCanExecuteChanged();
     }
 
     private async Task StartNextBoard()
@@ -211,7 +210,7 @@ public partial class BidTrainerPage
     {
         auction.Clear(Dealer);
         AuctionViewModel.Bids = new ObservableCollection<string>(auction.Bids.SelectMany(x => x.Value.Values).Select(_ => ""));
-        BiddingBoxViewModel.DoBid?.NotifyCanExecuteChanged();
+        BiddingBoxViewModel.DoBidCommand?.NotifyCanExecuteChanged();
         startTimeBoard = DateTime.Now;
         currentResult = new Result();
         await BidTillSouth();

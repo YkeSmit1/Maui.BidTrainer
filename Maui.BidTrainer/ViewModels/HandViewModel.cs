@@ -23,13 +23,11 @@ public class HandViewModel : ObservableObject
         {
             foreach (var card in suit.x)
             {
-                var valueTuple = (Util.GetSuitDescriptionASCII(suit.Item2), card.ToString());
                 Cards.Add(new Card
                 {
-                    Rect = new Rect(index * settings.CardDistance, 0, settings.CardWidth, settings.CardHeight),
-                    Source = dictionary[valueTuple],
+                    Rect = new Rect(index++ * settings.CardDistance, 0, settings.CardWidth, settings.CardHeight),
+                    Source = dictionary[(Util.GetSuitDescriptionASCII(suit.Item2), card.ToString())],
                 });
-                index++;
             }
         }
     }
