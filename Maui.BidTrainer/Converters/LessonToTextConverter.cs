@@ -12,7 +12,7 @@ public class LessonToTextConverter : IValueConverter
         if (!FileSystem.AppPackageFileExistsAsync(filePath).Result)
             return string.Empty;
         using var reader = new StreamReader(FileSystem.OpenAppPackageFileAsync(filePath).Result);
-        return reader.ReadToEnd();
+        return Utils.FormatTextWithSymbols(reader.ReadToEnd());
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -18,7 +18,7 @@
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <ScrollView Grid.Row="0">
-                <Label Text="{Binding Lesson, Converter={StaticResource LessonToTextConverter}}" Margin="10" 
+                <Label FormattedText="{Binding Lesson, Converter={StaticResource LessonToTextConverter}}" Margin="10" 
                        FontSize="11" FontFamily="{OnPlatform WinUI='Courier New', Android='monospace'}">
                 </Label>
             </ScrollView>
