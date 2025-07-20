@@ -19,4 +19,34 @@ public static class Utils
             writer.Write(buffer, 0, bytesRead);
         }
     }
+
+    public static FormattedString FormatTextWithSymbols(string text)
+    {
+        var formatted = new FormattedString();
+        int lastIndex = 0;
+    
+        for (int i = 0; i < text.Length; i++)
+        {
+            if (text[i] != '♥' && text[i] != '♦') continue;
+            if (i > lastIndex)
+            {
+                formatted.Spans.Add(new Span { Text = text.Substring(lastIndex, i - lastIndex), TextColor = GetStandardTextColor() });
+            }
+            
+            formatted.Spans.Add(new Span { Text = text[i].ToString(), TextColor = Colors.Red });
+            lastIndex = i + 1;
+        }
+    
+        if (lastIndex < text.Length)
+        {
+            formatted.Spans.Add(new Span { Text = text[lastIndex..], TextColor = GetStandardTextColor() });
+        }
+    
+        return formatted;
+
+        Color GetStandardTextColor()
+        {
+            return Application.Current?.RequestedTheme == AppTheme.Light ? Colors.Black : Colors.White;
+        }
+    }
 }

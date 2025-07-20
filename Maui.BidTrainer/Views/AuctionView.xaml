@@ -2,7 +2,11 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
+             xmlns:converters="clr-namespace:Maui.BidTrainer.Converters"
              x:Class="Maui.BidTrainer.Views.AuctionView">
+    <ContentView.Resources>
+        <converters:SymbolColorConverter x:Key="SymbolColorConverter" />
+    </ContentView.Resources>
     <ContentView.BindingContext>
         <viewModels:AuctionViewModel/>
     </ContentView.BindingContext>
@@ -29,7 +33,9 @@
             </CollectionView.Header> 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Label Text="{Binding}" FontAttributes="Bold" FontSize="10" VerticalTextAlignment="Center" x:DataType="x:String"/>
+                    <Label FormattedText="{Binding Converter={StaticResource SymbolColorConverter}}" 
+                           FontAttributes="Bold" FontSize="10" VerticalTextAlignment="Center" x:DataType="x:String">
+                    </Label>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
