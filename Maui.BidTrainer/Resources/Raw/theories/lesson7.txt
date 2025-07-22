@@ -22,8 +22,8 @@ RKC is always with 4NT, but a trump suit has to be set
 
 Responses
 5♣           1 or 4 keycards
-5♦           0 or 3 keycards
-5♥           2 or 5 keycards, no trump queen
+5♦     0 or 3 keycards
+5♥     2 or 5 keycards, no trump queen
 5♠           2 or 5 keycards with trump queen
 
 After a response which doesn’t tell anything about the trump queen, you can ask with the next bid which is not the trumpsuit for the trump queen

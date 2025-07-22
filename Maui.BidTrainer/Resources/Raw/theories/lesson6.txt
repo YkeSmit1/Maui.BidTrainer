@@ -13,5 +13,5 @@ If there is no unbid major, double shows both minors
 
 Reverse bidding means bidding a new suit higher than two in your own suit
  
-Example : 1♣ 1♠ 2♥ 
+Example : 1♣ - 1♠ - 2♥ 
 Reverse shows 16+ points and it is forcing

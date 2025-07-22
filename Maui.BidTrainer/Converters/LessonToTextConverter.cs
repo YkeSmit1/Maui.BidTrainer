@@ -12,7 +12,13 @@ public class LessonToTextConverter : IValueConverter
         if (!FileSystem.AppPackageFileExistsAsync(filePath).Result)
             return string.Empty;
         using var reader = new StreamReader(FileSystem.OpenAppPackageFileAsync(filePath).Result);
-        return Utils.FormatTextWithSymbols(reader.ReadToEnd());
+        var formatTextWithSymbols = Utils.FormatTextWithSymbols(reader.ReadToEnd());
+        foreach (var span in formatTextWithSymbols.Spans)
+        {
+            span.FontFamily = "RobotoMonoRegular";
+            span.FontSize = 11;
+        }
+        return formatTextWithSymbols;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
