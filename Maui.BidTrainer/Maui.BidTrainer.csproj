@@ -53,97 +53,53 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-	  <NoWarn>1701;1702;XC0022;XC0023</NoWarn>
+	  <NoWarn>1701;1702;XC0022</NoWarn>
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-	  <NoWarn>1701;1702;XC0022;XC0023</NoWarn>
+	  <NoWarn>1701;1702;XC0022</NoWarn>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
 	  <ApplicationVersion>19</ApplicationVersion>
-	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
-	  <ApplicationId>com.companyname.maui.bidtrainer2</ApplicationId>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
-	  <ApplicationVersion>13</ApplicationVersion>
-	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
-	  <ApplicationId>com.companyname.maui.bidtrainer2</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-maccatalyst|AnyCPU'">
 	  <ApplicationVersion>19</ApplicationVersion>
-	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
-	  <ApplicationId>com.companyname.maui.bidtrainer2</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-windows10.0.19041.0|AnyCPU'">
 	  <ApplicationVersion>19</ApplicationVersion>
-	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
-	  <ApplicationId>com.companyname.maui.bidtrainer2</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
 	  <ApplicationVersion>19</ApplicationVersion>
-	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
-	  <PublishTrimmed>False</PublishTrimmed>
-	  <ApplicationId>com.companyname.maui.bidtrainer2</ApplicationId>
-	  <AndroidPackageFormat>aab</AndroidPackageFormat>
-	  <AndroidUseAapt2>True</AndroidUseAapt2>
-	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
-	  <ApplicationVersion>13</ApplicationVersion>
-	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
-	  <ApplicationId>com.companyname.maui.bidtrainer2</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-maccatalyst|AnyCPU'">
 	  <ApplicationVersion>19</ApplicationVersion>
-	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
-	  <ApplicationId>com.companyname.maui.bidtrainer2</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-windows10.0.19041.0|AnyCPU'">
 	  <ApplicationVersion>19</ApplicationVersion>
-	  <ApplicationTitle>BidTrainer II</ApplicationTitle>
-	  <ApplicationId>com.companyname.maui.bidtrainer2</ApplicationId>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\ic_launcher.png" />
+		<MauiIcon Include="Resources\AppIcon\ic_launcher_round.png" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
 
 		<!-- Images -->
-		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+		<MauiImage Include="Resources\Images\*" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="Resources\AppIcon\ic_launcher.png" />
-	  <None Remove="Resources\AppIcon\ic_launcher_round.png" />
-	  <None Remove="Resources\Images\correct.png" />
-	  <None Remove="Resources\Images\dotnet_bot.png" />
-	  <None Remove="Resources\Images\Embedded\cardfaces.png" />
-	  <None Remove="Resources\Images\Embedded\cardfaces2.jpg" />
-	  <None Remove="Resources\Images\icons8_flashcards_32.png" />
-	  <None Remove="Resources\Images\icons8_leaderboard_32.png" />
-	  <None Remove="Resources\Images\icons8_next_32.png" />
-	  <None Remove="Resources\Images\icons8_regular_document_32.png" />
-	  <None Remove="Resources\Images\icons8_settings_32.png" />
-	  <None Remove="Resources\Images\incorrect.png" />
-	  <None Remove="Resources\Images\cardfaces.png" />
-	  <None Remove="Resources\Images\cardfaces2.jpg" />
-	  <None Remove="Resources\playing_cards.jpg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -187,96 +143,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <MauiIcon Include="Resources\AppIcon\ic_launcher.png" />
-    <MauiIcon Include="Resources\AppIcon\ic_launcher_round.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <MauiImage Include="Resources\Images\cardfaces.png" />
-    <MauiImage Include="Resources\Images\cardfaces2.jpg" />
-    <MauiImage Include="Resources\Images\correct.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <MauiImage Include="Resources\Images\dotnet_bot.png" />
-    <MauiImage Include="Resources\Images\icons8_flashcards_32.png" />
-    <MauiImage Include="Resources\Images\icons8_leaderboard_32.png" />
-    <MauiImage Include="Resources\Images\icons8_next_32.png" />
-    <MauiImage Include="Resources\Images\icons8_regular_document_32.png" />
-    <MauiImage Include="Resources\Images\icons8_settings_32.png" />
-    <MauiImage Include="Resources\Images\incorrect.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\EngineWrapper\EngineWrapper.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Platforms\Windows\Constants.cs">
-      <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
-    </Compile>
-    <Compile Update="Platforms\Windows\CosmosDBHelper.cs">
-      <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
-    </Compile>
-    <Compile Update="Views\AuctionView.xaml.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
-    </Compile>
-    <Compile Update="Views\BiddingBoxView.xaml.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
-    </Compile>
-    <Compile Update="Views\BidTrainerPage.xaml.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
-    </Compile>
-    <Compile Update="Views\HandView.xaml.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
-    </Compile>
-    <Compile Update="Views\LeaderboardPage.xaml.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
-    </Compile>
-    <Compile Update="Views\ResultsPage.xaml.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
-    </Compile>
-    <Compile Update="Views\SettingsPage.xaml.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
-    </Compile>
-    <Compile Update="Views\StartPage.xaml.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <MauiXaml Update="Views\AuctionView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Views\BiddingBoxView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Views\BidTrainerPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Views\HandView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Views\LeaderboardPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Views\ResultsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Views\SettingsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Views\StartPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
   </ItemGroup>
 
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
@@ -292,10 +159,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>SQLiteCpp.dll</TargetPath>
     </ContentWithTargetPath>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
   </ItemGroup>
 
   <ItemGroup>

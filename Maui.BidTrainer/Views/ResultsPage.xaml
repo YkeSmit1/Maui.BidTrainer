@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
-             xmlns:converters="clr-namespace:Maui.BidTrainer.Converters"
+             xmlns:converters="clr-namespace:Maui.BidTrainer.Converters"             
              x:Class="Maui.BidTrainer.Views.ResultsPage">
     <ContentPage.BindingContext>
         <viewModels:ResultsViewModel/>
@@ -14,7 +14,7 @@
         <Grid>
             <StackLayout>
                 <Label Text="Overview" Margin="5"/>
-                <Label Text="{Binding Results.Title}" x:DataType="viewModels:ResultsViewModel" Padding="10" HeightRequest="60"/>
+                <Label Text="{Binding Results.Title}" Padding="10" HeightRequest="60"/>
                 <BoxView Color="Black" WidthRequest="100" HeightRequest="2"/>
                 <CollectionView ItemsSource="{Binding Results.AllResults}">
                     <CollectionView.ItemTemplate>

@@ -4,7 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="using:Maui.BidTrainer.ViewModels"
              xmlns:converters="using:Maui.BidTrainer.Converters"
-             x:Class="Maui.BidTrainer.Views.TheoryPage">
+             x:Class="Maui.BidTrainer.Views.TheoryPage"
+             x:DataType="viewModels:TheoryViewModel">
     <ContentPage.Resources>
         <converters:LessonToTextConverter x:Key="LessonToTextConverter" />
     </ContentPage.Resources>
