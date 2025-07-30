@@ -55,10 +55,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
+    <AndroidAPILevel>android-31</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
+    <AndroidAPILevel>android-31</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -71,10 +73,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
+    <AndroidAPILevel>android-31</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
+    <AndroidAPILevel>android-31</AndroidAPILevel>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />
@@ -136,7 +140,7 @@
       <AdditionalIncludeDirectories>..\..\thirdparty\sqlite\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-lm</AdditionalOptions>
+      <AdditionalOptions>-lm -Wl,-z,max-page-size=16384</AdditionalOptions>
       <AdditionalDependencies>$(ProjectDir)..\..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\libSQLiteCpp.a;$(ProjectDir)..\..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\libsqlite3.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -147,7 +151,7 @@
       <AdditionalIncludeDirectories>..\..\thirdparty\sqlite\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-lm</AdditionalOptions>
+      <AdditionalOptions>-lm -Wl,-z,max-page-size=16384</AdditionalOptions>
       <AdditionalDependencies>$(ProjectDir)..\..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\libSQLiteCpp.a;$(ProjectDir)..\..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\libsqlite3.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -180,7 +184,7 @@
       <AdditionalIncludeDirectories>..\..\thirdparty\sqlite\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-lm</AdditionalOptions>
+      <AdditionalOptions>-lm -Wl,-z,max-page-size=16384</AdditionalOptions>
       <AdditionalDependencies>$(ProjectDir)..\..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\libSQLiteCpp.a;$(ProjectDir)..\..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\libsqlite3.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -191,7 +195,7 @@
       <AdditionalIncludeDirectories>..\..\thirdparty\sqlite\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-lm</AdditionalOptions>
+      <AdditionalOptions>-lm -Wl,-z,max-page-size=16384</AdditionalOptions>
       <AdditionalDependencies>$(ProjectDir)..\..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\libSQLiteCpp.a;$(ProjectDir)..\..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\libsqlite3.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
