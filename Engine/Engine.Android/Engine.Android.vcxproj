@@ -136,7 +136,7 @@
       <AdditionalIncludeDirectories>..\..\thirdparty\sqlite\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-lm -Wl,-z,max-page-size=16384</AdditionalOptions>
+      <AdditionalOptions>-lm</AdditionalOptions>
       <AdditionalDependencies>$(ProjectDir)..\..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\libSQLiteCpp.a;$(ProjectDir)..\..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\libsqlite3.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -147,7 +147,7 @@
       <AdditionalIncludeDirectories>..\..\thirdparty\sqlite\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-lm -Wl,-z,max-page-size=16384</AdditionalOptions>
+      <AdditionalOptions>-lm</AdditionalOptions>
       <AdditionalDependencies>$(ProjectDir)..\..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\libSQLiteCpp.a;$(ProjectDir)..\..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\libsqlite3.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -180,7 +180,7 @@
       <AdditionalIncludeDirectories>..\..\thirdparty\sqlite\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-lm -Wl,-z,max-page-size=16384</AdditionalOptions>
+      <AdditionalOptions>-lm</AdditionalOptions>
       <AdditionalDependencies>$(ProjectDir)..\..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\libSQLiteCpp.a;$(ProjectDir)..\..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\libsqlite3.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -191,7 +191,7 @@
       <AdditionalIncludeDirectories>..\..\thirdparty\sqlite\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-lm -Wl,-z,max-page-size=16384</AdditionalOptions>
+      <AdditionalOptions>-lm</AdditionalOptions>
       <AdditionalDependencies>$(ProjectDir)..\..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\libSQLiteCpp.a;$(ProjectDir)..\..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\libsqlite3.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
