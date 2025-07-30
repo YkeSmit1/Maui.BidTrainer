@@ -47,50 +47,34 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>Clang_5_0</PlatformToolset>
-    <AndroidAPILevel>android-31</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>Clang_5_0</PlatformToolset>
-    <AndroidAPILevel>android-31</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>Clang_5_0</PlatformToolset>
-    <AndroidAPILevel>android-31</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>Clang_5_0</PlatformToolset>
-    <AndroidAPILevel>android-31</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>Clang_5_0</PlatformToolset>
-    <AndroidAPILevel>android-31</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>Clang_5_0</PlatformToolset>
-    <AndroidAPILevel>android-31</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>Clang_5_0</PlatformToolset>
-    <AndroidAPILevel>android-31</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>Clang_5_0</PlatformToolset>
-    <AndroidAPILevel>android-31</AndroidAPILevel>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />
@@ -125,97 +109,89 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
-      <AdditionalOptions>-D PLATFORM=0 %(AdditionalOptions)</AdditionalOptions>
       <ExceptionHandling>Enabled</ExceptionHandling>
       <CppLanguageStandard>c++1z</CppLanguageStandard>
       <AdditionalIncludeDirectories>..\..\thirdparty\sqlite\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-lm</AdditionalOptions>
+      <AdditionalOptions>-lm -Wl,-z,max-page-size=16384</AdditionalOptions>
       <AdditionalDependencies>$(ProjectDir)..\..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\libSQLiteCpp.a;$(ProjectDir)..\..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\libsqlite3.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
-      <AdditionalOptions>-D PLATFORM=0 %(AdditionalOptions)</AdditionalOptions>
       <ExceptionHandling>Enabled</ExceptionHandling>
       <CppLanguageStandard>c++1z</CppLanguageStandard>
       <AdditionalIncludeDirectories>..\..\thirdparty\sqlite\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-lm</AdditionalOptions>
+      <AdditionalOptions>-lm -Wl,-z,max-page-size=16384</AdditionalOptions>
       <AdditionalDependencies>$(ProjectDir)..\..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\libSQLiteCpp.a;$(ProjectDir)..\..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\libsqlite3.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <AdditionalOptions>-D PLATFORM=0 %(AdditionalOptions)</AdditionalOptions>
       <ExceptionHandling>Enabled</ExceptionHandling>
       <CppLanguageStandard>c++1z</CppLanguageStandard>
       <AdditionalIncludeDirectories>..\..\thirdparty\sqlite\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-lm</AdditionalOptions>
+      <AdditionalOptions>-lm -Wl,-z,max-page-size=16384</AdditionalOptions>
       <AdditionalDependencies>$(ProjectDir)..\..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\libSQLiteCpp.a;$(ProjectDir)..\..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\libsqlite3.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <AdditionalOptions>-D PLATFORM=0 %(AdditionalOptions)</AdditionalOptions>
       <ExceptionHandling>Enabled</ExceptionHandling>
       <CppLanguageStandard>c++1z</CppLanguageStandard>
       <AdditionalIncludeDirectories>..\..\thirdparty\sqlite\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-lm</AdditionalOptions>
+      <AdditionalOptions>-lm -Wl,-z,max-page-size=16384</AdditionalOptions>
       <AdditionalDependencies>$(ProjectDir)..\..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\libSQLiteCpp.a;$(ProjectDir)..\..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\libsqlite3.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalOptions>-D PLATFORM=0 %(AdditionalOptions)</AdditionalOptions>
       <ExceptionHandling>Enabled</ExceptionHandling>
       <CppLanguageStandard>c++1z</CppLanguageStandard>
       <AdditionalIncludeDirectories>..\..\thirdparty\sqlite\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-lm</AdditionalOptions>
+      <AdditionalOptions>-lm -Wl,-z,max-page-size=16384</AdditionalOptions>
       <AdditionalDependencies>$(ProjectDir)..\..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\libSQLiteCpp.a;$(ProjectDir)..\..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\libsqlite3.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalOptions>-D PLATFORM=0 %(AdditionalOptions)</AdditionalOptions>
       <ExceptionHandling>Enabled</ExceptionHandling>
       <CppLanguageStandard>c++1z</CppLanguageStandard>
       <AdditionalIncludeDirectories>..\..\thirdparty\sqlite\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-lm</AdditionalOptions>
+      <AdditionalOptions>-lm -Wl,-z,max-page-size=16384</AdditionalOptions>
       <AdditionalDependencies>$(ProjectDir)..\..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\libSQLiteCpp.a;$(ProjectDir)..\..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\libsqlite3.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <ClCompile>
-      <AdditionalOptions>-D PLATFORM=0 %(AdditionalOptions)</AdditionalOptions>
       <CppLanguageStandard>c++1z</CppLanguageStandard>
       <ExceptionHandling>Enabled</ExceptionHandling>
       <AdditionalIncludeDirectories>..\..\thirdparty\sqlite\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-lm</AdditionalOptions>
+      <AdditionalOptions>-lm -Wl,-z,max-page-size=16384</AdditionalOptions>
       <AdditionalDependencies>$(ProjectDir)..\..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\libSQLiteCpp.a;$(ProjectDir)..\..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\libsqlite3.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
     <ClCompile>
-      <AdditionalOptions>-D PLATFORM=0 %(AdditionalOptions)</AdditionalOptions>
       <CppLanguageStandard>c++1z</CppLanguageStandard>
       <ExceptionHandling>Enabled</ExceptionHandling>
       <AdditionalIncludeDirectories>..\..\thirdparty\sqlite\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-lm</AdditionalOptions>
+      <AdditionalOptions>-lm -Wl,-z,max-page-size=16384</AdditionalOptions>
       <AdditionalDependencies>$(ProjectDir)..\..\thirdparty\sqliteCpp\lib\$(PlatformTarget)\$(Configuration)\libSQLiteCpp.a;$(ProjectDir)..\..\thirdparty\sqlite\lib\$(PlatformTarget)\$(Configuration)\libsqlite3.a;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
