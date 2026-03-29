@@ -30,6 +30,8 @@ jobs:
         source-url: https://nuget.pkg.github.com/YkeSmit1/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}        
+    - name: Install .Net MAUI
+      run: dotnet workload install maui      
     - name: Setup Java JDK
       uses: actions/setup-java@v4.0.0
       with:
