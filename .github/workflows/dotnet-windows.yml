@@ -44,6 +44,8 @@ jobs:
       run: dotnet publish maui.bidtrainer\maui.bidtrainer.csproj -c Release -f net9.0-windows10.0.19041.0 -p:RuntimeIdentifierOverride=win10-x64 --self-contained true -p:PublishReadyToRun=false
     - name: test c# test
       run: dotnet test .\BidTrainerTests\BidTrainerTests.csproj -c Release --no-restore
+    - name: basictest c# basictest
+      run: dotnet test .\Engine.DotNet.Tests\Engine.DotNet.Tests.csproj -c Release --no-restore
     - name: NuGet Restore
       run: nuget restore Maui.BidTrainer.sln
     - name: build c++ tests

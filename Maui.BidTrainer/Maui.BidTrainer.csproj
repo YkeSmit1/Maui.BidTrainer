@@ -148,6 +148,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Engine.DotNet\Engine.DotNet.csproj" />
     <ProjectReference Include="..\EngineWrapper\EngineWrapper.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
 ﻿using Common;
+using Engine.DotNet;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -9,8 +10,7 @@ public static class BidManager
 {
     public static Bid GetBid(Auction auction, string handsString)
     {
-        var description = new StringBuilder(128);
-        var bidId = Pinvoke.GetBidFromRule(handsString, auction.GetBidsAsStringASCII(), description);
+        var bidId = Api.GetBidFromRule(handsString, auction.GetBidsAsStringASCII(), out var description);
 
         if (bidId == 0)
         {
@@ -55,9 +55,8 @@ public static class BidManager
 
             JsonNode GetInformationFromAuction()
             {
-                var stringBuilder = new StringBuilder(8129);
-                Pinvoke.GetInformationFromAuction(auction.GetBidsAsStringASCII(), stringBuilder);
-                return JsonNode.Parse(stringBuilder.ToString());
+                var information = Api.GetInformationFromAuction(auction.GetBidsAsStringASCII());
+                return JsonNode.Parse(information);
             }
 
             bool SlamIsPossible()
@@ -84,10 +83,9 @@ public static class BidManager
 
     public static string GetInformation(Bid bid, Auction auction)
     {
-        var informationJson = new StringBuilder(8192);
-        Pinvoke.GetRulesByBid(Bid.GetBidId(bid), auction.GetBidsAsStringASCII(), informationJson);
+        var information = Api.GetRulesByBid(Bid.GetBidId(bid), auction.GetBidsAsStringASCII());
 
-        var records = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(informationJson.ToString());
+        var records = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(information);
         var bidInformation = new BidInformation(records);
         return bidInformation.GetInformation();
     }

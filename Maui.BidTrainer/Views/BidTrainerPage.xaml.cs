@@ -2,6 +2,7 @@
 using System.Text.Json;
 using Common;
 using CommunityToolkit.Mvvm.Input;
+using Engine.DotNet;
 using EngineWrapper;
 using Maui.BidTrainer.Services;
 using Maui.BidTrainer.ViewModels;
@@ -109,14 +110,14 @@ public partial class BidTrainerPage
             }
 
         await Utils.CopyFileToAppDataDirectory("four_card_majors.db3");
-        Pinvoke.Setup(Path.Combine(FileSystem.AppDataDirectory, "four_card_majors.db3"));
+        Api.Setup(Path.Combine(FileSystem.AppDataDirectory, "four_card_majors.db3"));
     }
 
     private async Task StartLessonAsync()
     {
         await Utils.CopyFileToAppDataDirectory(Lesson.PbnFile);
         await pbn.LoadAsync(Path.Combine(FileSystem.AppDataDirectory, Lesson.PbnFile));
-        Pinvoke.SetModules(Lesson.Modules);
+        Api.SetModules(Lesson.Modules);
         if (CurrentBoardIndex == 0)
             results.AllResults.Remove(Lesson.LessonNr);
     }

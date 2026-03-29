@@ -4,6 +4,7 @@ using EngineWrapper;
 using System.IO;
 using Common;
 using Xunit.Abstractions;
+using Engine.DotNet;
 
 namespace BidTrainerTests;
 
@@ -15,7 +16,7 @@ public class BidManagerIntegrationTests
     public BidManagerIntegrationTests(ITestOutputHelper testOutputHelper)
     {
         this.testOutputHelper = testOutputHelper;
-        var _ = Pinvoke.Setup("four_card_majors.db3");
+        Api.Setup("four_card_majors.db3");
     }
 
     [Fact]
@@ -62,7 +63,7 @@ public class BidManagerIntegrationTests
             "lesson7.pbn" => 126,
             _ => 127
         };
-        Pinvoke.SetModules(modules);
+        Api.SetModules(modules);
         pbn.Load(pbnFile);
         return pbn;
     }
