@@ -1,75 +1,80 @@
 ﻿using System.Text.Json;
 using System.Text.RegularExpressions;
-using Microsoft.Data.Sqlite;
+using SQLite;
+using SQLitePCL;
 
 namespace Engine.DotNet;
 
-public sealed class SqliteCppWrapper : ISqliteWrapper
+public sealed partial class SqliteCppWrapper : ISqliteWrapper
 {
-    private readonly SqliteConnection db;
+    private readonly SQLiteConnection db;
     private int _modules;
 
     public SqliteCppWrapper(string database)
     {
-        db = new SqliteConnection($"Data Source={database}");
-        db.Open();
+        db = new SQLiteConnection(database);
 
         RegisterFunctions();
     }
-
+    
     private void RegisterFunctions()
     {
-        db.CreateFunction<string?, string?, int?>("regex_match", (regexp, text) =>
+        raw.sqlite3_create_function(db.Handle, "regex_match", 2, null, RegexMatchSqlite);
+        raw.sqlite3_create_function(db.Handle, "getBidKindFromAuction", 2, null, BidKindFromAuctionSqlite);
+        return;
+
+        void RegexMatchSqlite(sqlite3_context ctx, object userData, sqlite3_value[] args)
+        {
+            var regexp = raw.sqlite3_value_text(args[0]).utf8_to_string();
+            var text = raw.sqlite3_value_text(args[1]).utf8_to_string();
+            raw.sqlite3_result_int(ctx, RegexMatch(regexp, text));
+        }
+
+        int RegexMatch(string regexp, string text)
         {
             if (string.IsNullOrWhiteSpace(regexp) || string.IsNullOrWhiteSpace(text))
-                return null;
+                return 0;
 
             return Regex.IsMatch(text, regexp) ? 1 : 0;
-        });
+        }
 
-        db.CreateFunction<string?, int, int?>("getBidKindFromAuction", (previousBidding, bidId) =>
+        void BidKindFromAuctionSqlite(sqlite3_context ctx, object userData, sqlite3_value[] args)
+        {
+            var previousBidding = raw.sqlite3_value_text(args[0]).utf8_to_string();
+            var bidId = raw.sqlite3_value_int(args[1]);
+            raw.sqlite3_result_int(ctx, BidKindFromAuction(previousBidding, bidId));
+        }
+        
+
+        int BidKindFromAuction(string previousBidding, int bidId)
         {
             if (string.IsNullOrWhiteSpace(previousBidding))
-                return null;
+                return 0;
 
             return (int)GetBidKindFromAuction(previousBidding, bidId);
-        });
+        }
     }
 
-    public (int bidId, string description) GetRule(
+    public (int bidId, string? description) GetRule(
         HandCharacteristic handCharacteristic,
         BoardCharacteristic boardCharacteristic,
         string previousBidding)
     {
-        using var cmd = db.CreateCommand();
-        cmd.CommandText = GetShapeSql();
+        var cmd = db.CreateCommand(GetShapeSql(), BuildShapeParameters(handCharacteristic, boardCharacteristic, previousBidding));
 
-        BindShapeParameters(cmd, handCharacteristic, boardCharacteristic, previousBidding);
-
-        using var reader = cmd.ExecuteReader();
-        if (reader.Read())
-            return (reader.GetInt32(0), reader.IsDBNull(1) ? string.Empty : reader.GetString(1));
-
-        return (0, string.Empty);
+        return cmd.ExecuteQuery<(int, string)>().FirstOrDefault();
     }
 
-    public (int bidId, string description) GetRelativeRule(
+    public (int bidId, string? description) GetRelativeRule(
         HandCharacteristic handCharacteristic,
         BoardCharacteristic boardCharacteristic,
         string previousSlamBidding)
     {
-        using var cmd = db.CreateCommand();
-        cmd.CommandText = GetRelativeShapeSql();
+        var cmd = db.CreateCommand(GetRelativeShapeSql(), BuildRelativeShapeParameters(handCharacteristic, boardCharacteristic, previousSlamBidding));
 
-        BindRelativeShapeParameters(cmd, handCharacteristic, boardCharacteristic, previousSlamBidding);
-
-        using var reader = cmd.ExecuteReader();
-        if (reader.Read())
-            return (reader.GetInt32(0), reader.IsDBNull(1) ? string.Empty : reader.GetString(1));
-
-        return (0, string.Empty);
+        return cmd.ExecuteQuery<(int, string)>().FirstOrDefault();
     }
-
+    
     public string GetRulesByBid(int bidId, string previousBidding)
     {
         var records = GetInternalRulesByBid(bidId, previousBidding);
@@ -95,31 +100,32 @@ public sealed class SqliteCppWrapper : ISqliteWrapper
         var bidRank = Utils.GetRank(bidId);
         var bidKindAuction = GetBidKindFromAuction(previousBidding, bidId);
 
-        using var cmd = db.CreateCommand();
-        cmd.CommandText = GetRulesSql();
+        var cmd = db.CreateCommand(GetRulesSql(), new Dictionary<string, object>
+        {
+            [":bidId"] = bidId,
+            [":modules"] = _modules,
+            [":position"] = position,
+            [":isCompetitive"] = isCompetitive ? 1 : 0,
+            [":bidRank"] = bidRank,
+            [":bidKindAuction"] = (int)bidKindAuction,
+            [":previousBidding"] = previousBidding
+        });
 
-        cmd.Parameters.AddWithValue(":bidId", bidId);
-        cmd.Parameters.AddWithValue(":modules", _modules);
-        cmd.Parameters.AddWithValue(":position", position);
-        cmd.Parameters.AddWithValue(":isCompetitive", isCompetitive ? 1 : 0);
-        cmd.Parameters.AddWithValue(":bidRank", bidRank);
-        cmd.Parameters.AddWithValue(":bidKindAuction", (int)bidKindAuction);
-        cmd.Parameters.AddWithValue(":previousBidding", previousBidding);
+        var rows = cmd.ExecuteQuery<RuleRow>();
 
         var records = new List<Dictionary<string, string>>();
 
-        using var reader = cmd.ExecuteReader();
-        while (reader.Read())
+        foreach (var row in rows)
         {
-            var isAbsoluteRule = !reader.IsDBNull(reader.GetOrdinal("BidId"));
+            var isAbsoluteRule = row.BidId.HasValue;
             var isSuitBid = (bidId % 5 != 0) && bidId > 0;
 
             if (isAbsoluteRule || isSuitBid)
             {
-                var record = ReadRecord(reader);
+                var record = row.ToDictionary();
 
-                if (reader.IsDBNull(reader.GetOrdinal("BidId")))
-                    UpdateMinMax(bidId, record, reader);
+                if (!row.BidId.HasValue)
+                    UpdateMinMax(bidId, record, row);
 
                 records.Add(record);
             }
@@ -130,109 +136,91 @@ public sealed class SqliteCppWrapper : ISqliteWrapper
 
     public List<Dictionary<string, string>> GetInternalRelativeRulesByBid(int bidId, string previousBidding)
     {
-        using var cmd = db.CreateCommand();
-        cmd.CommandText = GetRelativeRulesSql();
-
-        cmd.Parameters.AddWithValue(":bidId", bidId);
-        cmd.Parameters.AddWithValue(":previousBidding", previousBidding);
-        cmd.Parameters.AddWithValue(":lastBid", Utils.GetLastBidFromAuction(previousBidding));
-
-        var records = new List<Dictionary<string, string>>();
-
-        using var reader = cmd.ExecuteReader();
-        while (reader.Read())
+        var cmd = db.CreateCommand(GetRelativeRulesSql(), new Dictionary<string, object>
         {
-            records.Add(ReadRecord(reader));
-        }
+            [":bidId"] = bidId,
+            [":previousBidding"] = previousBidding,
+            [":lastBid"] = Utils.GetLastBidFromAuction(previousBidding)
+        });
+        
+        var rows = cmd.ExecuteQuery<RelativeRuleRow>();
 
-        return records;
+        return rows.Select(row => row.ToDictionary()).ToList();
     }
 
-    private void BindShapeParameters(
-        SqliteCommand cmd,
+    private Dictionary<string, object> BuildShapeParameters(
         HandCharacteristic hand,
         BoardCharacteristic board,
         string previousBidding)
-    {
-        cmd.Parameters.AddWithValue(":firstSuit", hand.FirstSuit);
-        cmd.Parameters.AddWithValue(":secondSuit", hand.SecondSuit);
-        cmd.Parameters.AddWithValue(":lowestSuit", hand.LowestSuit);
-        cmd.Parameters.AddWithValue(":highestSuit", hand.HighestSuit);
-        cmd.Parameters.AddWithValue(":fitWithPartnerSuit", board.FitWithPartnerSuit);
+        => new()
+        {
+            [":firstSuit"] = hand.FirstSuit,
+            [":secondSuit"] = hand.SecondSuit,
+            [":lowestSuit"] = hand.LowestSuit,
+            [":highestSuit"] = hand.HighestSuit,
+            [":fitWithPartnerSuit"] = board.FitWithPartnerSuit,
+            
+            [":lastBidId"] = board.LastBidId,
+            [":minSpades"] = hand.SuitLengths[0],
+            [":minHearts"] = hand.SuitLengths[1],
+            [":minDiamonds"] = hand.SuitLengths[2],
+            [":minClubs"] = hand.SuitLengths[3],
+            
+            [":minHcp"] = hand.Hcp,
+            [":isBalanced"] = hand.IsBalanced ? 1 : 0,
+            [":opponentsSuit"] = board.OpponentsSuit,
+            [":stopInOpponentsSuit"] = board.StopInOpponentsSuit ? 1 : 0,
+            
+            [":lengthFirstSuit"] = hand.LengthFirstSuit,
+            [":lengthSecondSuit"] = hand.LengthSecondSuit,
+            [":hasFit"] = board.HasFit ? 1 : 0,
+            [":fitIsMajor"] = board.FitIsMajor ? 1 : 0,
+            [":modules"] = _modules,
+            [":position"] = board.Position,
+            [":isCompetitive"] = board.IsCompetitive ? 1 : 0,
+            [":isReverse"] = hand.IsReverse ? 1 : 0,
+            [":isSemiBalanced"] = hand.IsSemiBalanced ? 1 : 0,
+            [":previousBidding"] = previousBidding
+        };
 
-        cmd.Parameters.AddWithValue(":lastBidId", board.LastBidId);
-        cmd.Parameters.AddWithValue(":minSpades", hand.SuitLengths[0]);
-        cmd.Parameters.AddWithValue(":minHearts", hand.SuitLengths[1]);
-        cmd.Parameters.AddWithValue(":minDiamonds", hand.SuitLengths[2]);
-        cmd.Parameters.AddWithValue(":minClubs", hand.SuitLengths[3]);
-
-        cmd.Parameters.AddWithValue(":minHcp", hand.Hcp);
-        cmd.Parameters.AddWithValue(":isBalanced", hand.IsBalanced ? 1 : 0);
-        cmd.Parameters.AddWithValue(":opponentsSuit", board.OpponentsSuit);
-        cmd.Parameters.AddWithValue(":stopInOpponentsSuit", board.StopInOpponentsSuit ? 1 : 0);
-
-        cmd.Parameters.AddWithValue(":lengthFirstSuit", hand.LengthFirstSuit);
-        cmd.Parameters.AddWithValue(":lengthSecondSuit", hand.LengthSecondSuit);
-        cmd.Parameters.AddWithValue(":hasFit", board.HasFit ? 1 : 0);
-        cmd.Parameters.AddWithValue(":fitIsMajor", board.FitIsMajor ? 1 : 0);
-        cmd.Parameters.AddWithValue(":modules", _modules);
-        cmd.Parameters.AddWithValue(":position", board.Position);
-        cmd.Parameters.AddWithValue(":isCompetitive", board.IsCompetitive ? 1 : 0);
-        cmd.Parameters.AddWithValue(":isReverse", hand.IsReverse ? 1 : 0);
-        cmd.Parameters.AddWithValue(":isSemiBalanced", hand.IsSemiBalanced ? 1 : 0);
-        cmd.Parameters.AddWithValue(":previousBidding", previousBidding);
-    }
-
-    private void BindRelativeShapeParameters(
-        SqliteCommand cmd,
+    private Dictionary<string, object> BuildRelativeShapeParameters(
         HandCharacteristic hand,
         BoardCharacteristic board,
         string previousSlamBidding)
-    {
-        cmd.Parameters.AddWithValue(":lastBidId", board.LastBidId);
-        cmd.Parameters.AddWithValue(":keyCards", board.KeyCards);
-        cmd.Parameters.AddWithValue(":trumpQueen", board.TrumpQueen ? 1 : 0);
-        cmd.Parameters.AddWithValue(":previousBidding", previousSlamBidding);
-        cmd.Parameters.AddWithValue(":fitWithPartner", board.FitWithPartnerSuit.ToString());
-        cmd.Parameters.AddWithValue(":spadeControl", hand.Controls[0] ? 1 : 0);
-        cmd.Parameters.AddWithValue(":heartControl", hand.Controls[1] ? 1 : 0);
-        cmd.Parameters.AddWithValue(":diamondControl", hand.Controls[2] ? 1 : 0);
-        cmd.Parameters.AddWithValue(":clubControl", hand.Controls[3] ? 1 : 0);
-        cmd.Parameters.AddWithValue(":allControlsPresent", board.AllControlsPresent ? 1 : 0);
-        cmd.Parameters.AddWithValue(":lastBid", Utils.GetBidASCII(board.LastBidId));
-        cmd.Parameters.AddWithValue(":modules", _modules);
-    }
-
-    private static Dictionary<string, string> ReadRecord(SqliteDataReader reader)
-    {
-        var record = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
-        for (var i = 0; i < reader.FieldCount; i++)
+        => new()
         {
-            var name = reader.GetName(i);
-            record[name] = reader.IsDBNull(i) ? string.Empty : reader.GetValue(i).ToString() ?? string.Empty;
-        }
+            [":lastBidId"] = board.LastBidId,
+            [":keyCards"] = board.KeyCards,
+            [":trumpQueen"] = board.TrumpQueen ? 1 : 0,
+            [":previousBidding"] = previousSlamBidding,
+            [":fitWithPartner"] = board.FitWithPartnerSuit.ToString(),
+            [":spadeControl"] = hand.Controls[0] ? 1 : 0,
+            [":heartControl"] = hand.Controls[1] ? 1 : 0,
+            [":diamondControl"] = hand.Controls[2] ? 1 : 0,
+            [":clubControl"] = hand.Controls[3] ? 1 : 0,
+            [":allControlsPresent"] = board.AllControlsPresent ? 1 : 0,
+            [":lastBid"] = Utils.GetBidASCII(board.LastBidId),
+            [":modules"] = _modules
+        };
 
-        return record;
-    }
 
-    private static void UpdateMinMax(int bidId, Dictionary<string, string> record, SqliteDataReader reader)
+    private static void UpdateMinMax(int bidId, Dictionary<string, string> record, RuleRow row)
     {
         var suit = Utils.GetSuitFromBidId(bidId) + "s";
-        var bidSuitKind = reader.GetInt32(reader.GetOrdinal("BidSuitKind"));
+        var bidSuitKind = row.BidSuitKind ?? 0;
 
         switch ((BidKind)bidSuitKind)
         {
             case BidKind.FirstSuit:
             case BidKind.LowestSuit:
             case BidKind.HighestSuit:
-                record["Min" + suit] = reader.GetString(reader.GetOrdinal("MinFirstSuit"));
-                record["Max" + suit] = reader.GetString(reader.GetOrdinal("MaxFirstSuit"));
+                record["Min" + suit] = row.MinFirstSuit ?? string.Empty;
+                record["Max" + suit] = row.MaxFirstSuit ?? string.Empty;
                 break;
 
             case BidKind.SecondSuit:
-                record["Min" + suit] = reader.GetString(reader.GetOrdinal("MinSecondSuit"));
-                record["Max" + suit] = reader.GetString(reader.GetOrdinal("MaxSecondSuit"));
+                record["Min" + suit] = row.MinSecondSuit ?? string.Empty;
+                record["Max" + suit] = row.MaxSecondSuit ?? string.Empty;
                 break;
 
             case BidKind.PartnersSuit:

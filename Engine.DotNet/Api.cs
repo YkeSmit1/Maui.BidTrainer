@@ -27,7 +27,7 @@ public static class Api
             ? GetSqliteWrapper().GetRule(handCharacteristic, boardCharacteristic, previousBidding)
             : GetSqliteWrapper().GetRelativeRule(handCharacteristic, boardCharacteristic, informationFromAuction.PreviousSlamBidding);
 
-        description = result.description;
+        description = result.description ?? "";
         return result.bidId;
     }
 
