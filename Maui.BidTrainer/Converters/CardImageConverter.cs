@@ -11,6 +11,7 @@ public class CardImageConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value!.Equals(true) ? parameter : BindableProperty.UnsetValue;
+        var s = (string)parameter;
+        return value!.Equals(true) ? s : s == "bbo" ? "default" : "bbo";
     }
 }

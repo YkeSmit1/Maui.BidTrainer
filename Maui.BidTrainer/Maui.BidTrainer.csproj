@@ -152,7 +152,7 @@
     <ProjectReference Include="..\EngineWrapper\EngineWrapper.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+  <!--<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
     <ContentWithTargetPath Include="..\Engine\Engine.Windows\bin\x64\$(Configuration)\Engine.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>Engine.dll</TargetPath>
@@ -165,7 +165,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>SQLiteCpp.dll</TargetPath>
     </ContentWithTargetPath>
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
