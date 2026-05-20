@@ -35,7 +35,7 @@ jobs:
     - name: NuGet Restore
       run: nuget restore Maui.BidTrainer.sln
     - name: Upload a Build Artifact
-    - uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4
       with:
         name: distribute_bidtrainer_windows
         path: ./**/*.msix
