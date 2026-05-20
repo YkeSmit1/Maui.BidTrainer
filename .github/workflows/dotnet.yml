@@ -17,8 +17,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-      with:
-          submodules: true      
     - name: Setup Keystore File
       run: |
         echo "${{ secrets.KEYSTORE_FILE }}" > myapp.keystore.asc
@@ -32,32 +30,6 @@ jobs:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}        
     - name: Install .Net MAUI
       run: dotnet workload install maui      
-    - name: Setup Java JDK
-      uses: actions/setup-java@v4.0.0
-      with:
-        distribution: 'microsoft'
-        java-version: '17'
-      # Restore from cache the previously built ports. If cache-miss, download, build vcpkg.
-    - name: Restore from cache and install vcpkg
-      # Download and build vcpkg, without installing any port. If content is cached already, it is a no-op.
-      uses: lukka/run-vcpkg@v11
-      # Now that vcpkg is installed, it is being used to run with desired arguments.
-    - name: Install SQLiteCpp and nlohmann-json using vcpg      
-      run: |
-        $VCPKG_ROOT/vcpkg install SQLiteCpp:x64-windows
-        $VCPKG_ROOT/vcpkg install nlohmann-json:x64-windows
-        $VCPKG_ROOT/vcpkg integrate install
-      shell: bash      
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v2
-    - name: build x64 .so files
-      run: msbuild Engine\Engine.Android\Engine.Android.vcxproj /p:Configuration=Release /p:Platform=x64
-    - name: build x86 .so files
-      run: msbuild Engine\Engine.Android\Engine.Android.vcxproj /p:Configuration=Release /p:Platform=x86
-    - name: build ARM .so files
-      run: msbuild Engine\Engine.Android\Engine.Android.vcxproj /p:Configuration=Release /p:Platform=ARM
-    - name: build ARM64 .so files
-      run: msbuild Engine\Engine.Android\Engine.Android.vcxproj /p:Configuration=Release /p:Platform=ARM64      
     - name: Build
       run: dotnet build Maui.BidTrainer\Maui.BidTrainer.csproj -c Release -f net9.0-android /p:AndroidSigningKeyStore=myapp.keystore /p:AndroidSigningKeyAlias=bidtrainer /p:AndroidSigningKeyPass="${{ secrets.KEYSTORE_PASSWORD }}" /p:AndroidSigningStorePass="${{ secrets.KEYSTORE_PASSWORD_ALIAS }}"
     - name: Upload a Build Artifact
