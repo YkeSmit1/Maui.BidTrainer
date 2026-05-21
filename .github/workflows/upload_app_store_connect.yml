@@ -1,0 +1,37 @@
+name: Upload to App Store
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: 'Build workflow run ID to upload (find this in the build workflow run URL)'
+        required: true
+        type: string
+
+jobs:
+  upload:
+    runs-on: macos-latest
+    steps:
+      - name: Download .ipa artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: ios-app
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.inputs.run_id }}
+
+      - name: Check downloaded files
+        run: |
+          ls -la
+          find . -name "*.ipa"          
+          find . -name "ios-app.zip"          
+
+      - name: Upload to App Store Connect
+        env:
+          APPLE_EMAIL: ${{ secrets.APPLE_EMAIL }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+        run: |
+          xcrun altool --upload-app \
+            --type ios \
+            --file maui.bidtrainer.ipa \
+            --username "$APPLE_EMAIL" \
+            --password "$APPLE_APP_SPECIFIC_PASSWORD"
