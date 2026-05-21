@@ -55,19 +55,18 @@ jobs:
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
       - name: Build iOS .ipa
-        timeout-minutes: 30
         run: |
-          dotnet publish suitplay/suitplay.csproj \
+          dotnet publish maui.bidtrainer/maui.bidtrainer.csproj \
             -f:net9.0-ios \
             -c Release \
             /p:ArchiveOnBuild=true \
             /p:RuntimeIdentifier=ios-arm64 \
             /p:CodesignKey="Apple Distribution: Yke Smit (L7Y5LALL64)" \
-            /p:CodesignProvision="suitplay_distribute" \
+            /p:CodesignProvision="bidtrainer_distribute" \
             /p:MtouchUseLlvm=false \
 
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v7
         with:
           name: ios-app
-          path: ./SuitPlay/bin/Release/net9.0-ios/ios-arm64/publish/suitplay.ipa
+          path: ./maui.bidtrainer/bin/Release/net9.0-ios/ios-arm64/publish/maui.bidtrainer.ipa
