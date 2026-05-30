@@ -20,6 +20,10 @@ jobs:
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '9.0.x'
+          source-url: https://nuget.pkg.github.com/YkeSmit1/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}     
+
       - name: Install MAUI workload
         run: dotnet workload install maui --version 10.0.202
 
