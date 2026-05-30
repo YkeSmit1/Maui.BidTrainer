@@ -1,0 +1,76 @@
+name: Take iOS Simulator Screenshots
+
+on:
+  workflow_dispatch:
+
+jobs:
+  screenshots:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Xcode version
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '26.3'
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Install MAUI workload
+        run: dotnet workload install maui --version 10.0.202 
+
+      - name: Build for simulator
+        run: |
+          dotnet build maui.bidtrainer/maui.bidtrainer.csproj \
+            -f:net9.0-ios \
+            -c Release \
+            /p:RuntimeIdentifier=iossimulator-x64 \
+            /p:CodesignKey="" \
+            /p:CodesignProvision="" \
+            /p:MtouchUseLlvm=false \
+
+      - name: Take iPad Pro 12.9 inch screenshot (13 inch)
+        run: |
+          # Boot simulator
+          xcrun simctl boot "iPad Pro 13-inch (M5)"
+          open -a Simulator
+          sleep 30
+
+          # Install and launch app
+          xcrun simctl install booted maui.bidtrainer/bin/Release/net9.0-ios/iossimulator-x64/maui.bidtrainer.app
+          xcrun simctl launch booted com.companyname.maui.bidtrainer
+          sleep 10
+
+          # Take screenshot
+          xcrun simctl io booted screenshot ipad_13.png
+          xcrun simctl shutdown booted
+
+      - name: Take iPhone screenshot (6.5 inch)
+        run: |
+          # Boot simulator
+          xcrun simctl boot "iPhone 16 Pro Max"
+          open -a Simulator
+          sleep 30
+
+          # Install and launch app
+          xcrun simctl install booted maui.bidtrainer/bin/Release/net9.0-ios/iossimulator-x64/maui.bidtrainer.app
+          xcrun simctl launch booted com.companyname.maui.bidtrainer
+          sleep 10
+
+          # Take screenshot
+          xcrun simctl io booted screenshot iphone_6_5.png
+          xcrun simctl shutdown booted
+          
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v7
+        with:
+          name: app-screenshots
+          path: |
+            iphone_6_5.png
+            ipad_13.png
+          retention-days: 5
