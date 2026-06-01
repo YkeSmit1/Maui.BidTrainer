@@ -110,7 +110,6 @@
 		<PackageReference Include="akgul.Maui.DataGrid" Version="4.0.6" />
 		<PackageReference Include="Common.BridgeClasses" Version="1.0.8" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-		<PackageReference Include="Microsoft.Azure.Cosmos" Version="3.52.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.6" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -122,6 +121,10 @@
 		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
 		<PackageReference Include="System.Private.Uri" Version="4.3.2" />
 	</ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' != 'net9.0-ios'">
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.52.0" />
+  </ItemGroup>  
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\Images\Embedded\cardfaces.png" />

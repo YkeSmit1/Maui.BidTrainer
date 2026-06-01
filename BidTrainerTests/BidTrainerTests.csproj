@@ -3,6 +3,12 @@
     <TargetFramework>net9.0</TargetFramework>
     <OutputType>WinExe</OutputType>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;NETSDK1206</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;NETSDK1206</NoWarn>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="..\Maui.BidTrainer\Resources\Raw\four_card_majors.db3" Link="four_card_majors.db3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
