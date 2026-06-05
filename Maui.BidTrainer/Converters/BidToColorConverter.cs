@@ -9,8 +9,7 @@ public class BidToColorConverter: IValueConverter
     {
         if  (value is not Bid bid)
             return null;
-        return bid.Suit is Suit.Diamonds or Suit.Hearts ? Colors.Red :
-            Application.Current?.RequestedTheme == AppTheme.Light ? Colors.Black : Colors.White;
+        return bid.Suit is Suit.Diamonds or Suit.Hearts ? Colors.Red : null;            
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
