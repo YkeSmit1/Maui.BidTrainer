@@ -1,4 +1,6 @@
-﻿namespace Maui.BidTrainer;
+﻿using Serilog;
+
+namespace Maui.BidTrainer;
 
 public partial class App
 {
@@ -21,6 +23,11 @@ public partial class App
         window.Y = ((displayInfo.Height / displayInfo.Density - window.Height) / 2) - 20;
 #endif
         return window;
-    }    
-        
+    }
+
+    protected override void OnSleep()
+    {
+        base.OnSleep();
+        Log.CloseAndFlush();
+    }
 }

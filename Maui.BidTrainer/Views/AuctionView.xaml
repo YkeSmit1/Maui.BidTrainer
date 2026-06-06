@@ -12,32 +12,31 @@
     </ContentView.BindingContext>
 
     <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" 
-                         Padding="-5" HeightRequest="180" WidthRequest="140">
-        <CollectionView ItemsSource="{Binding Bids}" x:DataType="viewModels:AuctionViewModel" Margin="10">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical" Span="4"/>
-            </CollectionView.ItemsLayout>
-            <CollectionView.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Text="West" FontAttributes="Bold" FontSize="10"/>
-                    <Label Grid.Column="1" Text="North" FontAttributes="Bold" FontSize="10"/>
-                    <Label Grid.Column="2" Text="East" FontAttributes="Bold" FontSize="10"/>
-                    <Label Grid.Column="3" Text="South" FontAttributes="Bold" FontSize="10"/>
-                </Grid>
-            </CollectionView.Header> 
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Label FormattedText="{Binding Converter={StaticResource SymbolColorConverter}}" 
-                           FontAttributes="Bold" FontSize="10" VerticalTextAlignment="Center" x:DataType="x:String">
-                    </Label>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                     Padding="-5" HeightRequest="180" WidthRequest="140">
+        <Grid Margin="10, 10, 10, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="West" FontAttributes="Bold" FontSize="10"/>
+            <Label Grid.Column="1" Text="North" FontAttributes="Bold" FontSize="10"/>
+            <Label Grid.Column="2" Text="East" FontAttributes="Bold" FontSize="10"/>
+            <Label Grid.Column="3" Text="South" FontAttributes="Bold" FontSize="10"/>
+        </Grid>
+        <ScrollView Margin="10">
+            <FlexLayout BindableLayout.ItemsSource="{Binding Bids}"
+                    Wrap="Wrap"
+                    Direction="Row">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Label FormattedText="{Binding Converter={StaticResource SymbolColorConverter}}"
+                           FontAttributes="Bold" FontSize="10" VerticalTextAlignment="Center"
+                           WidthRequest="32" HeightRequest="20"/>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+        </ScrollView>
     </VerticalStackLayout>
 </ContentView>
