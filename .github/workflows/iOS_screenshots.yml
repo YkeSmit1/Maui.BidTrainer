@@ -47,7 +47,7 @@ jobs:
           # Install and launch app
           xcrun simctl install booted maui.bidtrainer/bin/Release/net9.0-ios/iossimulator-x64/maui.bidtrainer.app
           xcrun simctl launch booted com.companyname.maui.bidtrainer
-          sleep 10
+          sleep 30
 
           # Take screenshot
           xcrun simctl io booted screenshot ipad_13.png
@@ -56,14 +56,14 @@ jobs:
       - name: Take iPhone screenshot (6.5 inch)
         run: |
           # Boot simulator
-          xcrun simctl boot "iPhone 16 Pro Max"
+          xcrun simctl boot "iPhone Air"
           open -a Simulator
           sleep 30
 
           # Install and launch app
           xcrun simctl install booted maui.bidtrainer/bin/Release/net9.0-ios/iossimulator-x64/maui.bidtrainer.app
           xcrun simctl launch booted com.companyname.maui.bidtrainer
-          sleep 10
+          sleep 30
 
           # Take screenshot
           xcrun simctl io booted screenshot iphone_6_5.png
