@@ -56,7 +56,7 @@ jobs:
       - name: Take iPhone screenshot (6.5 inch)
         run: |
           # Boot simulator
-          xcrun simctl boot "iPhone 16 Pro Max"
+          xcrun simctl boot "iPhone 11 Pro Max"
           open -a Simulator
           sleep 30
 
