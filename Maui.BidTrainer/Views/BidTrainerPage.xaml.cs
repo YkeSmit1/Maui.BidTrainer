@@ -60,7 +60,8 @@ public partial class BidTrainerPage
         
         BiddingBoxViewModel.DoBidCommand = new AsyncRelayCommand<Bid>(ClickBiddingBoxButton, bid => auction.BidIsPossible(bid));
         AuctionViewModel.Bids.Clear();
-        logger.Information("Test");
+        _ = Start();
+        
     }
 
     private void GenerateCardImages()
@@ -88,8 +89,7 @@ public partial class BidTrainerPage
 
     private void UpdateUi()
     {
-        MainThread.BeginInvokeOnMainThread(() =>
-            StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}");
+        StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}";
         GenerateCardImages();
     }
 
@@ -197,12 +197,10 @@ public partial class BidTrainerPage
             }
         }
 
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            PanelNorth.IsVisible = false;
-            BiddingBoxView.IsEnabled = true;
-            StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}";
-        });
+        PanelNorth.IsVisible = false;
+        BiddingBoxView.IsEnabled = true;
+        StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}";
+        
         ShowBothHands();
         await StartBidding();
     }
@@ -361,19 +359,6 @@ public partial class BidTrainerPage
         try
         {
             await Shell.Current.GoToAsync(nameof(SettingsPage));
-        }
-        catch (Exception exception)
-        {
-            await DisplayAlert("Error", exception.Message, "OK");
-        }
-    }
-
-    protected override async void OnAppearing()
-    {
-        try
-        {
-            base.OnAppearing();
-            await Start();
         }
         catch (Exception exception)
         {
