@@ -8,26 +8,20 @@ namespace Maui.BidTrainer.ViewModels;
 
 public partial class StartViewModel : ObservableObject
 {
-    public ObservableCollection<Lesson> Lessons { get; set; }
+    public ObservableCollection<LessonViewModel> Lessons { get; set; }
 
     public async Task LoadLessonsAsync()
     {
         using var reader = new StreamReader(await FileSystem.OpenAppPackageFileAsync("lessons.json"));
-        Lessons = JsonSerializer.Deserialize<ObservableCollection<Lesson>>(await reader.ReadToEndAsync());
+        var lessons = JsonSerializer.Deserialize<List<Lesson>>(await reader.ReadToEndAsync());
+        Lessons = new ObservableCollection<LessonViewModel>(lessons.Select(x => new LessonViewModel(x)));
         OnPropertyChanged(nameof(Lessons));
     }
     
     [RelayCommand]
-    private static async Task StartLesson(int lessonNr)
-    {
-        Preferences.Set("CurrentLesson", lessonNr);
-        Preferences.Set("CurrentBoardIndex", 0);
-        await Shell.Current.GoToAsync($"{nameof(TheoryPage)}?Lesson={lessonNr}");
-    }
-
-    [RelayCommand]
-    private static async Task ContinueWhereLeftOff()
+    private async Task ContinueWhereLeftOff()
     {
         await Shell.Current.GoToAsync(nameof(BidTrainerPage));
     }
+    
 }

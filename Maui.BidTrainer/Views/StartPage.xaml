@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
-             xmlns:bidTrainer="clr-namespace:Maui.BidTrainer"
              x:Class="Maui.BidTrainer.Views.StartPage">
     <ContentPage.Resources>
         <Style TargetType="Button">
@@ -22,13 +21,10 @@
             </Grid.RowDefinitions>
             <CollectionView Grid.Row="0" ItemsSource="{Binding Lessons}" x:DataType="viewModels:StartViewModel">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="bidTrainer:Lesson">
+                    <DataTemplate x:DataType="viewModels:LessonViewModel">
                         <StackLayout>
-                            <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                            <Button Text="{Binding Content}"
-                                    Command="{Binding Path=StartLessonCommand, 
-                                        Source={RelativeSource AncestorType={x:Type viewModels:StartViewModel}}, x:DataType=viewModels:StartViewModel}" 
-                                    CommandParameter="{Binding LessonNr}"/>
+                            <Button Text="{Binding Title}"
+                                    Command="{Binding Path=StartLessonCommand}"/>
                             <BoxView Color="Black" WidthRequest="100" HeightRequest="2"/>
                         </StackLayout>
                     </DataTemplate>
