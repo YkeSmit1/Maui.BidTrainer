@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
-             x:Class="Maui.BidTrainer.Views.StartPage">
+             x:Class="Maui.BidTrainer.Views.StartPage"
+             x:DataType="viewModels:StartViewModel">
     <ContentPage.Resources>
         <Style TargetType="Button">
             <Setter Property="Background" Value="BlanchedAlmond"/>
@@ -19,7 +20,7 @@
                 <RowDefinition Height="400"/>
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
-            <CollectionView Grid.Row="0" ItemsSource="{Binding Lessons}" x:DataType="viewModels:StartViewModel">
+            <CollectionView Grid.Row="0" ItemsSource="{Binding Lessons}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewModels:LessonViewModel">
                         <StackLayout>
@@ -32,7 +33,7 @@
             </CollectionView>
             <StackLayout Grid.Row="1">
                 <Button Text="Continue where I left off" 
-                        Command="{Binding ContinueWhereLeftOffCommand}" x:DataType="viewModels:StartViewModel"/>
+                        Command="{Binding ContinueWhereLeftOffCommand}"/>
                 <BoxView Color="Black" WidthRequest="100" HeightRequest="2"/>
             </StackLayout>
         </Grid>

@@ -311,7 +311,7 @@ public partial class BidTrainerPage
 
     private async Task ShowReport()
     {
-        await Shell.Current.GoToAsync(DeviceInfo.Platform == DevicePlatform.WinUI ? nameof(ResultsPage2) : nameof(ResultsPage), new Dictionary<string, object> { ["Results"] = results });
+        await Shell.Current.GoToAsync(nameof(ResultsPage2), new Dictionary<string, object> { ["Results"] = results });
     }
 
     private async void ButtonClickedStartLesson(object sender, EventArgs e)

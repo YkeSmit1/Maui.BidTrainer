@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
              xmlns:converters="clr-namespace:Maui.BidTrainer.Converters"
-             x:Class="Maui.BidTrainer.Views.AuctionView">
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             x:Class="Maui.BidTrainer.Views.AuctionView"
+             x:DataType="viewModels:AuctionViewModel">
     <ContentView.Resources>
         <converters:SymbolColorConverter x:Key="SymbolColorConverter" />
     </ContentView.Resources>
@@ -30,7 +32,7 @@
                     Wrap="Wrap"
                     Direction="Row">
                 <BindableLayout.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="system:String">
                         <Label FormattedText="{Binding Converter={StaticResource SymbolColorConverter}}"
                            FontAttributes="Bold" FontSize="10" VerticalTextAlignment="Center"
                            WidthRequest="32" HeightRequest="20"/>

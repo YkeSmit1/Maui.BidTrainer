@@ -3,13 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
              xmlns:bidTrainer="clr-namespace:Maui.BidTrainer"
-             x:Class="Maui.BidTrainer.Views.HandView">
+             x:Class="Maui.BidTrainer.Views.HandView"
+             x:DataType="viewModels:HandViewModel">
     <ContentView.BindingContext>
         <viewModels:HandViewModel/>
     </ContentView.BindingContext>
     <ContentView.Content>
         <StackLayout HorizontalOptions="Center">
-            <AbsoluteLayout BindableLayout.ItemsSource="{Binding Cards}" x:DataType="viewModels:HandViewModel">
+            <AbsoluteLayout BindableLayout.ItemsSource="{Binding Cards}">
                 <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="bidTrainer:Card">
                             <Image Source="{Binding Source}" 

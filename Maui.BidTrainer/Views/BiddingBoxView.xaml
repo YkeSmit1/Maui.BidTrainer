@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
              xmlns:converters="clr-namespace:Maui.BidTrainer.Converters"
-             x:Class="Maui.BidTrainer.Views.BiddingBoxView">
+             x:Class="Maui.BidTrainer.Views.BiddingBoxView"
+             x:DataType="viewModels:BiddingBoxViewModel">
     <ContentView.BindingContext>
         <viewModels:BiddingBoxViewModel/>
     </ContentView.BindingContext>
@@ -28,8 +29,7 @@
             </Grid.RowDefinitions>
             <!--Bids-->
             <CollectionView Grid.Row="0"
-                            ItemsSource="{Binding SuitBids}" 
-                            x:DataType="viewModels:BiddingBoxViewModel"
+                            ItemsSource="{Binding SuitBids}"
                             ItemTemplate="{StaticResource BidButtonsTemplate}">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Horizontal" Span="7"/>
@@ -38,7 +38,6 @@
             <!--NonBids (Pass, Dbl, Rdbl)-->
             <CollectionView Grid.Row="1"
                             ItemsSource="{Binding NonSuitBids}" 
-                            x:DataType="viewModels:BiddingBoxViewModel"
                             ItemTemplate="{StaticResource BidButtonsTemplate}">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Horizontal"/>

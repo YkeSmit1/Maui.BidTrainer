@@ -5,7 +5,8 @@
              xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
              xmlns:bidTrainer="clr-namespace:Maui.BidTrainer"
              xmlns:converters="clr-namespace:Maui.BidTrainer.Converters"
-             x:Class="Maui.BidTrainer.Views.ResultsPage2">
+             x:Class="Maui.BidTrainer.Views.ResultsPage2"
+             x:DataType="viewModels:ResultsViewModel">
     <ContentPage.Resources>
         <converters:BoolToImageConverter x:Key="BoolToImageConverter" />
     </ContentPage.Resources>
@@ -14,8 +15,8 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <VerticalStackLayout>
-            <Label Text="{Binding Results.Title}" Padding="20" x:DataType="viewModels:ResultsViewModel"/>
-            <CollectionView ItemsSource="{Binding Results.ResultList}" x:DataType="viewModels:ResultsViewModel">
+            <Label Text="{Binding Results.Title}" Padding="20"/>
+            <CollectionView ItemsSource="{Binding Results.ResultList}">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical"/>
                 </CollectionView.ItemsLayout>

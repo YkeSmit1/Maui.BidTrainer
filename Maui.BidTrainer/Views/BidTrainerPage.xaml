@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:Maui.BidTrainer.Views"
              x:Class="Maui.BidTrainer.Views.BidTrainerPage"
-             x:DataType="views:BidTrainerPage"
              Shell.TabBarIsVisible="False"
              Shell.NavBarIsVisible="False">
     <ContentPage.Resources>
