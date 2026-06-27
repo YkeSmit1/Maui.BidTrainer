@@ -1,21 +1,21 @@
 ﻿using System.Collections.ObjectModel;
 using Common;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 
 namespace Maui.BidTrainer.ViewModels;
 
-public class BiddingBoxViewModel : ObservableObject
+public partial class BiddingBoxViewModel : ObservableObject
 {
-    public ObservableCollection<Bid> SuitBids { get; set; }
-    public ObservableCollection<Bid> NonSuitBids { get; set; }
-    public AsyncRelayCommand<Bid> DoBidCommand { get; set; }
+    public ObservableCollection<BidViewModel> SuitBids { get; set; }
+    public ObservableCollection<BidViewModel> NonSuitBids { get; set; }
 
     public BiddingBoxViewModel()
     {
-        SuitBids = new ObservableCollection<Bid>(Enum.GetValues<Suit>()
+        var suitBids = Enum.GetValues<Suit>()
             .SelectMany(_ => Enumerable.Range(1, 7), (suit, level) => new { suit, level })
-            .Select(x => new Bid(x.level, x.suit)).OrderBy(x => x.Suit).ThenBy(x => x.Rank));
-        NonSuitBids = [Bid.PassBid, Bid.Dbl, Bid.Rdbl];
+            .Select(x => new Bid(x.level, x.suit)).OrderBy(x => x.Suit).ThenBy(x => x.Rank);
+        SuitBids = new ObservableCollection<BidViewModel>(suitBids.Select(x => new BidViewModel(x)));
+        List<Bid> bids = [Bid.PassBid, Bid.Dbl, Bid.Rdbl];
+        NonSuitBids = new ObservableCollection<BidViewModel>(bids.Select(x => new BidViewModel(x)));
     }
 }

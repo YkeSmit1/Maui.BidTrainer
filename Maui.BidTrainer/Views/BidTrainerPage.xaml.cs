@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text.Json;
 using Common;
-using CommunityToolkit.Mvvm.Input;
 using Engine.DotNet;
 using EngineWrapper;
 using Maui.BidTrainer.Services;
@@ -14,6 +13,7 @@ public partial class BidTrainerPage
 {
     private readonly StartPage startPage = new();
     private readonly SettingsService settingsService;
+    private readonly BidService bidService;
     private Dictionary<(string suit, string card), string> dictionary;
 
     // Bidding
@@ -46,22 +46,31 @@ public partial class BidTrainerPage
     private bool repeatMistakesMode;
 
     // ViewModels
-    private BiddingBoxViewModel BiddingBoxViewModel => (BiddingBoxViewModel)BiddingBoxView.BindingContext;
     private AuctionViewModel AuctionViewModel => (AuctionViewModel)AuctionView.BindingContext;
     private HandViewModel HandViewModelNorth => (HandViewModel)PanelNorth.BindingContext;
     private HandViewModel HandViewModelSouth => (HandViewModel)PanelSouth.BindingContext;
     private readonly ILogger logger = IPlatformApplication.Current!.Services.GetService<ILogger>();
+    private readonly EventHandler settingsServiceOnSettingsChanged;
+    private readonly EventHandler<Bid> bidServiceOnDoBid;
 
-    public BidTrainerPage(SettingsService settingsService)
+    public BidTrainerPage(SettingsService settingsService, BidService bidService)
     {
         InitializeComponent();
         this.settingsService = settingsService;
-        this.settingsService.SettingsChanged += (_, _) => UpdateUi();
-        
-        BiddingBoxViewModel.DoBidCommand = new AsyncRelayCommand<Bid>(ClickBiddingBoxButton, bid => auction.BidIsPossible(bid));
+        this.bidService = bidService;
+        this.bidService.Auction = auction;
+        settingsServiceOnSettingsChanged = (_, _) => UpdateUi();
+        this.settingsService.SettingsChanged += settingsServiceOnSettingsChanged;
+        bidServiceOnDoBid = async void (_, bid) => await ClickBiddingBoxButton(bid);
+        this.bidService.OnDoBid += bidServiceOnDoBid;
         AuctionViewModel.Bids.Clear();
         _ = Start();
-        
+    }
+    
+    protected override void OnDisappearing()
+    {
+        settingsService.SettingsChanged -= settingsServiceOnSettingsChanged;
+        bidService.OnDoBid -= bidServiceOnDoBid;
     }
 
     private void GenerateCardImages()
@@ -161,7 +170,7 @@ public partial class BidTrainerPage
         if (AuctionViewModel.Bids.Any() && AuctionViewModel.Bids.Last() == "?")
             AuctionViewModel.Bids.RemoveAt(AuctionViewModel.Bids.Count - 1);
         AuctionViewModel.Bids.Add(bid.ToString());
-        BiddingBoxViewModel.DoBidCommand?.NotifyCanExecuteChanged();
+        bidService.AuctionHasChanged();
     }
 
     private async Task StartNextBoard()
@@ -209,7 +218,7 @@ public partial class BidTrainerPage
     {
         auction.Clear(Dealer);
         AuctionViewModel.Bids = new ObservableCollection<string>(auction.Bids.SelectMany(x => x.Value.Values).Select(_ => ""));
-        BiddingBoxViewModel.DoBidCommand?.NotifyCanExecuteChanged();
+        bidService.AuctionHasChanged();
         startTimeBoard = DateTime.Now;
         currentResult = new Result();
         await BidTillSouth();

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:common="clr-namespace:Common;assembly=Common"
              xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
              xmlns:converters="clr-namespace:Maui.BidTrainer.Converters"
              x:Class="Maui.BidTrainer.Views.BiddingBoxView">
@@ -10,17 +9,14 @@
     </ContentView.BindingContext>
     <ContentView.Resources>
         <converters:BidToColorConverter x:Key="BidToColorConverter" />
-        <DataTemplate x:Key="BidButtonsTemplate" x:DataType="common:Bid">
+        <DataTemplate x:Key="BidButtonsTemplate" x:DataType="viewModels:BidViewModel">
             <Border Padding="1" BackgroundColor="{AppThemeBinding Light={StaticResource MediumSeaGreen}, Dark={StaticResource DarkOliveGreen}}">
-                <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                <Button Text="{Binding}" 
+                <Button Text="{Binding BidString}" 
                         FontSize="9"
                         BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
                         TextColor="{Binding Converter={StaticResource BidToColorConverter}}"
                         HorizontalOptions="Center" VerticalOptions="Center"
-                        Command="{Binding Path=DoBidCommand, Source={RelativeSource AncestorType={x:Type viewModels:BiddingBoxViewModel}}, 
-                            x:DataType=viewModels:BiddingBoxViewModel}" 
-                        CommandParameter="{Binding}"/>
+                        Command="{Binding Path=DoBidCommand}"/>
             </Border>
         </DataTemplate>
     </ContentView.Resources>
