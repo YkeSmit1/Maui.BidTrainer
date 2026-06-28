@@ -1,8 +1,6 @@
-﻿using System.Collections.ObjectModel;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Common;
 using Engine.DotNet;
-using EngineWrapper;
 using Maui.BidTrainer.Services;
 using Maui.BidTrainer.ViewModels;
 using Serilog;
@@ -11,15 +9,13 @@ namespace Maui.BidTrainer.Views;
 
 public partial class BidTrainerPage
 {
+    private readonly BoardService boardService;
     private readonly StartPage startPage = new();
     private readonly SettingsService settingsService;
-    private readonly BidService bidService;
     private Dictionary<(string suit, string card), string> dictionary;
 
     // Bidding
-    private readonly Auction auction = new();
     private readonly Pbn pbn = new();
-    private bool isInHintMode;
 
     // Lesson
     private static int CurrentLesson
@@ -35,13 +31,10 @@ public partial class BidTrainerPage
     }
 
     private Dictionary<Player, string> Deal => pbn.Boards[CurrentBoardIndex].Deal;
-    private Player Dealer => pbn.Boards[CurrentBoardIndex].Dealer;
     private List<Lesson> lessons;
     private Lesson Lesson => lessons.Single(l => l.LessonNr == CurrentLesson);
 
     // Results
-    private Result currentResult;
-    private DateTime startTimeBoard;
     private Results results = new();
     private bool repeatMistakesMode;
 
@@ -51,27 +44,57 @@ public partial class BidTrainerPage
     private HandViewModel HandViewModelSouth => (HandViewModel)PanelSouth.BindingContext;
     private readonly ILogger logger = IPlatformApplication.Current!.Services.GetService<ILogger>();
     private readonly EventHandler settingsServiceOnSettingsChanged;
-    private readonly EventHandler<Bid> bidServiceOnDoBid;
+    private EventHandler<BoardService.DisplayAlertEventArgs> onDisplayAlertRequested;
+    private EventHandler onAuctionCleared;
+    private EventHandler<string> onAuctionBidAdded;
+    private EventHandler<Result> onBoardCompleted;
 
-    public BidTrainerPage(SettingsService settingsService, BidService bidService)
+    public BidTrainerPage(SettingsService settingsService, BoardService boardService)
     {
         InitializeComponent();
         this.settingsService = settingsService;
-        this.bidService = bidService;
-        this.bidService.Auction = auction;
         settingsServiceOnSettingsChanged = (_, _) => UpdateUi();
         this.settingsService.SettingsChanged += settingsServiceOnSettingsChanged;
-        bidServiceOnDoBid = async void (_, bid) => await ClickBiddingBoxButton(bid);
-        this.bidService.OnDoBid += bidServiceOnDoBid;
+        
+        this.boardService = boardService;
+        InitializeBoardService();
+        
         AuctionViewModel.Bids.Clear();
         _ = Start();
     }
-    
-    protected override void OnDisappearing()
+
+    private void InitializeBoardService()
     {
-        settingsService.SettingsChanged -= settingsServiceOnSettingsChanged;
-        bidService.OnDoBid -= bidServiceOnDoBid;
+        onDisplayAlertRequested = async (_, args) => await DisplayAlert(args.Title, args.Message, "OK");
+        onAuctionCleared = (_, _) => AuctionViewModel.Bids.Clear();
+        onAuctionBidAdded = (_, bid) =>
+        {
+            if (AuctionViewModel.Bids.Any() && AuctionViewModel.Bids.Last() == "?")
+                AuctionViewModel.Bids.RemoveAt(AuctionViewModel.Bids.Count - 1);
+            AuctionViewModel.Bids.Add(bid);
+        };
+        onBoardCompleted = async (_, result) => await OnBoardCompleted(result);
     }
+    
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+        boardService.DisplayAlertRequested += onDisplayAlertRequested;
+        boardService.AuctionCleared += onAuctionCleared;
+        boardService.AuctionBidAdded += onAuctionBidAdded;
+        boardService.BoardCompleted += onBoardCompleted;
+        settingsService.SettingsChanged += settingsServiceOnSettingsChanged;
+    }
+
+    protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
+    {
+        base.OnNavigatedFrom(args);
+        boardService.DisplayAlertRequested -= onDisplayAlertRequested;
+        boardService.AuctionCleared -= onAuctionCleared;
+        boardService.AuctionBidAdded -= onAuctionBidAdded;
+        boardService.BoardCompleted -= onBoardCompleted;
+        settingsService.SettingsChanged -= settingsServiceOnSettingsChanged;
+    } 
 
     private void GenerateCardImages()
     {
@@ -130,49 +153,25 @@ public partial class BidTrainerPage
         if (CurrentBoardIndex == 0)
             results.AllResults.Remove(Lesson.LessonNr);
     }
-
-    private async Task ClickBiddingBoxButton(Bid bid)
+    
+    private async Task OnBoardCompleted(Result result)
     {
-        try
+        if (!repeatMistakesMode)
         {
-            if (isInHintMode)
-            {
-                currentResult.UsedHint = true;
-                await DisplayAlert("Information", BidManager.GetInformation(bid, auction), "OK");
-            }
-            else
-            {
-                var engineBid = BidManager.GetBid(auction, Deal[Player.South]);
-
-                if (bid != engineBid)
-                {
-                    var message = $"The correct bid is {engineBid}. Description: {engineBid.description}.";
-                    var engineBidInformation = BidManager.GetInformation(engineBid, auction);
-                    var bidInformation = BidManager.GetInformation(bid, auction);
-                    var s = $"{message}\n\nCorrect bid {engineBid}\n{engineBidInformation}\n\nYour bid {bid}\n{bidInformation}";
-                    await DisplayAlert("Incorrect bid", s, "OK");
-                    currentResult.AnsweredCorrectly = false;
-                }
-                UpdateBidControls(engineBid);
-
-                await BidTillSouth();
-            }
+            result.Lesson = CurrentLesson;
+            result.Board = CurrentBoardIndex + 1;
+            results.AddResult(Lesson.LessonNr, CurrentBoardIndex, result);
         }
-        catch (Exception exception)
-        {
-            await DisplayAlert("Error", exception.Message, "OK");
-        }
-    }
+        await UploadResultsAsync();
+        CurrentBoardIndex = GetNextBoardNumber();
 
-    private void UpdateBidControls(Bid bid)
-    {
-        auction.AddBid(bid);
-        if (AuctionViewModel.Bids.Any() && AuctionViewModel.Bids.Last() == "?")
-            AuctionViewModel.Bids.RemoveAt(AuctionViewModel.Bids.Count - 1);
-        AuctionViewModel.Bids.Add(bid.ToString());
-        bidService.AuctionHasChanged();
-    }
+        var resultsFile = Path.Combine(FileSystem.AppDataDirectory, "results.json");
+        await File.WriteAllTextAsync(resultsFile, JsonSerializer.Serialize(results,
+            new JsonSerializerOptions { WriteIndented = true }));
 
+        await StartNextBoard();
+    }    
+    
     private async Task StartNextBoard()
     {
         if (CurrentBoardIndex == -1)
@@ -211,18 +210,9 @@ public partial class BidTrainerPage
         StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}";
         
         ShowBothHands();
-        await StartBidding();
+        boardService.StartBoard(pbn.Boards[CurrentBoardIndex]);
     }
-
-    private async Task StartBidding()
-    {
-        auction.Clear(Dealer);
-        AuctionViewModel.Bids = new ObservableCollection<string>(auction.Bids.SelectMany(x => x.Value.Values).Select(_ => ""));
-        bidService.AuctionHasChanged();
-        startTimeBoard = DateTime.Now;
-        currentResult = new Result();
-        await BidTillSouth();
-    }
+    
 
     private void ShowBothHands()
     {
@@ -232,37 +222,6 @@ public partial class BidTrainerPage
         HandViewModelSouth.ShowHand(Deal[Player.South], alternateSuits, cardProfile, dictionary);
     }
 
-    private async Task BidTillSouth()
-    {
-        while (auction.CurrentPlayer != Player.South && !auction.IsEndOfBidding())
-        {
-            var bid = BidManager.GetBid(auction, Deal[auction.CurrentPlayer]);
-            UpdateBidControls(bid);
-        }
-
-        AuctionViewModel.Bids.Add("?");
-
-        if (auction.IsEndOfBidding())
-        {
-            BiddingBoxView.IsEnabled = false;
-            PanelNorth.IsVisible = true;
-            if (!repeatMistakesMode)
-            {
-                currentResult.TimeElapsed = DateTime.Now - startTimeBoard;
-                currentResult.Lesson = CurrentLesson;
-                currentResult.Board = CurrentBoardIndex + 1;
-                results.AddResult(Lesson.LessonNr, CurrentBoardIndex, currentResult);
-            }
-            await DisplayAlert("Info", $"Hand is done. Contract:{auction.currentContract}", "OK");
-            await UploadResultsAsync();
-            CurrentBoardIndex = GetNextBoardNumber();
-
-            var resultsFile = Path.Combine(FileSystem.AppDataDirectory, "results.json");
-            await File.WriteAllTextAsync(resultsFile, JsonSerializer.Serialize(results, new JsonSerializerOptions { WriteIndented = true }));
-
-            await StartNextBoard();
-        }
-    }
 
     private int GetNextBoardNumber()
     {
@@ -379,8 +338,8 @@ public partial class BidTrainerPage
     {
         try
         {
-            isInHintMode = e.Value;
-            LabelMode.Text = isInHintMode ? "Hint" : "Bid";
+            boardService.SetHintMode(e.Value);
+            LabelMode.Text = e.Value ? "Hint" : "Bid";
         }
         catch (Exception exception)
         {

@@ -30,6 +30,7 @@ public static class MauiProgram
                 .CreateLogger());
         services.AddLogging(logging => logging.AddSerilog());
         builder.Services.AddSingleton<SettingsService>();
+        builder.Services.AddSingleton<BoardService>();
         builder.Services.AddSingleton<BidService>();
 
 #if DEBUG
