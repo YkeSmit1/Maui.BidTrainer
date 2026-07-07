@@ -2,9 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:Maui.BidTrainer.Views"
+             xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
              x:Class="Maui.BidTrainer.Views.BidTrainerPage"
              Shell.TabBarIsVisible="False"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+             x:DataType="viewModels:BidTrainerViewModel">
+    <ContentPage.BindingContext>
+        <viewModels:BidTrainerViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Resources>
         <Style TargetType="Button" x:Key="ToolbarButton">
             <Setter Property="FontSize" Value="8"/>
@@ -34,7 +39,7 @@
 
             <Label Grid.Row="0" Grid.Column="0" x:Name="StatusLabel" Padding="10" 
                    BackgroundColor="{AppThemeBinding Light={StaticResource SeaGreen}, Dark={StaticResource DarkGreen}}"/>
-            <Button Grid.Row="0" Grid.Column="1" Clicked="ButtonClickedShowLog" Text="Log" IsVisible="False"></Button>
+            <Button Grid.Row="0" Grid.Column="1" Command="{Binding ShowLogCommand}" Text="Log" IsVisible="False"></Button>
             <!-- NorthHand-->
             <views:HandView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="PanelNorth"/>
             <Label Grid.Row="2" Grid.Column="0" x:Name="MistakeLabel" TextColor="Coral" Padding="10"></Label>
@@ -43,8 +48,8 @@
             <!-- Auction-->
             <StackLayout Grid.Row="3" Grid.Column="1" Orientation="Vertical">
                 <StackLayout  Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label x:Name="LabelMode" Text="Bid"/>
-                    <Switch ThumbColor="SandyBrown" OnColor="RosyBrown" Toggled="Switch_Toggled"/>
+                    <Label Text="{Binding LabelMode}"/>
+                    <Switch ThumbColor="SandyBrown" OnColor="RosyBrown" IsToggled="{Binding IsHintMode}"/>
                 </StackLayout>
                 <views:AuctionView x:Name="AuctionView"/>
             </StackLayout>
@@ -55,10 +60,10 @@
             <StackLayout Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"  Orientation="Horizontal" Padding="10" 
                          BackgroundColor="{AppThemeBinding Light={StaticResource SeaGreen}, Dark={StaticResource DarkGreen}}">
                 <Button Text="NextBoard" Clicked="ButtonClickedNextBoard" ImageSource="icons8_next_32.png" Style="{StaticResource ToolbarButton}"/>
-                <Button Text="Lesson" Clicked="ButtonClickedStartLesson" ImageSource="icons8_flashcards_32.png" Style="{StaticResource ToolbarButton}"/>
-                <Button Text="Results" Clicked="ButtonClickedResults" ImageSource="icons8_regular_document_32.png" Style="{StaticResource ToolbarButton}"/>
-                <Button Text="Leaderboard" Clicked="ButtonClickedLeaderBoard" ImageSource="icons8_leaderboard_32.png" Style="{StaticResource ToolbarButton}"/>
-                <Button Text="Settings" Clicked="ButtonClickedSettings" ImageSource="icons8_settings_32.png" Style="{StaticResource ToolbarButton}"/>
+                <Button Text="Lesson" Command="{Binding StartLessonCommand}" ImageSource="icons8_flashcards_32.png" Style="{StaticResource ToolbarButton}"/>
+                <Button Text="Results" Command="{Binding ResultsCommand}" ImageSource="icons8_regular_document_32.png" Style="{StaticResource ToolbarButton}"/>
+                <Button Text="Leaderboard" Command="{Binding LeaderBoardCommand}" ImageSource="icons8_leaderboard_32.png" Style="{StaticResource ToolbarButton}"/>
+                <Button Text="Settings" Command="{Binding SettingsCommand}" ImageSource="icons8_settings_32.png" Style="{StaticResource ToolbarButton}"/>
             </StackLayout>
         </Grid>
     </ContentPage.Content>

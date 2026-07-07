@@ -10,7 +10,6 @@ namespace Maui.BidTrainer.Views;
 public partial class BidTrainerPage
 {
     private readonly BoardService boardService;
-    private readonly StartPage startPage = new();
     private readonly SettingsService settingsService;
     private readonly ResultsService resultService;
     private Dictionary<(string suit, string card), string> dictionary;
@@ -106,8 +105,7 @@ public partial class BidTrainerPage
     {
         try
         {
-            if (!startPage.IsLoaded)
-                await Initialize();
+            await Initialize();
             UpdateUi();
             await StartLessonAsync();
             await StartNextBoard();
@@ -230,86 +228,13 @@ public partial class BidTrainerPage
     {
         await Shell.Current.GoToAsync(nameof(ResultsPage2), new Dictionary<string, object> { ["Results"] = resultService.Results });
     }
-
-    private async void ButtonClickedStartLesson(object sender, EventArgs e)
-    {
-        try
-        {
-            await Shell.Current.GoToAsync(nameof(StartPage));
-        }
-        catch (Exception exception)
-        {
-            await DisplayAlert("Error", exception.Message, "OK");
-        }
-    }
-
+    
     private async void ButtonClickedNextBoard(object sender, EventArgs e)
     {
         try
         {
             CurrentBoardIndex = GetNextBoardNumber();
             await StartNextBoard();
-        }
-        catch (Exception exception)
-        {
-            await DisplayAlert("Error", exception.Message, "OK");
-        }
-    }
-
-    private async void ButtonClickedResults(object sender, EventArgs e)
-    {
-        try
-        {
-            await ShowReport();
-        }
-        catch (Exception exception)
-        {
-            await DisplayAlert("Error", exception.Message, "OK");
-        }
-    }
-
-    private async void ButtonClickedLeaderBoard(object sender, EventArgs e)
-    {
-        try
-        {
-            await Shell.Current.GoToAsync(nameof(LeaderboardPage));
-        }
-        catch (Exception exception)
-        {
-            await DisplayAlert("Error", exception.Message, "OK");
-        }
-    }
-
-    private async void ButtonClickedSettings(object sender, EventArgs e)
-    {
-        try
-        {
-            await Shell.Current.GoToAsync(nameof(SettingsPage));
-        }
-        catch (Exception exception)
-        {
-            await DisplayAlert("Error", exception.Message, "OK");
-        }
-    }
-
-    private async void Switch_Toggled(object sender, ToggledEventArgs e)
-    {
-        try
-        {
-            boardService.SetHintMode(e.Value);
-            LabelMode.Text = e.Value ? "Hint" : "Bid";
-        }
-        catch (Exception exception)
-        {
-            await DisplayAlert("Error", exception.Message, "OK");
-        }
-    }
-
-    private async void ButtonClickedShowLog(object sender, EventArgs e)
-    {
-        try
-        {
-            await Shell.Current.GoToAsync(nameof(LogPage));
         }
         catch (Exception exception)
         {
