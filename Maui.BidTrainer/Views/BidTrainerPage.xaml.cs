@@ -12,6 +12,7 @@ public partial class BidTrainerPage
     private readonly BoardService boardService;
     private readonly StartPage startPage = new();
     private readonly SettingsService settingsService;
+    private readonly ResultsService resultService;
     private Dictionary<(string suit, string card), string> dictionary;
 
     // Bidding
@@ -33,9 +34,6 @@ public partial class BidTrainerPage
     private Dictionary<Player, string> Deal => pbn.Boards[CurrentBoardIndex].Deal;
     private List<Lesson> lessons;
     private Lesson Lesson => lessons.Single(l => l.LessonNr == CurrentLesson);
-
-    // Results
-    private Results results = new();
     private bool repeatMistakesMode;
 
     // ViewModels
@@ -47,9 +45,9 @@ public partial class BidTrainerPage
     private EventHandler<BoardService.DisplayAlertEventArgs> onDisplayAlertRequested;
     private EventHandler onAuctionCleared;
     private EventHandler<string> onAuctionBidAdded;
-    private EventHandler<Result> onBoardCompleted;
+    private EventHandler<BoardService.BoardCompletedEventArgs> onBoardCompleted;
 
-    public BidTrainerPage(SettingsService settingsService, BoardService boardService)
+    public BidTrainerPage(SettingsService settingsService, BoardService boardService, ResultsService resultService)
     {
         InitializeComponent();
         this.settingsService = settingsService;
@@ -57,6 +55,7 @@ public partial class BidTrainerPage
         this.settingsService.SettingsChanged += settingsServiceOnSettingsChanged;
         
         this.boardService = boardService;
+        this.resultService = resultService;
         InitializeBoardService();
         
         AuctionViewModel.Bids.Clear();
@@ -130,16 +129,7 @@ public partial class BidTrainerPage
         using var lessonsReader = new StreamReader(await FileSystem.OpenAppPackageFileAsync("lessons.json"));
         lessons = JsonSerializer.Deserialize<List<Lesson>>(await lessonsReader.ReadToEndAsync());
 
-        var resultsFile = Path.Combine(FileSystem.AppDataDirectory, "results.json");
-        if (File.Exists(resultsFile))
-            try
-            {
-                results = JsonSerializer.Deserialize<Results>(await File.ReadAllTextAsync(resultsFile));
-            }
-            catch (Exception exception)
-            {
-                logger.Error(exception, "Error when loading results");
-            }
+        await resultService.LoadResultsFromFile();
 
         await Utils.CopyFileToAppDataDirectory("four_card_majors.db3");
         Api.Setup(Path.Combine(FileSystem.AppDataDirectory, "four_card_majors.db3"));
@@ -150,33 +140,34 @@ public partial class BidTrainerPage
         await Utils.CopyFileToAppDataDirectory(Lesson.PbnFile);
         await pbn.LoadAsync(Path.Combine(FileSystem.AppDataDirectory, Lesson.PbnFile));
         Api.SetModules(Lesson.Modules);
-        if (CurrentBoardIndex == 0)
-            results.AllResults.Remove(Lesson.LessonNr);
+        if (CurrentBoardIndex == 0) 
+            resultService.RemoveLessonResults(Lesson.LessonNr);
     }
-    
-    private async Task OnBoardCompleted(Result result)
+
+    private async Task OnBoardCompleted(BoardService.BoardCompletedEventArgs args)
     {
+        BiddingBoxView.IsEnabled = false;
+        PanelNorth.IsVisible = true;
         if (!repeatMistakesMode)
         {
-            result.Lesson = CurrentLesson;
-            result.Board = CurrentBoardIndex + 1;
-            results.AddResult(Lesson.LessonNr, CurrentBoardIndex, result);
+            args.Result.Lesson = CurrentLesson;
+            args.Result.Board = CurrentBoardIndex + 1;
+            resultService.AddResult(args.Result, CurrentBoardIndex);
         }
-        await UploadResultsAsync();
+        await resultService.UploadResultsAsync();
         CurrentBoardIndex = GetNextBoardNumber();
 
-        var resultsFile = Path.Combine(FileSystem.AppDataDirectory, "results.json");
-        await File.WriteAllTextAsync(resultsFile, JsonSerializer.Serialize(results,
-            new JsonSerializerOptions { WriteIndented = true }));
+        await resultService.SaveResultsToFile();
+        await DisplayAlert("Info", $"Hand is done. Contract:{args.Contract}", "Ok");
 
         await StartNextBoard();
-    }    
-    
+    }
+
     private async Task StartNextBoard()
     {
         if (CurrentBoardIndex == -1)
         {
-            var wrongBoards = results.AllResults[CurrentLesson].GetWrongBoards();
+            var wrongBoards = resultService.GetWrongBoards(CurrentLesson);
             if (!repeatMistakesMode && wrongBoards.Count > 0)
             {
                 repeatMistakesMode = true;
@@ -190,7 +181,7 @@ public partial class BidTrainerPage
 
                 if (Lesson.LessonNr != lessons.Last().LessonNr)
                 {
-                    var percentage = results.AllResults[Lesson.LessonNr].Percentage;
+                    var percentage = resultService.GetPercentage(Lesson.LessonNr);
                     await DisplayAlert("Info", $"End of lesson. Your have scored {percentage}", "OK");
                     CurrentLesson++;
                     await Shell.Current.GoToAsync($"{nameof(TheoryPage)}?Lesson={CurrentLesson}");
@@ -212,7 +203,7 @@ public partial class BidTrainerPage
         ShowBothHands();
         boardService.StartBoard(pbn.Boards[CurrentBoardIndex]);
     }
-    
+
 
     private void ShowBothHands()
     {
@@ -227,7 +218,7 @@ public partial class BidTrainerPage
     {
         if (repeatMistakesMode)
         {
-            var wrongBoards = results.AllResults[CurrentLesson].GetWrongBoards();
+            var wrongBoards = resultService.GetWrongBoards(CurrentLesson);
             return wrongBoards.Last() == CurrentBoardIndex ? -1 : wrongBoards.SkipWhile(x => x != CurrentBoardIndex).ElementAt(1);
         }
         if (CurrentBoardIndex == pbn.Boards.Count - 1)
@@ -235,42 +226,9 @@ public partial class BidTrainerPage
         return CurrentBoardIndex + 1;
     }
 
-    private async Task UploadResultsAsync()
-    {
-        var username = Preferences.Get("Username", "");
-        if (username == "") return;
-        var res = results.AllResults.Values.SelectMany(x => x.Results.Values).ToList();
-        await UpdateOrCreateAccount(username, res.Count, res.Count(x => x.AnsweredCorrectly), res.Sum(x => x.TimeElapsed.Ticks));
-        return;
-
-        static async Task UpdateOrCreateAccount(string username, int boardPlayed, int correctBoards, long timeElapsed)
-        {
-            var account = new Account
-            {
-                username = username,
-                numberOfBoardsPlayed = boardPlayed,
-                numberOfCorrectBoards = correctBoards,
-                timeElapsed = new TimeSpan(timeElapsed)
-            };
-
-            var cosmosDbHelper = DependencyService.Get<ICosmosDbHelper>();
-            var user = await cosmosDbHelper.GetAccount(username);
-            if (user == null || string.IsNullOrWhiteSpace(user.Value.id))
-            {
-                account.id = Guid.NewGuid().ToString();
-                await cosmosDbHelper.InsertAccount(account);
-            }
-            else
-            {
-                account.id = user.Value.id;
-                await cosmosDbHelper.UpdateAccount(account);
-            }
-        }
-    }
-
     private async Task ShowReport()
     {
-        await Shell.Current.GoToAsync(nameof(ResultsPage2), new Dictionary<string, object> { ["Results"] = results });
+        await Shell.Current.GoToAsync(nameof(ResultsPage2), new Dictionary<string, object> { ["Results"] = resultService.Results });
     }
 
     private async void ButtonClickedStartLesson(object sender, EventArgs e)

@@ -32,6 +32,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<SettingsService>();
         builder.Services.AddSingleton<BoardService>();
         builder.Services.AddSingleton<BidService>();
+        builder.Services.AddSingleton<ResultsService>();
 
 #if DEBUG
         builder.Logging.AddDebug();

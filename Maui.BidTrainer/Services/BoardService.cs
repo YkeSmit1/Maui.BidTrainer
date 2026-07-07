@@ -11,6 +11,12 @@ public class BoardService
         public string Message { get; init; }
     }
     
+    public class BoardCompletedEventArgs : EventArgs
+    {
+        public Result Result { get; init; }
+        public Bid Contract { get; init; }
+    }
+
     private readonly BidService bidService;
     
     private Result currentResult;
@@ -21,7 +27,7 @@ public class BoardService
     private Dictionary<Player, string> deal;
     
     public event EventHandler<DisplayAlertEventArgs> DisplayAlertRequested;
-    public event EventHandler<Result> BoardCompleted;
+    public event EventHandler<BoardCompletedEventArgs> BoardCompleted;
     public event EventHandler<string> AuctionBidAdded;
     public event EventHandler AuctionCleared;
 
@@ -121,8 +127,7 @@ public class BoardService
         if (auction.IsEndOfBidding())
         {
             currentResult.TimeElapsed = DateTime.Now - startTimeBoard;
-            RaiseBidAlertEvent($"Hand is done. Contract:{auction.currentContract}", "Info");
-            BoardCompleted?.Invoke(this, currentResult);
+            BoardCompleted?.Invoke(this, new BoardCompletedEventArgs { Result = currentResult, Contract = auction.currentContract});
         }
     }
 }    
