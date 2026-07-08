@@ -36,9 +36,12 @@
                 <ColumnDefinition Width="270"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-
-            <Label Grid.Row="0" Grid.Column="0" x:Name="StatusLabel" Padding="10" 
-                   BackgroundColor="{AppThemeBinding Light={StaticResource SeaGreen}, Dark={StaticResource DarkGreen}}"/>
+            <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource SeaGreen}, Dark={StaticResource DarkGreen}}"
+                    Grid.Row="0" Grid.Column="0">
+                <Label Text="{Binding Username, StringFormat='Username:{0}'}" Padding="10"/>
+                <Label Text="{Binding Lesson, StringFormat='Lesson:{0}'}" Padding="10"/>
+                <Label Text="{Binding Board, StringFormat='Board:{0}'}" Padding="10"/>
+            </VerticalStackLayout>
             <Button Grid.Row="0" Grid.Column="1" Command="{Binding ShowLogCommand}" Text="Log" IsVisible="False"></Button>
             <!-- NorthHand-->
             <views:HandView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="PanelNorth"/>
@@ -48,7 +51,7 @@
             <!-- Auction-->
             <StackLayout Grid.Row="3" Grid.Column="1" Orientation="Vertical">
                 <StackLayout  Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="{Binding LabelMode}"/>
+                    <Label Text="{Binding Mode}"/>
                     <Switch ThumbColor="SandyBrown" OnColor="RosyBrown" IsToggled="{Binding IsHintMode}"/>
                 </StackLayout>
                 <views:AuctionView x:Name="AuctionView"/>

@@ -18,24 +18,25 @@ public partial class SettingsPage
         ((SettingsViewModel)BindingContext).Load();
     }
 
-    protected override async void OnDisappearing()
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        ((SettingsViewModel)BindingContext).Save();
+        settingsService.NotifySettingsChanged();
+    }
+
+    private async void UsernameUnfocused(object sender, FocusEventArgs e)
     {
         try
         {
-            base.OnDisappearing();
             var settingsViewModel = (SettingsViewModel)BindingContext;
-            if (Preferences.Get("Username", "") != settingsViewModel.Username)
+            if (Preferences.Get("Username", "") == settingsViewModel.Username) 
+                return;
+            var account = await DependencyService.Get<ICosmosDbHelper>().GetAccount(settingsViewModel.Username);
+            if (account is { id: not null })
             {
-                var account = await DependencyService.Get<ICosmosDbHelper>().GetAccount(settingsViewModel.Username);
-                if (account != null)
-                {
-                    await DisplayAlert("Error", "Username already exists", "OK");
-                    return;
-                }
+                await DisplayAlert("Error", "Username already exists", "OK");
             }
-
-            settingsViewModel.Save();
-            settingsService.NotifySettingsChanged();
         }
         catch (Exception exception)
         {

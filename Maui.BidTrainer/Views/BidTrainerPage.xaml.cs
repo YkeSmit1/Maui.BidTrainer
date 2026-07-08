@@ -40,6 +40,7 @@ public partial class BidTrainerPage
     private HandViewModel HandViewModelNorth => (HandViewModel)PanelNorth.BindingContext;
     private HandViewModel HandViewModelSouth => (HandViewModel)PanelSouth.BindingContext;
     private readonly ILogger logger = IPlatformApplication.Current!.Services.GetService<ILogger>();
+    // Event-handlers
     private readonly EventHandler settingsServiceOnSettingsChanged;
     private EventHandler<BoardService.DisplayAlertEventArgs> onDisplayAlertRequested;
     private EventHandler onAuctionCleared;
@@ -50,7 +51,12 @@ public partial class BidTrainerPage
     {
         InitializeComponent();
         this.settingsService = settingsService;
-        settingsServiceOnSettingsChanged = (_, _) => UpdateUi();
+        settingsServiceOnSettingsChanged = (_, _) =>
+        {
+            ((BidTrainerViewModel)BindingContext).Username = Preferences.Get("Username", "");
+            GenerateCardImages();
+            ShowBothHands();
+        };
         this.settingsService.SettingsChanged += settingsServiceOnSettingsChanged;
         
         this.boardService = boardService;
@@ -106,7 +112,6 @@ public partial class BidTrainerPage
         try
         {
             await Initialize();
-            UpdateUi();
             await StartLessonAsync();
             await StartNextBoard();
         }
@@ -114,12 +119,6 @@ public partial class BidTrainerPage
         {
             await DisplayAlert("Error", e.ToString(), "OK");
         }
-    }
-
-    private void UpdateUi()
-    {
-        StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}";
-        GenerateCardImages();
     }
 
     private async Task Initialize()
@@ -131,6 +130,7 @@ public partial class BidTrainerPage
 
         await Utils.CopyFileToAppDataDirectory("four_card_majors.db3");
         Api.Setup(Path.Combine(FileSystem.AppDataDirectory, "four_card_majors.db3"));
+        GenerateCardImages();
     }
 
     private async Task StartLessonAsync()
@@ -140,6 +140,7 @@ public partial class BidTrainerPage
         Api.SetModules(Lesson.Modules);
         if (CurrentBoardIndex == 0) 
             resultService.RemoveLessonResults(Lesson.LessonNr);
+        ((BidTrainerViewModel)BindingContext).Lesson = Lesson.LessonNr;
     }
 
     private async Task OnBoardCompleted(BoardService.BoardCompletedEventArgs args)
@@ -196,12 +197,10 @@ public partial class BidTrainerPage
 
         PanelNorth.IsVisible = false;
         BiddingBoxView.IsEnabled = true;
-        StatusLabel.Text = $"Username: {Preferences.Get("Username", "")}\nLesson: {Lesson.LessonNr}\nBoard: {CurrentBoardIndex + 1}";
-        
+        ((BidTrainerViewModel)BindingContext).Board = CurrentBoardIndex + 1;
         ShowBothHands();
         boardService.StartBoard(pbn.Boards[CurrentBoardIndex]);
     }
-
 
     private void ShowBothHands()
     {
@@ -210,7 +209,6 @@ public partial class BidTrainerPage
         HandViewModelNorth.ShowHand(Deal[Player.North], alternateSuits, cardProfile, dictionary);
         HandViewModelSouth.ShowHand(Deal[Player.South], alternateSuits, cardProfile, dictionary);
     }
-
 
     private int GetNextBoardNumber()
     {

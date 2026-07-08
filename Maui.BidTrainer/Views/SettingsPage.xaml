@@ -24,7 +24,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Text="Username" Padding="15"/>
-            <Entry Grid.Row="0" Grid.Column="1" Placeholder="Username" Text="{Binding Username}"/>
+            <Entry Grid.Row="0" Grid.Column="1" Placeholder="Username" Text="{Binding Username}" Unfocused="UsernameUnfocused"/>
             <Label Grid.Row="1" Grid.Column="0" Text="Alternate suits" Padding="15"/>
             <Switch Grid.Row="1" Grid.Column="1" IsToggled="{Binding AlternateSuits}"/>
             <Label Grid.Row="2" Grid.Column="0" Text="Cards" Padding="15"/>

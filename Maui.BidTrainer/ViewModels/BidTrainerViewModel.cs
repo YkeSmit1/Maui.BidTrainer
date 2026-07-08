@@ -16,14 +16,16 @@ public partial class BidTrainerViewModel : ObservableObject
         ?? throw new InvalidOperationException("BoardService is not registered.");
 
     [ObservableProperty] public partial bool IsHintMode { get; set; }
+    [ObservableProperty] public partial string Username { get; set; } = Preferences.Get("Username", "");
+    [ObservableProperty] public partial int Lesson { get; set; }
+    [ObservableProperty] public partial int Board { get; set; }
+    [ObservableProperty] public partial string Mode { get; set; } = "Bid";
     
     partial void OnIsHintModeChanged(bool value)
     {
         boardService.SetHintMode(value);
-        LabelMode = value ? "Hint" : "Bid";
-    }    
-    
-    [ObservableProperty] public partial string LabelMode { get; set; } = "Bid";
+        Mode = value ? "Hint" : "Bid";
+    }
 
     [RelayCommand]
     private async Task StartLesson()
