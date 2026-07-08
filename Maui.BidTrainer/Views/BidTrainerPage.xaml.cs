@@ -3,7 +3,6 @@ using Common;
 using Engine.DotNet;
 using Maui.BidTrainer.Services;
 using Maui.BidTrainer.ViewModels;
-using Serilog;
 
 namespace Maui.BidTrainer.Views;
 
@@ -30,7 +29,7 @@ public partial class BidTrainerPage
         set => Preferences.Set(nameof(CurrentBoardIndex), value);
     }
 
-    private Dictionary<Player, string> Deal => pbn.Boards[CurrentBoardIndex].Deal;
+    private BoardDto Board => pbn.Boards[CurrentBoardIndex];
     private List<Lesson> lessons;
     private Lesson Lesson => lessons.Single(l => l.LessonNr == CurrentLesson);
     private bool repeatMistakesMode;
@@ -40,13 +39,13 @@ public partial class BidTrainerPage
     private HandViewModel HandViewModelNorth => (HandViewModel)PanelNorth.BindingContext;
     private HandViewModel HandViewModelSouth => (HandViewModel)PanelSouth.BindingContext;
     private BidTrainerViewModel BidTrainerViewModel => (BidTrainerViewModel)BindingContext;
-    private readonly ILogger logger = IPlatformApplication.Current!.Services.GetService<ILogger>();
+
     // Event-handlers
     private readonly EventHandler settingsServiceOnSettingsChanged;
-    private EventHandler<BoardService.DisplayAlertEventArgs> onDisplayAlertRequested;
-    private EventHandler onAuctionCleared;
-    private EventHandler<string> onAuctionBidAdded;
-    private EventHandler<BoardService.BoardCompletedEventArgs> onBoardCompleted;
+    private readonly EventHandler<BoardService.DisplayAlertEventArgs> onDisplayAlertRequested;
+    private readonly EventHandler onAuctionCleared;
+    private readonly EventHandler<string> onAuctionBidAdded;
+    private readonly EventHandler<BoardService.BoardCompletedEventArgs> onBoardCompleted;
 
     public BidTrainerPage(SettingsService settingsService, BoardService boardService, ResultsService resultService, CardService cardService)
     {
@@ -183,13 +182,13 @@ public partial class BidTrainerPage
         BiddingBoxView.IsEnabled = true;
         BidTrainerViewModel.Board = CurrentBoardIndex + 1;
         ShowBothHands();
-        boardService.StartBoard(pbn.Boards[CurrentBoardIndex]);
+        boardService.StartBoard(Board);
     }
 
     private void ShowBothHands()
     {
-        HandViewModelNorth.ShowHand(Deal[Player.North]);
-        HandViewModelSouth.ShowHand(Deal[Player.South]);
+        HandViewModelNorth.ShowHand(Board.Deal[Player.North]);
+        HandViewModelSouth.ShowHand(Board.Deal[Player.South]);
     }
 
     private int GetNextBoardNumber()

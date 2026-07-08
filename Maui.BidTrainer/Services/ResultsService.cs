@@ -74,11 +74,11 @@ public class ResultsService
 
     public string GetPercentage(int lesson)
     {
-        return Results.AllResults[lesson].Percentage;
+        return Results.AllResults.TryGetValue(lesson, out var value) ? value.Percentage : "";
     }
 
     public List<int> GetWrongBoards(int lesson)
     {
-        return Results.AllResults[lesson].GetWrongBoards();
+        return Results.AllResults.TryGetValue(lesson, out var value) ? value.GetWrongBoards() : [];
     }
 }
