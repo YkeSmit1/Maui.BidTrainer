@@ -20,6 +20,7 @@ public partial class BidTrainerViewModel : ObservableObject
     [ObservableProperty] public partial int Lesson { get; set; }
     [ObservableProperty] public partial int Board { get; set; }
     [ObservableProperty] public partial string Mode { get; set; } = "Bid";
+    [ObservableProperty] public partial string Mistake { get; set; } = "";
     
     partial void OnIsHintModeChanged(bool value)
     {
@@ -85,6 +86,19 @@ public partial class BidTrainerViewModel : ObservableObject
         try
         {
             await Shell.Current.GoToAsync(nameof(LogPage));
+        }
+        catch (Exception exception)
+        {
+            await Shell.Current.DisplayAlert("Error", exception.Message, "OK");
+        }
+    }
+
+    [RelayCommand]
+    private async Task ShowReport()
+    {
+        try
+        {
+            await Shell.Current.GoToAsync(nameof(ResultsPage2), new Dictionary<string, object> { ["Results"] = resultService.Results });
         }
         catch (Exception exception)
         {

@@ -122,8 +122,6 @@ public class BoardService
             UpdateBidControls(bid);
         }
 
-        AuctionBidAdded?.Invoke(this, "?");
-
         if (auction.IsEndOfBidding())
         {
             currentResult.TimeElapsed = DateTime.Now - startTimeBoard;

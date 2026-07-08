@@ -1,15 +1,22 @@
 ﻿using System.Collections.ObjectModel;
 using Common;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Maui.BidTrainer.Services;
 
 namespace Maui.BidTrainer.ViewModels;
 
 public class HandViewModel : ObservableObject
 {
+    private readonly CardService cardService =
+        Application.Current?.Handler?.MauiContext?.Services.GetRequiredService<CardService>()
+        ?? throw new InvalidOperationException("CardService is not registered.");
+    
     public ObservableCollection<Card> Cards { get; set; } = [];
 
-    public void ShowHand(string hand, bool alternateSuits, string cardProfile, Dictionary<(string suit, string card), string> dictionary)
+    public void ShowHand(string hand)
     {
+        var alternateSuits = Preferences.Get("AlternateSuits", true);
+        var cardProfile = Preferences.Get("CardImageSettings", "default");
         var settings = CardImageSettings.GetCardImageSettings(cardProfile);
         Cards.Clear();
 
@@ -26,7 +33,7 @@ public class HandViewModel : ObservableObject
                 Cards.Add(new Card
                 {
                     Rect = new Rect(index++ * settings.CardDistance, 0, settings.CardWidth, settings.CardHeight),
-                    Source = dictionary[(Util.GetSuitDescriptionASCII(suit.Item2), card.ToString())],
+                    Source = cardService.Dictionary[(Util.GetSuitDescriptionASCII(suit.Item2), card.ToString())],
                 });
             }
         }

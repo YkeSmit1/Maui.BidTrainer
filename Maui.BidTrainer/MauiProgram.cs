@@ -33,6 +33,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<BoardService>();
         builder.Services.AddSingleton<BidService>();
         builder.Services.AddSingleton<ResultsService>();
+        builder.Services.AddSingleton<CardService>();
 
 #if DEBUG
         builder.Logging.AddDebug();

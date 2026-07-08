@@ -45,7 +45,7 @@
             <Button Grid.Row="0" Grid.Column="1" Command="{Binding ShowLogCommand}" Text="Log" IsVisible="False"></Button>
             <!-- NorthHand-->
             <views:HandView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="PanelNorth"/>
-            <Label Grid.Row="2" Grid.Column="0" x:Name="MistakeLabel" TextColor="Coral" Padding="10"></Label>
+            <Label Grid.Row="2" Grid.Column="0" Text="{Binding Mistake}" TextColor="Coral" Padding="10"></Label>
             <!-- BiddingBox-->
             <views:BiddingBoxView Grid.Row="3" Grid.Column="0" x:Name="BiddingBoxView" Margin="10"/>
             <!-- Auction-->
