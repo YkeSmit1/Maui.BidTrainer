@@ -24,7 +24,7 @@ public partial class BidTrainerViewModel : ObservableObject
     
     partial void OnIsHintModeChanged(bool value)
     {
-        boardService.SetHintMode(value);
+        boardService.IsInHintMode = value;
         Mode = value ? "Hint" : "Bid";
     }
 

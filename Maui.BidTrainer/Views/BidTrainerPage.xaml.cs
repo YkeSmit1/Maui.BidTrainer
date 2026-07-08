@@ -53,28 +53,22 @@ public partial class BidTrainerPage
         InitializeComponent();
         this.settingsService = settingsService;
         this.cardService = cardService;
+        this.boardService = boardService;
+        this.resultService = resultService;
+        
         settingsServiceOnSettingsChanged = (_, _) =>
         {
             BidTrainerViewModel.Username = Preferences.Get("Username", "");
             this.cardService.GenerateCardImages();
             ShowBothHands();
         };
-        this.settingsService.SettingsChanged += settingsServiceOnSettingsChanged;
-        
-        this.boardService = boardService;
-        this.resultService = resultService;
-        InitializeBoardService();
-        
-        AuctionViewModel.Clear();
-        _ = Start();
-    }
-
-    private void InitializeBoardService()
-    {
         onDisplayAlertRequested = async (_, args) => await DisplayAlert(args.Title, args.Message, "OK");
         onAuctionCleared = (_, _) => AuctionViewModel.Clear();
         onAuctionBidAdded = (_, bid) => { AuctionViewModel.AddBid(bid); };
         onBoardCompleted = async (_, result) => await OnBoardCompleted(result);
+
+        AuctionViewModel.Clear();
+        _ = Start();
     }
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)

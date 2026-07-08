@@ -21,8 +21,8 @@ public class BoardService
     
     private Result currentResult;
     private DateTime startTimeBoard;
-    private bool isInHintMode;
-    
+    public bool IsInHintMode { get; set; }
+
     private Auction auction;
     private Dictionary<Player, string> deal;
     
@@ -49,16 +49,11 @@ public class BoardService
         auction.Clear(pbnBoard.Dealer);
         currentResult = new Result();
         startTimeBoard = DateTime.Now;
-        isInHintMode = false;
+        IsInHintMode = false;
         AuctionCleared?.Invoke(this, EventArgs.Empty);
         bidService.Auction = auction;
         bidService.AuctionHasChanged();
         BidTillSouth();
-    }
-
-    public void SetHintMode(bool value)
-    {
-        isInHintMode = value;
     }
     
     private Task ClickBiddingBoxButton(Bid bid)
@@ -67,7 +62,7 @@ public class BoardService
         {
             try
             {
-                if (isInHintMode)
+                if (IsInHintMode)
                 {
                     currentResult.UsedHint = true;
                     RaiseBidAlertEvent(BidManager.GetInformation(bid, auction), "Information");
