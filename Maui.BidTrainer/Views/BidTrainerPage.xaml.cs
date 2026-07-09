@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using Common;
+﻿using Common;
 using Engine.DotNet;
 using Maui.BidTrainer.Services;
 using Maui.BidTrainer.ViewModels;
@@ -12,6 +11,7 @@ public partial class BidTrainerPage
     private readonly SettingsService settingsService;
     private readonly ResultsService resultService;
     private readonly CardService cardService;
+    private readonly LessonService lessonService;
 
     // Bidding
     private readonly Pbn pbn = new();
@@ -30,8 +30,6 @@ public partial class BidTrainerPage
     }
 
     private BoardDto Board => pbn.Boards[CurrentBoardIndex];
-    private List<Lesson> lessons;
-    private Lesson Lesson => lessons.Single(l => l.LessonNr == CurrentLesson);
     private bool repeatMistakesMode;
 
     // ViewModels
@@ -47,11 +45,12 @@ public partial class BidTrainerPage
     private readonly EventHandler<string> onAuctionBidAdded;
     private readonly EventHandler<BoardService.BoardCompletedEventArgs> onBoardCompleted;
 
-    public BidTrainerPage(SettingsService settingsService, BoardService boardService, ResultsService resultService, CardService cardService)
+    public BidTrainerPage(SettingsService settingsService, BoardService boardService, ResultsService resultService, CardService cardService, LessonService lessonService)
     {
         InitializeComponent();
         this.settingsService = settingsService;
         this.cardService = cardService;
+        this.lessonService = lessonService;
         this.boardService = boardService;
         this.resultService = resultService;
         
@@ -61,16 +60,13 @@ public partial class BidTrainerPage
             this.cardService.GenerateCardImages();
             ShowBothHands();
         };
-        onDisplayAlertRequested = async (_, args) => await DisplayAlert(args.Title, args.Message, "OK");
+        onDisplayAlertRequested = async void (_, args) => await DisplayAlert(args.Title, args.Message, "OK");
         onAuctionCleared = (_, _) => AuctionViewModel.Clear();
         onAuctionBidAdded = (_, bid) => { AuctionViewModel.AddBid(bid); };
-        onBoardCompleted = async (_, result) => await OnBoardCompleted(result);
-
-        AuctionViewModel.Clear();
-        _ = Start();
+        onBoardCompleted = async void (_, result) => await OnBoardCompleted(result);
     }
 
-    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
         boardService.DisplayAlertRequested += onDisplayAlertRequested;
@@ -78,6 +74,7 @@ public partial class BidTrainerPage
         boardService.AuctionBidAdded += onAuctionBidAdded;
         boardService.BoardCompleted += onBoardCompleted;
         settingsService.SettingsChanged += settingsServiceOnSettingsChanged;
+        await Start();
     }
 
     protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
@@ -106,9 +103,6 @@ public partial class BidTrainerPage
 
     private async Task Initialize()
     {
-        using var lessonsReader = new StreamReader(await FileSystem.OpenAppPackageFileAsync("lessons.json"));
-        lessons = JsonSerializer.Deserialize<List<Lesson>>(await lessonsReader.ReadToEndAsync());
-
         await resultService.LoadResultsFromFile();
 
         await Utils.CopyFileToAppDataDirectory("four_card_majors.db3");
@@ -118,12 +112,13 @@ public partial class BidTrainerPage
 
     private async Task StartLessonAsync()
     {
-        await Utils.CopyFileToAppDataDirectory(Lesson.PbnFile);
-        await pbn.LoadAsync(Path.Combine(FileSystem.AppDataDirectory, Lesson.PbnFile));
-        Api.SetModules(Lesson.Modules);
+        var lesson = (await lessonService.GetLessonsAsync()).Single(l => l.LessonNr == CurrentLesson);
+        await Utils.CopyFileToAppDataDirectory(lesson.PbnFile);
+        await pbn.LoadAsync(Path.Combine(FileSystem.AppDataDirectory, lesson.PbnFile));
+        Api.SetModules(lesson.Modules);
         if (CurrentBoardIndex == 0) 
-            resultService.RemoveLessonResults(Lesson.LessonNr);
-        BidTrainerViewModel.Lesson = Lesson.LessonNr;
+            resultService.RemoveLessonResults(lesson.LessonNr);
+        BidTrainerViewModel.Lesson = lesson.LessonNr;
     }
 
     private async Task OnBoardCompleted(BoardService.BoardCompletedEventArgs args)
@@ -161,9 +156,9 @@ public partial class BidTrainerPage
                 BidTrainerViewModel.Mistake = "";
                 CurrentBoardIndex = 0;
 
-                if (Lesson.LessonNr != lessons.Last().LessonNr)
+                if (CurrentLesson != (await lessonService.GetLessonsAsync()).Last().LessonNr)
                 {
-                    var percentage = resultService.GetPercentage(Lesson.LessonNr);
+                    var percentage = resultService.GetPercentage(CurrentLesson);
                     await DisplayAlert("Info", $"End of lesson. Your have scored {percentage}", "OK");
                     CurrentLesson++;
                     await Shell.Current.GoToAsync($"{nameof(TheoryPage)}?Lesson={CurrentLesson}");
