@@ -60,7 +60,7 @@ public partial class BidTrainerPage
             this.cardService.GenerateCardImages();
             ShowBothHands();
         };
-        onDisplayAlertRequested = async void (_, args) => await DisplayAlert(args.Title, args.Message, "OK");
+        onDisplayAlertRequested = async void (_, args) => await DisplayAlertAsync(args.Title, args.Message, "OK");
         onAuctionCleared = (_, _) => AuctionViewModel.Clear();
         onAuctionBidAdded = (_, bid) => { AuctionViewModel.AddBid(bid); };
         onBoardCompleted = async void (_, result) => await OnBoardCompleted(result);
@@ -97,7 +97,7 @@ public partial class BidTrainerPage
         }
         catch (Exception e)
         {
-            await DisplayAlert("Error", e.ToString(), "OK");
+            await DisplayAlertAsync("Error", e.ToString(), "OK");
         }
     }
 
@@ -135,7 +135,7 @@ public partial class BidTrainerPage
         CurrentBoardIndex = GetNextBoardNumber();
 
         await resultService.SaveResultsToFile();
-        await DisplayAlert("Info", $"Hand is done. Contract:{args.Contract}", "Ok");
+        await DisplayAlertAsync("Info", $"Hand is done. Contract:{args.Contract}", "Ok");
 
         await StartNextBoard();
     }
@@ -159,14 +159,14 @@ public partial class BidTrainerPage
                 if (CurrentLesson != (await lessonService.GetLessonsAsync()).Last().LessonNr)
                 {
                     var percentage = resultService.GetPercentage(CurrentLesson);
-                    await DisplayAlert("Info", $"End of lesson. Your have scored {percentage}", "OK");
+                    await DisplayAlertAsync("Info", $"End of lesson. Your have scored {percentage}", "OK");
                     CurrentLesson++;
                     await Shell.Current.GoToAsync($"{nameof(TheoryPage)}?Lesson={CurrentLesson}");
                     await StartLessonAsync();
                 }
                 else
                 {
-                    await DisplayAlert("Info", "End of lessons", "OK");
+                    await DisplayAlertAsync("Info", "End of lessons", "OK");
                     CurrentLesson = 2;
                     await Shell.Current.GoToAsync(nameof(ResultsPage2), new Dictionary<string, object> { ["Results"] = resultService.Results });
                 }
@@ -207,7 +207,7 @@ public partial class BidTrainerPage
         }
         catch (Exception exception)
         {
-            await DisplayAlert("Error", exception.Message, "OK");
+            await DisplayAlertAsync("Error", exception.Message, "OK");
         }
     }
 }

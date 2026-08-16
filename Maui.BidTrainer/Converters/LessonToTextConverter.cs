@@ -6,7 +6,7 @@ public class LessonToTextConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value == null) 
+        if (value == null || (int)value == 0) 
             return string.Empty;
         var filePath = Path.Combine("theories", $"lesson{(int)value}.txt");
         if (!FileSystem.AppPackageFileExistsAsync(filePath).Result)

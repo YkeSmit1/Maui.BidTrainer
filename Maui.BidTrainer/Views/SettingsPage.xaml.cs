@@ -35,12 +35,12 @@ public partial class SettingsPage
             var account = await DependencyService.Get<ICosmosDbHelper>().GetAccount(settingsViewModel.Username);
             if (account is { id: not null })
             {
-                await DisplayAlert("Error", "Username already exists", "OK");
+                await DisplayAlertAsync("Error", "Username already exists", "OK");
             }
         }
         catch (Exception exception)
         {
-            await DisplayAlert("Error", exception.Message, "OK");
+            await DisplayAlertAsync("Error", exception.Message, "OK");
         }
     }
 }

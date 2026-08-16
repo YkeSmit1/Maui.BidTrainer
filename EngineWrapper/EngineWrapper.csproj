@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -10,7 +10,7 @@
     <NoWarn>1701;1702;NETSDK1206</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Common.BridgeClasses" Version="1.0.8" />
+    <PackageReference Include="Common.BridgeClasses" Version="1.0.9" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine.DotNet\Engine.DotNet.csproj" />

@@ -37,7 +37,7 @@ public partial class BidTrainerViewModel : ObservableObject
         }
         catch (Exception exception)
         {
-            await Shell.Current.DisplayAlert("Error", exception.Message, "OK");
+            await Shell.Current.DisplayAlertAsync("Error", exception.Message, "OK");
         }
     }
 
@@ -50,7 +50,7 @@ public partial class BidTrainerViewModel : ObservableObject
         }
         catch (Exception exception)
         {
-            await Shell.Current.DisplayAlert("Error", exception.Message, "OK");
+            await Shell.Current.DisplayAlertAsync("Error", exception.Message, "OK");
         }
     }
 
@@ -63,7 +63,7 @@ public partial class BidTrainerViewModel : ObservableObject
         }
         catch (Exception exception)
         {
-            await Shell.Current.DisplayAlert("Error", exception.Message, "OK");
+            await Shell.Current.DisplayAlertAsync("Error", exception.Message, "OK");
         }
     }
 
@@ -76,7 +76,7 @@ public partial class BidTrainerViewModel : ObservableObject
         }
         catch (Exception exception)
         {
-            await Shell.Current.DisplayAlert("Error", exception.Message, "OK");
+            await Shell.Current.DisplayAlertAsync("Error", exception.Message, "OK");
         }
     }
 
@@ -89,7 +89,7 @@ public partial class BidTrainerViewModel : ObservableObject
         }
         catch (Exception exception)
         {
-            await Shell.Current.DisplayAlert("Error", exception.Message, "OK");
+            await Shell.Current.DisplayAlertAsync("Error", exception.Message, "OK");
         }
     }
 
@@ -102,7 +102,7 @@ public partial class BidTrainerViewModel : ObservableObject
         }
         catch (Exception exception)
         {
-            await Shell.Current.DisplayAlert("Error", exception.Message, "OK");
+            await Shell.Current.DisplayAlertAsync("Error", exception.Message, "OK");
         }
     }
 }

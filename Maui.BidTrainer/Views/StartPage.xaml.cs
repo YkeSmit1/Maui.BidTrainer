@@ -18,7 +18,7 @@ public partial class StartPage
         }
         catch (Exception exception)
         {
-            await DisplayAlert("Error", exception.Message, "OK");
+            await DisplayAlertAsync("Error", exception.Message, "OK");
         }
     }
 }

@@ -15,7 +15,7 @@ public partial class TheoryPage
         }
         catch (Exception exception)
         {
-            await DisplayAlert("Error", exception.ToString(), "OK");
+            await Shell.Current.DisplayAlertAsync("Error", exception.ToString(), "OK");
         }
     }
 }
