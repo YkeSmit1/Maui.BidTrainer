@@ -26,6 +26,8 @@ jobs:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}   
     - name: Install .Net MAUI
       run: dotnet workload install maui      
+    - name: Check workload version
+      run: dotnet workload list
     - name: Build
       run: dotnet publish maui.bidtrainer\maui.bidtrainer.csproj -c Release -f net10.0-windows10.0.19041.0 -p:RuntimeIdentifierOverride=win10-x64 --self-contained true -p:PublishReadyToRun=false
     - name: test c# test
