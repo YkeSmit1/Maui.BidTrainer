@@ -24,14 +24,14 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '9.0.x'
+        dotnet-version: '10.0.x'
         source-url: https://nuget.pkg.github.com/YkeSmit1/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}        
     - name: Install .Net MAUI
       run: dotnet workload install maui      
     - name: Build
-      run: dotnet build Maui.BidTrainer\Maui.BidTrainer.csproj -c Release -f net9.0-android /p:AndroidSigningKeyStore=myapp.keystore /p:AndroidSigningKeyAlias=bidtrainer /p:AndroidSigningKeyPass="${{ secrets.KEYSTORE_PASSWORD }}" /p:AndroidSigningStorePass="${{ secrets.KEYSTORE_PASSWORD_ALIAS }}"
+      run: dotnet build Maui.BidTrainer\Maui.BidTrainer.csproj -c Release -f net10.0-android /p:AndroidSigningKeyStore=myapp.keystore /p:AndroidSigningKeyAlias=bidtrainer /p:AndroidSigningKeyPass="${{ secrets.KEYSTORE_PASSWORD }}" /p:AndroidSigningStorePass="${{ secrets.KEYSTORE_PASSWORD_ALIAS }}"
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4
       with:

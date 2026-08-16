@@ -22,7 +22,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: '10.0.x'
           source-url: https://nuget.pkg.github.com/YkeSmit1/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}     
@@ -57,7 +57,7 @@ jobs:
       - name: Build iOS .ipa
         run: |
           dotnet publish maui.bidtrainer/maui.bidtrainer.csproj \
-            -f:net9.0-ios \
+            -f:net10.0-ios \
             -c Release \
             /p:ArchiveOnBuild=true \
             /p:RuntimeIdentifier=ios-arm64 \
@@ -69,4 +69,4 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: ios-app
-          path: ./maui.bidtrainer/bin/Release/net9.0-ios/ios-arm64/publish/maui.bidtrainer.ipa
+          path: ./maui.bidtrainer/bin/Release/net10.0-ios/ios-arm64/publish/maui.bidtrainer.ipa

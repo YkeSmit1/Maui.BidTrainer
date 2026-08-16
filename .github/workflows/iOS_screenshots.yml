@@ -19,7 +19,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: '10.0.x'
           source-url: https://nuget.pkg.github.com/YkeSmit1/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}     
@@ -30,7 +30,7 @@ jobs:
       - name: Build for simulator
         run: |
           dotnet build maui.bidtrainer/maui.bidtrainer.csproj \
-            -f:net9.0-ios \
+            -f:net10.0-ios \
             -c Release \
             /p:RuntimeIdentifier=iossimulator-x64 \
             /p:CodesignKey="" \
@@ -45,7 +45,7 @@ jobs:
           sleep 30
 
           # Install and launch app
-          xcrun simctl install booted maui.bidtrainer/bin/Release/net9.0-ios/iossimulator-x64/maui.bidtrainer.app
+          xcrun simctl install booted maui.bidtrainer/bin/Release/net10.0-ios/iossimulator-x64/maui.bidtrainer.app
           xcrun simctl launch booted com.companyname.maui.bidtrainer
           sleep 30
 
@@ -61,7 +61,7 @@ jobs:
           sleep 30
 
           # Install and launch app
-          xcrun simctl install booted maui.bidtrainer/bin/Release/net9.0-ios/iossimulator-x64/maui.bidtrainer.app
+          xcrun simctl install booted maui.bidtrainer/bin/Release/net10.0-ios/iossimulator-x64/maui.bidtrainer.app
           xcrun simctl launch booted com.companyname.maui.bidtrainer
           sleep 30
 

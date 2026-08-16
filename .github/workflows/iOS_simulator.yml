@@ -19,7 +19,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: '10.0.x'
           source-url: https://nuget.pkg.github.com/YkeSmit1/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}     
@@ -30,7 +30,7 @@ jobs:
       - name: Build for iOS Simulator
         run: |
           dotnet build maui.bidtrainer/maui.bidtrainer.csproj \
-            -f:net9.0-ios \
+            -f:net10.0-ios \
             -c Release \
             /p:RuntimeIdentifier=iossimulator-x64 \
             /p:CodesignKey="" \
@@ -38,12 +38,12 @@ jobs:
 
       - name: Zip .app for Appetize
         run: |
-          cd maui.bidtrainer/bin/Release/net9.0-ios/iossimulator-x64
+          cd maui.bidtrainer/bin/Release/net10.0-ios/iossimulator-x64
           zip -r simulator-app.zip *.app
 
       - name: Upload simulator app
         uses: actions/upload-artifact@v7
         with:
           name: simulator-app
-          path: maui.bidtrainer/bin/Release/net9.0-ios/iossimulator-x64/simulator-app.zip
+          path: maui.bidtrainer/bin/Release/net10.0-ios/iossimulator-x64/simulator-app.zip
           retention-days: 5
