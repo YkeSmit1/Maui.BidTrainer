@@ -1,10 +1,11 @@
 ﻿using Common;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Maui.BidTrainer.Services;
 
 namespace Maui.BidTrainer.ViewModels;
 
-public partial class BidViewModel
+public partial class BidViewModel : ObservableObject
 {
     private readonly BidService bidService =
         Application.Current?.Handler?.MauiContext?.Services.GetRequiredService<BidService>()
@@ -12,6 +13,10 @@ public partial class BidViewModel
 
     public Bid Bid { get; }
     public string BidString => Bid.ToString();
+    public Color Color =>
+        !CanDoBid() ? Colors.Gray :
+        Bid.Suit is Suit.Diamonds or Suit.Hearts ? Colors.Red :
+        Application.Current is { RequestedTheme: AppTheme.Light } ? Colors.Black : Colors.White;
 
     public BidViewModel(Bid bid)
     {
@@ -22,6 +27,7 @@ public partial class BidViewModel
     private void AuctionChanged()
     {
         DoBidCommand.NotifyCanExecuteChanged();
+        OnPropertyChanged(nameof(Color));
     }
 
     private bool CanDoBid()
