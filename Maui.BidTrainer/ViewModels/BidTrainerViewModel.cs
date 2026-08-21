@@ -5,16 +5,8 @@ using Maui.BidTrainer.Views;
 
 namespace Maui.BidTrainer.ViewModels;
 
-public partial class BidTrainerViewModel : ObservableObject
+public partial class BidTrainerViewModel(ResultsService resultService, BoardService boardService) : ObservableObject
 {
-    private readonly ResultsService resultService =
-        Application.Current?.Handler?.MauiContext?.Services.GetRequiredService<ResultsService>()
-        ?? throw new InvalidOperationException("ResultsService is not registered.");
-    
-    private readonly BoardService boardService =
-        Application.Current?.Handler?.MauiContext?.Services.GetRequiredService<BoardService>()
-        ?? throw new InvalidOperationException("BoardService is not registered.");
-
     [ObservableProperty] public partial bool IsHintMode { get; set; }
     [ObservableProperty] public partial string Username { get; set; } = Preferences.Get("Username", "");
     [ObservableProperty] public partial int Lesson { get; set; }

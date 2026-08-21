@@ -4,9 +4,10 @@ namespace Maui.BidTrainer.Views;
 
 public partial class StartPage
 {
-    public StartPage()
+    public StartPage(StartViewModel startViewModel)
     {
         InitializeComponent();
+        BindingContext = startViewModel;
     }
 
     protected override async void OnAppearing()

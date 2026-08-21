@@ -4,9 +4,6 @@
              xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
              x:Class="Maui.BidTrainer.Views.BiddingBoxView"
              x:DataType="viewModels:BiddingBoxViewModel">
-    <ContentView.BindingContext>
-        <viewModels:BiddingBoxViewModel/>
-    </ContentView.BindingContext>
     <ContentView.Resources>
         <DataTemplate x:Key="BidButtonsTemplate" x:DataType="viewModels:BidViewModel">
             <Border Padding="1" BackgroundColor="{AppThemeBinding Light={StaticResource MediumSeaGreen}, Dark={StaticResource DarkOliveGreen}}">

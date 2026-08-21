@@ -7,9 +7,6 @@
              Shell.TabBarIsVisible="False"
              Shell.NavBarIsVisible="False"
              x:DataType="viewModels:BidTrainerViewModel">
-    <ContentPage.BindingContext>
-        <viewModels:BidTrainerViewModel/>
-    </ContentPage.BindingContext>
     <ContentPage.Resources>
         <Style TargetType="Button" x:Key="ToolbarButton">
             <Setter Property="FontSize" Value="8"/>

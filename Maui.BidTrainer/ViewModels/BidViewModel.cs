@@ -7,9 +7,7 @@ namespace Maui.BidTrainer.ViewModels;
 
 public partial class BidViewModel : ObservableObject
 {
-    private readonly BidService bidService =
-        Application.Current?.Handler?.MauiContext?.Services.GetRequiredService<BidService>()
-        ?? throw new InvalidOperationException("BidService is not registered.");
+    private readonly BidService bidService;
 
     public Bid Bid { get; }
     public string BidString => Bid.ToString();
@@ -18,9 +16,10 @@ public partial class BidViewModel : ObservableObject
         Bid.Suit is Suit.Diamonds or Suit.Hearts ? Colors.Red :
         Application.Current is { RequestedTheme: AppTheme.Light } ? Colors.Black : Colors.White;
 
-    public BidViewModel(Bid bid)
+    public BidViewModel(Bid bid, BidService bidService)
     {
         Bid = bid;
+        this.bidService = bidService;
         bidService.OnAuctionHasChanged += (_, _) => AuctionChanged();
     }
     

@@ -34,8 +34,8 @@ public partial class BidTrainerPage
 
     // ViewModels
     private AuctionViewModel AuctionViewModel => (AuctionViewModel)AuctionView.BindingContext;
-    private HandViewModel HandViewModelNorth => (HandViewModel)PanelNorth.BindingContext;
-    private HandViewModel HandViewModelSouth => (HandViewModel)PanelSouth.BindingContext;
+    private readonly HandViewModel handViewModelNorth;
+    private readonly HandViewModel handViewModelSouth;
     private BidTrainerViewModel BidTrainerViewModel => (BidTrainerViewModel)BindingContext;
 
     // Event-handlers
@@ -45,7 +45,8 @@ public partial class BidTrainerPage
     private readonly EventHandler<string> onAuctionBidAdded;
     private readonly EventHandler<BoardService.BoardCompletedEventArgs> onBoardCompleted;
 
-    public BidTrainerPage(SettingsService settingsService, BoardService boardService, ResultsService resultService, CardService cardService, LessonService lessonService)
+    public BidTrainerPage(SettingsService settingsService, BoardService boardService, ResultsService resultService, CardService cardService, LessonService lessonService, 
+        BidTrainerViewModel bidTrainerViewModel, BiddingBoxViewModel biddingBoxViewModel)
     {
         InitializeComponent();
         this.settingsService = settingsService;
@@ -53,6 +54,12 @@ public partial class BidTrainerPage
         this.lessonService = lessonService;
         this.boardService = boardService;
         this.resultService = resultService;
+        BindingContext = bidTrainerViewModel;
+        BiddingBoxView.BindingContext = biddingBoxViewModel;
+        handViewModelNorth = new HandViewModel(cardService);
+        handViewModelSouth = new HandViewModel(cardService);
+        PanelNorth.BindingContext = handViewModelNorth;
+        PanelSouth.BindingContext = handViewModelSouth;
         
         settingsServiceOnSettingsChanged = (_, _) =>
         {
@@ -182,8 +189,8 @@ public partial class BidTrainerPage
 
     private void ShowBothHands()
     {
-        HandViewModelNorth.ShowHand(Board.Deal[Player.North]);
-        HandViewModelSouth.ShowHand(Board.Deal[Player.South]);
+        handViewModelNorth.ShowHand(Board.Deal[Player.North]);
+        handViewModelSouth.ShowHand(Board.Deal[Player.South]);
     }
 
     private int GetNextBoardNumber()

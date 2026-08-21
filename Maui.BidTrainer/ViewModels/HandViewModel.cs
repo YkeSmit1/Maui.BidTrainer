@@ -5,12 +5,8 @@ using Maui.BidTrainer.Services;
 
 namespace Maui.BidTrainer.ViewModels;
 
-public class HandViewModel : ObservableObject
+public class HandViewModel(CardService cardService) : ObservableObject
 {
-    private readonly CardService cardService =
-        Application.Current?.Handler?.MauiContext?.Services.GetRequiredService<CardService>()
-        ?? throw new InvalidOperationException("CardService is not registered.");
-    
     public ObservableCollection<Card> Cards { get; set; } = [];
 
     public void ShowHand(string hand)
