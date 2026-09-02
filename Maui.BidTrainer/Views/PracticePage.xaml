@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Maui.BidTrainer.ViewModels"
+             x:Class="Maui.BidTrainer.Views.PracticePage"
+             x:DataType="viewModels:PracticeViewModel"
+             Title="Practice">
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="BlanchedAlmond"/>
+            <Setter Property="TextColor" Value="Blue"/>
+            <Setter Property="MinimumHeightRequest" Value="50"/>
+        </Style>
+        <Style TargetType="RadioButton">
+            <Setter Property="Background" Value="BlanchedAlmond"/>
+            <Setter Property="TextColor" Value="Blue"/>
+            <Setter Property="MinimumHeightRequest" Value="50"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid BackgroundColor="BlanchedAlmond" Padding="20" RowSpacing="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+
+            <ScrollView Grid.Row="0">
+                <StackLayout RadioButtonGroup.GroupName="Lessons"
+                             RadioButtonGroup.SelectedValue="{Binding SelectedLesson}"
+                             BindableLayout.ItemsSource="{Binding Lessons}"
+                             Spacing="8">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="viewModels:LessonViewModel">
+                            <RadioButton Content="{Binding Title}"
+                                         Value="{Binding .}"/>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </ScrollView>
+
+            <StackLayout Grid.Row="1" Spacing="4">
+                <Label Text="How many boards do you want to play?" TextColor="Blue"/>
+                <Label Text="{Binding NumberOfBoards, StringFormat='{0:0}'}"
+                       HorizontalOptions="Center"
+                       FontAttributes="Bold"
+                       TextColor="Blue"/>
+                <Slider Minimum="1"
+                        Maximum="10"
+                        Value="{Binding NumberOfBoards}"/>
+            </StackLayout>
+
+            <Button Grid.Row="2"
+                    Text="Play"
+                    Command="{Binding PlayCommand}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

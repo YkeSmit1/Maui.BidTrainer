@@ -6,16 +6,4 @@ public partial class TheoryPage
     {
         InitializeComponent();
     }
-
-    private async void ButtonCloseClicked(object sender, EventArgs e)
-    {
-        try
-        {
-            await Shell.Current.GoToAsync(nameof(BidTrainerPage));
-        }
-        catch (Exception exception)
-        {
-            await Shell.Current.DisplayAlertAsync("Error", exception.ToString(), "OK");
-        }
-    }
 }

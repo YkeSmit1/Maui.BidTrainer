@@ -15,7 +15,7 @@
         <Grid BackgroundColor="BlanchedAlmond">
             <Grid.RowDefinitions>
                 <RowDefinition Height="400"/>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <CollectionView Grid.Row="0" ItemsSource="{Binding Lessons}">
                 <CollectionView.ItemTemplate>
@@ -29,8 +29,10 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
             <StackLayout Grid.Row="1">
-                <Button Text="Continue where I left off" 
+                <Button Text="Continue where I left off"
                         Command="{Binding ContinueWhereLeftOffCommand}"/>
+                <Button Text="Practice"
+                        Command="{Binding GoToPracticeCommand}"/>
                 <BoxView Color="Black" WidthRequest="100" HeightRequest="2"/>
             </StackLayout>
         </Grid>

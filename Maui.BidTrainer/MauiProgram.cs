@@ -38,9 +38,11 @@ public static class MauiProgram
         builder.Services.AddSingleton<ResultsService>();
         builder.Services.AddSingleton<CardService>();
         builder.Services.AddSingleton<LessonService>();
+        builder.Services.AddSingleton<ShufflingService>();
         
         // ViewModels
         builder.Services.AddTransient<StartViewModel>();
+        builder.Services.AddTransient<PracticeViewModel>();
         builder.Services.AddTransient<BidTrainerViewModel>();
         builder.Services.AddTransient<BiddingBoxViewModel>();
         builder.Services.AddTransient<HandViewModel>();

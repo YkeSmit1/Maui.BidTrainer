@@ -21,7 +21,12 @@ public partial class StartViewModel(LessonService lessonService) : ObservableObj
     [RelayCommand]
     private async Task ContinueWhereLeftOff()
     {
-        await Shell.Current.GoToAsync(nameof(BidTrainerPage));
+        await Shell.Current.GoToAsync($"{nameof(BidTrainerPage)}?PracticeMode={false}");
     }
-    
+
+    [RelayCommand]
+    private async Task GoToPractice()
+    {
+        await Shell.Current.GoToAsync(nameof(PracticePage));
+    }
 }

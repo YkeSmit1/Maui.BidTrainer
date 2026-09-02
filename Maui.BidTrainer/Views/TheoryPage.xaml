@@ -21,7 +21,7 @@
             <ScrollView Grid.Row="0">
                 <Label FormattedText="{Binding Lesson, Converter={StaticResource LessonToTextConverter}}" Margin="10"/>
             </ScrollView>
-            <Button Grid.Row="1" Text="Continue" Clicked="ButtonCloseClicked" HorizontalOptions="Center"></Button>
+            <Button Grid.Row="1" Text="Continue" Command="{Binding CloseCommand}" HorizontalOptions="Center"></Button>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

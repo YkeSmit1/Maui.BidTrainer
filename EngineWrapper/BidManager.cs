@@ -1,6 +1,5 @@
 ﻿using Common;
 using Engine.DotNet;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
@@ -19,7 +18,7 @@ public static class BidManager
                 return calculatedBid;
         }
         var bid = Bid.GetBid(bidId);
-        bid.description = description.ToString();
+        bid.description = description;
         return bid;
 
         Bid GetCalculatedBid()

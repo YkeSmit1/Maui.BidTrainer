@@ -5,6 +5,7 @@ using Maui.BidTrainer.ViewModels;
 
 namespace Maui.BidTrainer.Views;
 
+[QueryProperty(nameof(PracticeMode),"PracticeMode")]
 public partial class BidTrainerPage
 {
     private readonly BoardService boardService;
@@ -12,9 +13,11 @@ public partial class BidTrainerPage
     private readonly ResultsService resultService;
     private readonly CardService cardService;
     private readonly LessonService lessonService;
+    private readonly ShufflingService shufflingService;
 
     // Bidding
     private readonly Pbn pbn = new();
+    private List<BoardDto> boards;
 
     // Lesson
     private static int CurrentLesson
@@ -29,7 +32,9 @@ public partial class BidTrainerPage
         set => Preferences.Set(nameof(CurrentBoardIndex), value);
     }
 
-    private BoardDto Board => pbn.Boards[CurrentBoardIndex];
+    public bool PracticeMode { get; set; }
+
+    private BoardDto Board => boards[CurrentBoardIndex];
     private bool repeatMistakesMode;
 
     // ViewModels
@@ -45,7 +50,7 @@ public partial class BidTrainerPage
     private readonly EventHandler<string> onAuctionBidAdded;
     private readonly EventHandler<BoardService.BoardCompletedEventArgs> onBoardCompleted;
 
-    public BidTrainerPage(SettingsService settingsService, BoardService boardService, ResultsService resultService, CardService cardService, LessonService lessonService, 
+    public BidTrainerPage(SettingsService settingsService, BoardService boardService, ResultsService resultService, CardService cardService, LessonService lessonService, ShufflingService shufflingService, 
         BidTrainerViewModel bidTrainerViewModel, BiddingBoxViewModel biddingBoxViewModel)
     {
         InitializeComponent();
@@ -54,6 +59,7 @@ public partial class BidTrainerPage
         this.lessonService = lessonService;
         this.boardService = boardService;
         this.resultService = resultService;
+        this.shufflingService = shufflingService;
         BindingContext = bidTrainerViewModel;
         BiddingBoxView.BindingContext = biddingBoxViewModel;
         handViewModelNorth = new HandViewModel(cardService);
@@ -126,6 +132,8 @@ public partial class BidTrainerPage
         if (CurrentBoardIndex == 0) 
             resultService.RemoveLessonResults(lesson.LessonNr);
         BidTrainerViewModel.Lesson = lesson.LessonNr;
+        boards = PracticeMode ? Enumerable.Range(1, Preferences.Get("NumberOfBoards", 0))
+            .Select(_ => new BoardDto { Deal = shufflingService.Deal(new Random()) }).ToList() : pbn.Boards;
     }
 
     private async Task OnBoardCompleted(BoardService.BoardCompletedEventArgs args)
@@ -168,6 +176,12 @@ public partial class BidTrainerPage
                     var percentage = resultService.GetPercentage(CurrentLesson);
                     await DisplayAlertAsync("Info", $"End of lesson. Your have scored {percentage}", "OK");
                     CurrentLesson++;
+                    if (PracticeMode)
+                    {
+                        await Shell.Current.GoToAsync(nameof(PracticePage));
+                        return;
+                    }
+
                     await Shell.Current.GoToAsync($"{nameof(TheoryPage)}?Lesson={CurrentLesson}");
                     await StartLessonAsync();
                 }
@@ -200,7 +214,7 @@ public partial class BidTrainerPage
             var wrongBoards = resultService.GetWrongBoards(CurrentLesson);
             return wrongBoards.Last() == CurrentBoardIndex ? -1 : wrongBoards.SkipWhile(x => x != CurrentBoardIndex).ElementAt(1);
         }
-        if (CurrentBoardIndex == pbn.Boards.Count - 1)
+        if (CurrentBoardIndex >= boards.Count - 1)
             return -1;
         return CurrentBoardIndex + 1;
     }
